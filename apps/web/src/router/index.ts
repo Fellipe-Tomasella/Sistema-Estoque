@@ -126,15 +126,30 @@ const appRoutes: RouteRecordRaw[] = [
     component: () => import('@/modules/pending/pages/PendingPage.vue'),
     meta: { title: 'Pendências' },
   },
-  { path: 'relatorios/vendas', name: 'report-sales', component: soon, meta: { title: 'Vendas por período' } },
-  { path: 'relatorios/fiado', name: 'report-receivables', component: soon, meta: { title: 'Fiado em aberto' } },
+  {
+    path: 'relatorios/vendas',
+    name: 'report-sales',
+    component: () => import('@/modules/reports/pages/SalesReportPage.vue'),
+    meta: { title: 'Vendas por período' },
+  },
+  {
+    path: 'relatorios/fiado',
+    name: 'report-receivables',
+    component: () => import('@/modules/reports/pages/ReceivablesReportPage.vue'),
+    meta: { title: 'Fiado em aberto' },
+  },
   {
     path: 'relatorios/mais-vendidos',
     name: 'report-ranking',
-    component: soon,
+    component: () => import('@/modules/reports/pages/RankingReportPage.vue'),
     meta: { title: 'Mais e menos vendidos' },
   },
-  { path: 'fechamento/:data?', name: 'closing', component: soon, meta: { title: 'Fechamento do dia' } },
+  {
+    path: 'fechamento/:data?',
+    name: 'closing',
+    component: () => import('@/modules/reports/pages/ClosingPage.vue'),
+    meta: { title: 'Fechamento do dia' },
+  },
   { path: 'configuracoes', name: 'settings', component: soon, meta: { title: 'Configurações' } },
 ]
 
