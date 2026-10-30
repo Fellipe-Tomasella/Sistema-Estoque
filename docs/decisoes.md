@@ -26,6 +26,9 @@ Formato: data · decisão · motivo · quem decidiu. Mais recentes no fim. **Nã
 | 019 | 30/10/2026 | TypeScript fixado em 6.0 e postgres.js em 3.x (não as majors mais novas). | typescript-eslint ainda não suporta TS 7; Drizzle é testado com postgres.js 3. | Claude |
 | 020 | 30/10/2026 | Repositório: github.com/Fellipe-Tomasella/Sistema-Estoque, push a cada etapa. | Versionamento para poder voltar etapas. | Dev |
 | 021 | 30/10/2026 | Origin-check recusa escrita com `Origin` diferente de `APP_ORIGIN`; requisição sem `Origin` (scripts, ferramentas) passa — o cookie SameSite=Lax já barra o envio cross-site. Login bloqueado após 5 erros em 15 min por IP+e-mail (HTTP 429). | Navegadores sempre enviam `Origin` em POST; exigir o cabeçalho quebraria scripts sem ganho de segurança. | Claude |
+| 022 | 30/10/2026 | Sem rota `/stock/overview`: `/products` (com `stock=out\|low`) já traz produto + variações + saldo + situação, e a grade é montada na tela. | Evita duas consultas com o mesmo conteúdo. | Claude |
+| 023 | 30/10/2026 | Importação: o `custo` de cada linha vai para a variação; referência e categoria do produto vêm da primeira linha que as tiver. Na efetivação o plano é refeito sobre o catálogo atual; se surgiu variação igual depois da prévia, a importação pede nova prévia (409). | Planilha tem uma linha por variação; refazer o plano impede contar estoque duas vezes. | Claude |
+| 024 | 30/10/2026 | Enums opcionais em query/body usam `OneOf` (união de literais), não `t.UnionEnum`. | O Elysia preenche `UnionEnum` ausente com o primeiro valor — um filtro não pedido seria aplicado. | Claude |
 
 ## Versões instaladas (Etapa 0)
 
@@ -41,6 +44,3 @@ Formato: data · decisão · motivo · quem decidiu. Mais recentes no fim. **Nã
 | Tailwind CSS | (front adiado) |
 | shadcn-vue | (front adiado) |
 | vite-plugin-pwa | (front adiado) |
-| 022 | 30/10/2026 | Sem rota `/stock/overview`: `/products` (com `stock=out\|low`) já traz produto + variações + saldo + situação, e a grade é montada na tela. | Evita duas consultas com o mesmo conteúdo. | Claude |
-| 023 | 30/10/2026 | Importação: o `custo` de cada linha vai para a variação; referência e categoria do produto vêm da primeira linha que as tiver. Na efetivação o plano é refeito sobre o catálogo atual; se surgiu variação igual depois da prévia, a importação pede nova prévia (409). | Planilha tem uma linha por variação; refazer o plano impede contar estoque duas vezes. | Claude |
-| 024 | 30/10/2026 | Enums opcionais em query/body usam `OneOf` (união de literais), não `t.UnionEnum`. | O Elysia preenche `UnionEnum` ausente com o primeiro valor — um filtro não pedido seria aplicado. | Claude |
