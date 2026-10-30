@@ -3,20 +3,32 @@
 Painel web (com PWA) para uma loja on-line de roupas: produtos com cor/tamanho, estoque, PDV, dinheiro/Pix/cartão/fiado,
 cancelamentos, devoluções e trocas, relatórios e fechamento diário. Empresa MEI.
 
-## Como usar estes arquivos com o Claude Code
+## Operação básica (dev)
 
-1. Abra esta pasta no VS Code e inicie o Claude Code no terminal integrado.
-2. O `CLAUDE.md` é lido automaticamente. Comece com:
+Pré-requisitos: Bun 1.3, PostgreSQL 18 (instalado ou `bun run db:up`) com os bancos `estoque` e `estoque_test`
+(role/senha `estoque`), Docker só para gerar a imagem.
 
-   > Leia o CLAUDE.md e todos os arquivos de docs/ na ordem indicada. Depois me diga, em poucas linhas, o que entendeu
-   > e se viu alguma contradição entre os documentos. Não escreva código ainda.
+```bash
+cp .env.example .env        # primeira vez
+bun install
+bun run db:migrate          # aplica as migrations
+bun run db:seed             # dados de exemplo — entre com dona@loja.dev / senha-dev-123
+bun run dev                 # API em :3000 e front em http://localhost:5173
+```
 
-3. Depois, etapa por etapa (`docs/09-roadmap.md`):
+| Tarefa | Comando |
+| --- | --- |
+| Lint e tipos | `bun run lint && bun run typecheck` |
+| Testes de regra (API, banco de teste) | `bun run test` |
+| E2E A1–A10 (Playwright, banco de teste) | `bunx playwright install chromium` (1ª vez) e `bun run test:e2e` |
+| Build do front | `bun run build` |
+| Imagem de produção | `docker build -f docker/Dockerfile -t sistema-estoque .` |
+| Criar usuária | `cd apps/api && bun run user:create --name "…" --email "…"` |
+| Redefinir senha | `cd apps/api && bun run user:reset-password --email "…"` |
+| Conferir integridade (estoque, fiado) | `cd apps/api && bun run check-integrity` |
 
-   > Vamos fazer a Etapa 0 do roadmap. Faça um plano curto, espere meu ok e implemente.
-
-4. Quando a cliente ou o contador responderem algo de `docs/10-pendencias.md`, peça ao Claude Code para registrar em
-   `docs/decisoes.md` e atualizar a regra correspondente.
+Produção (Docker + Portainer + Nginx, backup, runbook): `docs/08-deploy.md`. No container, os scripts rodam com
+`bun apps/api/src/scripts/<nome>.ts`. Publicar versão: criar uma tag `vX.Y.Z` — o GitHub Actions envia a imagem ao GHCR.
 
 ## Mapa dos documentos
 

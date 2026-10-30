@@ -10,3 +10,6 @@ backups/
 
 # Arquivos originais dos modelos (já extraídos em design/stitch)
 stich modelos/
+e2e/.auth/
+test-results/
+playwright-report/

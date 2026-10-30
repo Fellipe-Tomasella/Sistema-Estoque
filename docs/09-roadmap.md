@@ -149,12 +149,13 @@ Docs: 06 §5.
 
 ## Etapa 12 — Produção
 Docs: 08.
-- [ ] Dockerfile, entrypoint com migrations, compose de produção, `backup.sh`, exemplo de Nginx.
-- [ ] `release.yml` (GHCR).
+- [x] Dockerfile, entrypoint com migrations, `backup.sh`, exemplo de Nginx (`docker/`). Imagem testada localmente.
+- [ ] Compose de produção (stack Swarm no Portainer) — aguardando o exemplo de compose do dev.
+- [x] `release.yml` (GHCR) e build no `ci.yml`.
 - [x] Exportação ZIP (RN-ACE-04) — `GET /api/exports/full.zip`.
-- [ ] Testes E2E Playwright dos cenários A1–A10 + login.
+- [x] Testes E2E Playwright dos cenários A1–A10 + login (`bun run test:e2e`, banco de teste).
 - [ ] Subir na VPS seguindo o runbook; testar restauração de backup.
-- [ ] README com operação básica para o dev.
+- [x] README com operação básica para o dev.
 
 **Aceite:** sistema no ar com HTTPS, backup diário gerado e restaurado em teste, E2E verde.
 

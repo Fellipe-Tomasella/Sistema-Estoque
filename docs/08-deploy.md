@@ -35,7 +35,9 @@ volumes: { pgdata-dev: {} }
 
 ## 3. Imagem de produção (`docker/Dockerfile`)
 
-Orientação (ajustar nomes de scripts na Etapa 0):
+**Implementado** em `docker/Dockerfile` (decisão 035): o Bun executa o TypeScript da API direto (sem `dist/`),
+o build do Vue vai para `/app/public` e a API o serve (`PUBLIC_DIR`). Build local:
+`docker build -f docker/Dockerfile -t sistema-estoque .` — o esboço original fica abaixo como referência:
 
 ```dockerfile
 FROM oven/bun:1 AS deps
@@ -156,7 +158,7 @@ Deploy: no Portainer, atualizar `APP_TAG` e “Update the stack” (ou webhook d
 1. DNS do subdomínio apontando para a VPS; certificado HTTPS no esquema atual.
 2. Criar a stack no Portainer com o compose e as variáveis.
 3. Subir. Conferir `https://…/api/health`.
-4. Criar a conta da dona: `docker exec -it estoque-app bun dist/scripts/create-user.js --name "…" --email "…"` (senha pedida no terminal).
+4. Criar a conta da dona: `docker exec -it estoque-app bun apps/api/src/scripts/create-user.ts --name "…" --email "…"` (senha pedida no terminal).
 5. Entrar, preencher Configurações (loja, UF, fuso).
 6. Importar planilha ou cadastrar produtos com saldo inicial (contagem real).
 7. Testar no celular e instalar o PWA.
@@ -169,8 +171,8 @@ Deploy: no Portainer, atualizar `APP_TAG` e “Update the stack” (ou webhook d
   `pg_restore --clean --if-exists -d $DATABASE_URL backups/estoque-AAAA-MM-DD.dump`.
 - Além do backup, a dona tem a **exportação ZIP** (RN-ACE-04) em Configurações.
 - Atualizações: migrations são só aditivas sempre que possível; antes de atualizar a imagem, rodar um backup manual
-  (`docker exec estoque-backup /backup.sh once`).
+  (`docker exec estoque-backup sh /backup.sh once`).
 
 ## 9. Recuperação de acesso sem e-mail
 
-`docker exec -it estoque-app bun dist/scripts/reset-password.js --email "…"`.
+`docker exec -it estoque-app bun apps/api/src/scripts/reset-password.ts --email "…"`.

@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "vue-tsc --noEmit -p tsconfig.json"
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.4.9",
@@ -34,6 +35,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@playwright/test": "1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/bun": "^1.4.4",
     "@vite-pwa/assets-generator": "1",

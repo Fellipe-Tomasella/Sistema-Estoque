@@ -47,10 +47,10 @@ bun run db:generate              # gera migration a partir do schema Drizzle
 bun run db:migrate               # aplica migrations
 bun run db:seed                  # dados de exemplo (só dev)
 bun run test                     # testes da API (bun test) contra banco de teste
-bun run test:web                 # (com o front) testes de componentes (vitest)
-bun run test:e2e                 # (com o front) playwright (fluxos críticos)
+bun run test:e2e                 # Playwright A1–A10 + login (sobe API 3100 e web 5174 no banco de teste)
 bun run lint && bun run typecheck
-bun run build                    # build de produção (web + api)
+bun run build                    # build de produção do front (a API roda o TS direto)
+docker build -f docker/Dockerfile -t sistema-estoque .   # imagem única (API + front)
 ```
 
 ## Regras de trabalho (obrigatórias)

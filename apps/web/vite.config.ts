@@ -43,6 +43,7 @@ export default defineConfig({
     port: 5173,
     // Mesma origem em desenvolvimento: o navegador fala só com o Vite, que repassa /api para a API.
     // 127.0.0.1 e não localhost: no Windows “localhost” resolve para IPv6 (::1) e a API escuta em IPv4.
-    proxy: { '/api': { target: 'http://127.0.0.1:3000', changeOrigin: false } },
+    // API_PORT: os testes E2E sobem outra API (banco de teste) em outra porta.
+    proxy: { '/api': { target: `http://127.0.0.1:${process.env.API_PORT ?? 3000}`, changeOrigin: false } },
   },
 })

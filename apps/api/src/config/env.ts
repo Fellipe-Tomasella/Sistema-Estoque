@@ -18,6 +18,8 @@ export const env = {
   isTest,
   isProduction: nodeEnv === 'production',
   port: Number(process.env.PORT ?? 3000),
+  /** Pasta do build do front (produção). Sem ela, só a API sobe. */
+  publicDir: optional('PUBLIC_DIR'),
   appOrigin: required('APP_ORIGIN'),
   databaseUrl: isTest ? required('DATABASE_URL_TEST') : required('DATABASE_URL'),
   sessionSecret: required('SESSION_SECRET'),
