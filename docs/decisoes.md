@@ -33,6 +33,7 @@ Formato: data · decisão · motivo · quem decidiu. Mais recentes no fim. **Nã
 | 026 | 30/10/2026 | Na confirmação, preço e situação (ativo) das variações são lidos de novo com as variações travadas; se algo saiu de venda ou falta saldo, nada é gravado. | RN-PRO-06 (rascunho acompanha o cadastro) e RN-VEN-07. | Claude |
 | 027 | 30/10/2026 | Todo cancelamento cria um registro `returns` tipo `cancellation` com as peças ainda não devolvidas — recebidas na hora (com a loja, movimento `sale_cancel_return`) ou aguardando (com a cliente). `sale_items.returned_qty` soma essas peças. | Um só caminho para retorno físico (RN-DEV-07), mantém o invariante 4 e impede cancelar duas vezes as mesmas peças. | Claude |
 | 028 | 30/10/2026 | Dívida zerada por cancelamento fica `cancelled`; por devolução de peças, `settled`. A situação de pagamento de venda cancelada não muda. | O histórico mostra se a dívida foi paga ou cancelada; a venda cancelada guarda como estava. | Claude |
+| 029 | 30/10/2026 | A venda da troca é da mesma cliente da venda original, sem desconto próprio; o crédito é o valor das peças devolvidas até o total dela. Se a venda nova for bloqueada (pagamento faltando, estoque), nada da troca é gravado. | RN-DEV-05/06 numa transação única; desconto na troca não foi pedido. | Claude |
 
 ## Versões instaladas (Etapa 0)
 

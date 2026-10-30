@@ -56,7 +56,7 @@ export class SalesService {
     })
   }
 
-  calculate(sale: Sale, lines: CartLine[]) {
+  calculate(sale: Sale, lines: CartLine[], creditCents = 0) {
     return calculateCart({
       lines,
       discountKind: sale.discountKind,
@@ -64,6 +64,7 @@ export class SalesService {
       payments: sale.draftPayments,
       fiado: sale.draftFiado,
       customerId: sale.customerId,
+      creditCents,
     })
   }
 

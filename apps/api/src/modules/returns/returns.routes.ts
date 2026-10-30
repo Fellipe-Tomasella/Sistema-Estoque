@@ -1,5 +1,6 @@
 import { Elysia } from 'elysia'
 import { authPlugin } from '../../shared/auth.plugin'
+import { requireIdempotencyKey } from '../../shared/idempotency'
 import {
   CancelBody,
   CancelPreviewQuery,
@@ -9,6 +10,7 @@ import {
   ReceiveItemParams,
   RefundDoneBody,
   RefundsQuery,
+  ReturnRequestBody,
 } from './returns.schemas'
 
 /** Cancelamento, retorno físico de peças e devoluções de valor. */
@@ -27,6 +29,20 @@ export const returnsRoutes = new Elysia()
       params: IdParams,
       body: CancelBody,
     },
+  )
+  .post(
+    '/sales/:id/returns/preview',
+    ({ params, body, services }) => services.partialReturns.preview(params.id, body),
+    { params: IdParams, body: ReturnRequestBody },
+  )
+  .post(
+    '/sales/:id/returns',
+    async ({ params, body, headers, services, user, set }) => {
+      const result = await services.partialReturns.execute(requireIdempotencyKey(headers), params.id, body, user.id)
+      set.status = result.alreadyProcessed ? 200 : 201
+      return result
+    },
+    { params: IdParams, body: ReturnRequestBody },
   )
   .get('/returns', ({ services }) => services.returns.awaiting())
   .post(

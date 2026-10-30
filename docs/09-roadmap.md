@@ -107,10 +107,10 @@ Docs: 04 RN-CAN, RN-DEV-07/08, 05 Cancelamento/Devoluções (receber peça, refu
 
 ## Etapa 8 — Devolução parcial e troca
 Docs: 04 RN-DEV, 05 Devoluções, 06 §3.5.
-- [ ] Prévia e execução de devolução parcial (abate fiado → devolução de valor).
-- [ ] Troca em transação única com nova venda e `exchange_credit`.
-- [ ] Fórmula de valor proporcional sem perda de centavos (testes com desconto e quantidades ímpares).
-- [ ] `returned_qty` e limites de quantidade.
+- [x] Prévia e execução de devolução parcial (abate fiado → devolução de valor).
+- [x] Troca em transação única com nova venda e `exchange_credit`.
+- [x] Fórmula de valor proporcional sem perda de centavos (testes com desconto e quantidades ímpares).
+- [x] `returned_qty` e limites de quantidade.
 
 **Aceite:** A8, A9; devolver 1 de 3 peças com desconto e depois as outras 2 soma exatamente o total da linha; invariante 4 ok.
 

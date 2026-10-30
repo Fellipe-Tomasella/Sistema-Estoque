@@ -8,13 +8,13 @@ import type { SalesService } from './sales.service'
 import { normalizeShipping } from './shipping'
 
 /** Mesma variação adicionada de novo soma na linha existente (RN-VEN-02). */
-function mergeItems(items: { variantId: string; quantity: number }[]) {
+export function mergeItems(items: { variantId: string; quantity: number }[]) {
   const merged = new Map<string, number>()
   for (const item of items) merged.set(item.variantId, (merged.get(item.variantId) ?? 0) + item.quantity)
   return [...merged].map(([variantId, quantity]) => ({ variantId, quantity }))
 }
 
-function normalizePayment(payment: DraftPayment): DraftPayment {
+export function normalizePayment(payment: DraftPayment): DraftPayment {
   const isCard = payment.method === 'card'
   return {
     id: payment.id,

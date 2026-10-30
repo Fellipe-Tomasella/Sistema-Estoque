@@ -20,6 +20,8 @@ export interface CartInput {
   payments: DraftPayment[]
   fiado: boolean
   customerId: string | null
+  /** Crédito de troca (RN-DEV-05): conta como pago, mas não é dinheiro. */
+  creditCents?: number
 }
 
 const units = (n: number) => `${n} ${n === 1 ? 'unidade' : 'unidades'}`
@@ -64,7 +66,8 @@ export function calculateCart(input: CartInput) {
       changeCents: given !== null && given >= payment.amountCents ? given - payment.amountCents : null,
     }
   })
-  const paidCents = payments.reduce((sum, payment) => sum + payment.amountCents, 0)
+  const creditCents = input.creditCents ?? 0
+  const paidCents = creditCents + payments.reduce((sum, payment) => sum + payment.amountCents, 0)
   const remainingCents = totalCents - paidCents
   const fiadoCents = input.fiado ? Math.max(0, remainingCents) : 0
 
@@ -78,6 +81,7 @@ export function calculateCart(input: CartInput) {
     discountCents: discount,
     totalCents,
     payments,
+    creditCents,
     paidCents,
     fiadoCents,
     warnings,

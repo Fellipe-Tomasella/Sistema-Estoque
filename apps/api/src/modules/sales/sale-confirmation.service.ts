@@ -1,5 +1,5 @@
 import { allocateDiscount, ErrorCode, type SalePaymentStatus } from '@estoque/shared'
-import { db } from '../../db/client'
+import { db, type DbOrTx } from '../../db/client'
 import type { Customer, Sale } from '../../db/schema'
 import { businessDate } from '../../shared/business-date'
 import { BusinessRuleError } from '../../shared/errors'
@@ -47,133 +47,156 @@ export class SaleConfirmationService {
   ) {}
 
   async confirm(id: string, userId: string) {
-    const alreadyProcessed = await db.transaction(async (tx) => {
-      const sale = await this.sales.require(id, tx, true)
-      if (sale.status !== 'draft') return true
+    const alreadyProcessed = await db.transaction((tx) => this.confirmWithin(tx, id, userId))
+    return { ...(await this.sales.view(id)), alreadyProcessed }
+  }
 
-      const items = await this.repo.items(id, tx)
-      const lines = await this.sales.cartLines(items, tx, true)
-      const cart = this.sales.calculate(sale, lines)
-      if (cart.blockers.length > 0) {
-        throw new BusinessRuleError(cart.blockers[0]!, ErrorCode.BUSINESS_RULE, { blockers: cart.blockers })
-      }
-      const short = cart.lines.find((line) => line.quantity > line.availableQty)
-      if (short) {
-        throw new BusinessRuleError(
-          `Não foi possível confirmar: só há ${units(short.availableQty)} de ${lineName(short)} (no carrinho: ${short.quantity}).`,
-          ErrorCode.INSUFFICIENT_STOCK,
-          { variantId: short.variantId, available: short.availableQty, requested: short.quantity },
-        )
-      }
+  /**
+   * Confirma dentro de uma transação já aberta (a troca confirma a venda nova junto com a devolução).
+   * `exchangeCreditCents` entra como pagamento `exchange_credit`. Devolve `true` se a venda já estava confirmada.
+   */
+  async confirmWithin(tx: DbOrTx, id: string, userId: string, exchangeCreditCents = 0): Promise<boolean> {
+    const sale = await this.sales.require(id, tx, true)
+    if (sale.status !== 'draft') return true
 
-      const customer = sale.customerId ? await this.customers.require(sale.customerId, tx) : null
-      const store = await this.settings.get(tx)
-      const now = new Date()
-      const context = { businessDate: businessDate(now, store.timezone), userId }
-      const number = await this.repo.nextNumber(tx)
-
-      // Congela nome, rótulo e preço; o rateio do desconto define o valor de cada peça em devoluções (RN-VEN-05).
-      const allocation = allocateDiscount(
-        cart.lines.map((line) => line.lineSubtotalCents),
-        cart.discountCents,
+    const items = await this.repo.items(id, tx)
+    const lines = await this.sales.cartLines(items, tx, true)
+    const cart = this.sales.calculate(sale, lines, exchangeCreditCents)
+    if (cart.blockers.length > 0) {
+      throw new BusinessRuleError(cart.blockers[0]!, ErrorCode.BUSINESS_RULE, { blockers: cart.blockers })
+    }
+    const short = cart.lines.find((line) => line.quantity > line.availableQty)
+    if (short) {
+      throw new BusinessRuleError(
+        `Não foi possível confirmar: só há ${units(short.availableQty)} de ${lineName(short)} (no carrinho: ${short.quantity}).`,
+        ErrorCode.INSUFFICIENT_STOCK,
+        { variantId: short.variantId, available: short.availableQty, requested: short.quantity },
       )
-      const itemByVariant = new Map(items.map((item) => [item.variantId, item]))
-      for (const [index, line] of cart.lines.entries()) {
-        await this.repo.updateItem(
-          itemByVariant.get(line.variantId)!.id,
-          {
-            productName: line.productName,
-            variantLabel: line.variantLabel,
-            unitPriceCents: line.unitPriceCents,
-            lineSubtotalCents: line.lineSubtotalCents,
-            discountAllocatedCents: allocation[index]!,
-            lineTotalCents: line.lineSubtotalCents - allocation[index]!,
-          },
-          tx,
-        )
-      }
+    }
 
-      await this.stock.apply(
-        tx,
-        cart.lines.map((line) => ({
-          variantId: line.variantId,
-          type: 'sale' as const,
-          delta: -line.quantity,
-          refType: 'sale' as const,
-          refId: id,
-        })),
-        context,
-      )
+    const customer = sale.customerId ? await this.customers.require(sale.customerId, tx) : null
+    const store = await this.settings.get(tx)
+    const now = new Date()
+    const context = { businessDate: businessDate(now, store.timezone), userId }
+    const number = await this.repo.nextNumber(tx)
 
-      await this.payments.insertMany(
-        cart.payments.map((payment) => ({
-          id: payment.id,
-          kind: 'sale_checkout' as const,
-          method: payment.method,
-          cardType: payment.cardType ?? null,
-          cardInstallments: payment.installments ?? null,
-          amountCents: payment.amountCents,
-          saleId: id,
-          customerId: sale.customerId,
-          businessDate: context.businessDate,
-          receivedAt: now,
-          createdBy: userId,
-        })),
-        tx,
-      )
-
-      if (cart.fiadoCents > 0) {
-        await this.receivables.insert(
-          {
-            customerId: customer!.id,
-            saleId: id,
-            origin: 'sale',
-            description: `Venda ${formatSaleNumber(number)}`,
-            originalCents: cart.fiadoCents,
-            dueDate: sale.draftFiadoDueDate,
-            businessDate: context.businessDate,
-          },
-          tx,
-        )
-      }
-
-      const shippingAddress = this.shippingAddress(sale, customer)
-      const shippingUf = sale.shippingUf ?? shippingAddress?.uf ?? null
-      const fiscal = classifyFiscal({
-        customerDocumentType: customer?.documentType ?? null,
-        fiscalRequested: sale.fiscalRequested,
-        hasShipping: sale.shippingStatus !== 'none',
-        shippingUf,
-        storeUf: store.uf,
-      })
-
-      await this.repo.update(
-        id,
+    // Congela nome, rótulo e preço; o rateio do desconto define o valor de cada peça em devoluções (RN-VEN-05).
+    const allocation = allocateDiscount(
+      cart.lines.map((line) => line.lineSubtotalCents),
+      cart.discountCents,
+    )
+    const itemByVariant = new Map(items.map((item) => [item.variantId, item]))
+    for (const [index, line] of cart.lines.entries()) {
+      await this.repo.updateItem(
+        itemByVariant.get(line.variantId)!.id,
         {
-          status: 'confirmed',
-          number,
-          version: sale.version + 1,
-          customerSnapshot: customer ? snapshotOf(customer) : null,
-          subtotalCents: cart.subtotalCents,
-          discountCents: cart.discountCents,
-          totalCents: cart.totalCents,
-          draftPayments: [],
-          paymentStatus: paymentStatus(cart.paidCents, cart.fiadoCents),
-          shippingAddress,
-          shippingUf,
-          buyerType: fiscal.buyerType,
-          fiscalRequirement: fiscal.requirement,
-          fiscalNote: fiscal.note,
-          businessDate: context.businessDate,
-          confirmedAt: now,
+          productName: line.productName,
+          variantLabel: line.variantLabel,
+          unitPriceCents: line.unitPriceCents,
+          lineSubtotalCents: line.lineSubtotalCents,
+          discountAllocatedCents: allocation[index]!,
+          lineTotalCents: line.lineSubtotalCents - allocation[index]!,
         },
         tx,
       )
-      await this.audit.record({ entity: 'sale', entityId: id, action: 'confirm', after: { number }, userId }, tx)
-      return false
+    }
+
+    await this.stock.apply(
+      tx,
+      cart.lines.map((line) => ({
+        variantId: line.variantId,
+        type: 'sale' as const,
+        delta: -line.quantity,
+        refType: 'sale' as const,
+        refId: id,
+      })),
+      context,
+    )
+
+    await this.payments.insertMany(
+      cart.payments.map((payment) => ({
+        id: payment.id,
+        kind: 'sale_checkout' as const,
+        method: payment.method,
+        cardType: payment.cardType ?? null,
+        cardInstallments: payment.installments ?? null,
+        amountCents: payment.amountCents,
+        saleId: id,
+        customerId: sale.customerId,
+        businessDate: context.businessDate,
+        receivedAt: now,
+        createdBy: userId,
+      })),
+      tx,
+    )
+    if (cart.creditCents > 0) {
+      await this.payments.insertMany(
+        [
+          {
+            id: Bun.randomUUIDv7(),
+            kind: 'exchange_credit',
+            method: 'exchange_credit',
+            amountCents: cart.creditCents,
+            saleId: id,
+            customerId: sale.customerId,
+            businessDate: context.businessDate,
+            receivedAt: now,
+            createdBy: userId,
+          },
+        ],
+        tx,
+      )
+    }
+
+    if (cart.fiadoCents > 0) {
+      await this.receivables.insert(
+        {
+          customerId: customer!.id,
+          saleId: id,
+          origin: 'sale',
+          description: `Venda ${formatSaleNumber(number)}`,
+          originalCents: cart.fiadoCents,
+          dueDate: sale.draftFiadoDueDate,
+          businessDate: context.businessDate,
+        },
+        tx,
+      )
+    }
+
+    const shippingAddress = this.shippingAddress(sale, customer)
+    const shippingUf = sale.shippingUf ?? shippingAddress?.uf ?? null
+    const fiscal = classifyFiscal({
+      customerDocumentType: customer?.documentType ?? null,
+      fiscalRequested: sale.fiscalRequested,
+      hasShipping: sale.shippingStatus !== 'none',
+      shippingUf,
+      storeUf: store.uf,
     })
 
-    return { ...(await this.sales.view(id)), alreadyProcessed }
+    await this.repo.update(
+      id,
+      {
+        status: 'confirmed',
+        number,
+        version: sale.version + 1,
+        customerSnapshot: customer ? snapshotOf(customer) : null,
+        subtotalCents: cart.subtotalCents,
+        discountCents: cart.discountCents,
+        totalCents: cart.totalCents,
+        draftPayments: [],
+        paymentStatus: paymentStatus(cart.paidCents, cart.fiadoCents),
+        shippingAddress,
+        shippingUf,
+        buyerType: fiscal.buyerType,
+        fiscalRequirement: fiscal.requirement,
+        fiscalNote: fiscal.note,
+        businessDate: context.businessDate,
+        confirmedAt: now,
+      },
+      tx,
+    )
+    await this.audit.record({ entity: 'sale', entityId: id, action: 'confirm', after: { number }, userId }, tx)
+    return false
   }
 
   /** Com envio e sem endereço próprio, usa o endereço da cliente (RN-ENV-01). */

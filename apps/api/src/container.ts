@@ -22,6 +22,7 @@ import { ReceivableReceiptsService } from './modules/receivables/receivable-rece
 import { ReceivablesRepository } from './modules/receivables/receivables.repository'
 import { ReceivablesService } from './modules/receivables/receivables.service'
 import { ReceiptsService } from './modules/receipts/receipts.service'
+import { PartialReturnsService } from './modules/returns/partial-returns.service'
 import { RefundsRepository } from './modules/returns/refunds.repository'
 import { RefundsService } from './modules/returns/refunds.service'
 import { ReturnsRepository } from './modules/returns/returns.repository'
@@ -89,6 +90,17 @@ export function createContainer() {
     audit,
   )
 
+  const saleConfirmation = new SaleConfirmationService(
+    repositories.sales,
+    sales,
+    repositories.payments,
+    repositories.receivables,
+    stock,
+    settings,
+    customers,
+    audit,
+  )
+
   return {
     mailer,
     audit,
@@ -116,17 +128,20 @@ export function createContainer() {
     ),
     returns: new ReturnsService(repositories.returns, stock, settings, audit),
     refunds: new RefundsService(repositories.refunds, settings, audit),
-    receipts: new ReceiptsService(sales, settings, receivableReceipts),
-    saleConfirmation: new SaleConfirmationService(
+    partialReturns: new PartialReturnsService(
       repositories.sales,
       sales,
-      repositories.payments,
+      saleConfirmation,
+      repositories.returns,
+      repositories.refunds,
       repositories.receivables,
+      receivables,
       stock,
       settings,
-      customers,
       audit,
     ),
+    receipts: new ReceiptsService(sales, settings, receivableReceipts),
+    saleConfirmation,
     saleDrafts: new SaleDraftsService(repositories.sales, sales, customers),
     stockAdjustments: new StockAdjustmentsService(stock, settings, audit),
     stockEntries: new StockEntriesService(repositories.stockEntries, stock, settings),
