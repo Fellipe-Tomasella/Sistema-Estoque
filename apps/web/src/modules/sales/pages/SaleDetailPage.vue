@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Calendar, FileText, StickyNote, UserRound } from '@lucide/vue'
+import { ArrowLeftRight, Calendar, CircleX, FileText, StickyNote, UserRound } from '@lucide/vue'
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Textarea } from '@/components/ui/textarea'
 import { formatDateTime } from '@/lib/format'
 import { initials, useCustomer } from '@/modules/customers/composables/useCustomers'
+import CancelSaleDialog from '@/modules/returns/components/CancelSaleDialog.vue'
 import FiscalCard from '../components/FiscalCard.vue'
 import SaleItemsCard from '../components/SaleItemsCard.vue'
 import SalePaymentsCard from '../components/SalePaymentsCard.vue'
@@ -31,6 +32,7 @@ const { notes } = useSaleMutations(id)
 // Rascunho não tem detalhe: abre no PDV.
 watch(sale, (s) => s?.status === 'draft' && router.replace(`/vender/${s.id}`))
 
+const cancelling = ref(false)
 const noteText = ref('')
 watch(sale, (s) => (noteText.value = s?.notes ?? ''), { immediate: true })
 async function saveNotes() {
@@ -73,6 +75,15 @@ async function saveNotes() {
         <Button variant="outline" as-child>
           <a :href="`/api/sales/${sale.id}/receipt.pdf`" target="_blank" rel="noopener"><FileText /> Comprovante</a>
         </Button>
+        <template v-if="sale.status === 'confirmed'">
+          <Button variant="outline" as-child>
+            <RouterLink :to="`/vendas/${sale.id}/devolver`"><ArrowLeftRight /> Devolver / trocar</RouterLink>
+          </Button>
+          <Button variant="outline" class="text-red-700 hover:bg-red-50 hover:text-red-700" @click="cancelling = true">
+            <CircleX /> Cancelar venda
+          </Button>
+          <CancelSaleDialog v-model:open="cancelling" :sale-id="sale.id" :number-label="sale.numberLabel ?? ''" />
+        </template>
       </div>
     </Card>
 

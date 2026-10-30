@@ -85,6 +85,12 @@ const appRoutes: RouteRecordRaw[] = [
     meta: { title: 'Vendas' },
   },
   {
+    path: 'vendas/:id/devolver',
+    name: 'sale-return',
+    component: () => import('@/modules/returns/pages/ReturnPage.vue'),
+    meta: { title: 'Devolver ou trocar' },
+  },
+  {
     path: 'vendas/:id',
     name: 'sale',
     component: () => import('@/modules/sales/pages/SaleDetailPage.vue'),
