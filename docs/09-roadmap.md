@@ -116,12 +116,12 @@ Docs: 04 RN-DEV, 05 Devoluções, 06 §3.5.
 
 ## Etapa 9 — Relatórios e fechamento diário
 Docs: 04 RN-REL, RN-FEC, 05 Relatórios, 06 §3.7.
-- [ ] Vendas por período (dia/semana/mês) com canceladas e devoluções separadas.
-- [ ] Fiado em aberto.
-- [ ] Mais e menos vendidos (produto e variação, incluindo sem venda).
-- [ ] Fechamento: cálculo, dinheiro contado, salvar snapshot, “alterado depois”.
-- [ ] CSV de cada relatório.
-- [ ] Início (`/dashboard`) com todos os cartões de aviso.
+- [x] Vendas por período (dia/semana/mês) com canceladas e devoluções separadas.
+- [x] Fiado em aberto.
+- [x] Mais e menos vendidos (produto e variação, incluindo sem venda).
+- [x] Fechamento: cálculo, dinheiro contado, salvar snapshot, “alterado depois”.
+- [x] CSV de cada relatório (`/reports/sales.csv`, `/reports/receivables.csv`, `/reports/products-ranking.csv`).
+- [x] Início (`/dashboard`) com todos os cartões de aviso (pendências fiscais refinadas na Etapa 10).
 
 **Aceite:** um dia de teste com venda à vista, venda fiado, recebimento de fiado antigo, cancelamento com devolução de valor e estorno →
 fechamento bate com conta feita à mão (teste automatizado com esse roteiro).

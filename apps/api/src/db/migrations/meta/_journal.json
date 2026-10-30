@@ -57,6 +57,13 @@
       "when": 1793378807974,
       "tag": "0007_returns_refunds",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1793379602939,
+      "tag": "0008_daily_closings",
+      "breakpoints": true
     }
   ]
 }

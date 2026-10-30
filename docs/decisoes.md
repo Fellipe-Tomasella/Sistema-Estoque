@@ -34,6 +34,7 @@ Formato: data · decisão · motivo · quem decidiu. Mais recentes no fim. **Nã
 | 027 | 30/10/2026 | Todo cancelamento cria um registro `returns` tipo `cancellation` com as peças ainda não devolvidas — recebidas na hora (com a loja, movimento `sale_cancel_return`) ou aguardando (com a cliente). `sale_items.returned_qty` soma essas peças. | Um só caminho para retorno físico (RN-DEV-07), mantém o invariante 4 e impede cancelar duas vezes as mesmas peças. | Claude |
 | 028 | 30/10/2026 | Dívida zerada por cancelamento fica `cancelled`; por devolução de peças, `settled`. A situação de pagamento de venda cancelada não muda. | O histórico mostra se a dívida foi paga ou cancelada; a venda cancelada guarda como estava. | Claude |
 | 029 | 30/10/2026 | A venda da troca é da mesma cliente da venda original, sem desconto próprio; o crédito é o valor das peças devolvidas até o total dela. Se a venda nova for bloqueada (pagamento faltando, estoque), nada da troca é gravado. | RN-DEV-05/06 numa transação única; desconto na troca não foi pedido. | Claude |
+| 030 | 30/10/2026 | Fechamento: venda confirmada e cancelada no mesmo dia não soma nas vendas do dia (aparece só nos cancelamentos); o pagamento dela continua nos recebimentos do dia em que entrou. Relatórios recebem o período como `from`/`to`; os atalhos (hoje, semana…) ficam na tela. | RN-CAN-06/09 e RN-FEC-01/02. | Claude |
 
 ## Versões instaladas (Etapa 0)
 

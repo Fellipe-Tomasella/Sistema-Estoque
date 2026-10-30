@@ -23,6 +23,12 @@ import { ReceivablesRepository } from './modules/receivables/receivables.reposit
 import { ReceivablesService } from './modules/receivables/receivables.service'
 import { ReceiptsService } from './modules/receipts/receipts.service'
 import { PartialReturnsService } from './modules/returns/partial-returns.service'
+import { ClosingsRepository } from './modules/reports/closings.repository'
+import { ClosingsService } from './modules/reports/closings.service'
+import { DashboardRepository } from './modules/reports/dashboard.repository'
+import { DashboardService } from './modules/reports/dashboard.service'
+import { ReportsRepository } from './modules/reports/reports.repository'
+import { ReportsService } from './modules/reports/reports.service'
 import { RefundsRepository } from './modules/returns/refunds.repository'
 import { RefundsService } from './modules/returns/refunds.service'
 import { ReturnsRepository } from './modules/returns/returns.repository'
@@ -45,7 +51,9 @@ export function createContainer() {
   const repositories = {
     audit: new AuditRepository(db),
     auth: new AuthRepository(db),
+    closings: new ClosingsRepository(db),
     customers: new CustomersRepository(db),
+    dashboard: new DashboardRepository(db),
     health: new HealthRepository(db),
     imports: new ImportsRepository(db),
     integrity: new IntegrityRepository(db),
@@ -53,6 +61,7 @@ export function createContainer() {
     products: new ProductsRepository(db),
     receivables: new ReceivablesRepository(db),
     refunds: new RefundsRepository(db),
+    reports: new ReportsRepository(db),
     returns: new ReturnsRepository(db),
     sales: new SalesRepository(db),
     settings: new SettingsRepository(db),
@@ -128,6 +137,9 @@ export function createContainer() {
     ),
     returns: new ReturnsService(repositories.returns, stock, settings, audit),
     refunds: new RefundsService(repositories.refunds, settings, audit),
+    reports: new ReportsService(repositories.reports, settings),
+    closings: new ClosingsService(repositories.closings, settings, audit),
+    dashboard: new DashboardService(repositories.dashboard, stock, settings),
     partialReturns: new PartialReturnsService(
       repositories.sales,
       sales,

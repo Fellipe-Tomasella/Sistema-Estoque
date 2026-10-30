@@ -6,6 +6,7 @@ import { importsRoutes } from './modules/imports/imports.routes'
 import { productsRoutes } from './modules/products/products.routes'
 import { variantsRoutes } from './modules/products/variants.routes'
 import { receivablesRoutes } from './modules/receivables/receivables.routes'
+import { reportsRoutes } from './modules/reports/reports.routes'
 import { returnsRoutes } from './modules/returns/returns.routes'
 import { salesRoutes } from './modules/sales/sales.routes'
 import { settingsRoutes } from './modules/settings/settings.routes'
@@ -28,6 +29,7 @@ export function createApp() {
     .use(salesRoutes)
     .use(receivablesRoutes)
     .use(returnsRoutes)
+    .use(reportsRoutes)
 }
 
 /** Tipo consumido pelo Eden Treaty no front. */

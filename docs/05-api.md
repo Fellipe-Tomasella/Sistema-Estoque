@@ -113,7 +113,7 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 | GET | `/reports/sales` | `?from&to&groupBy=day\|week\|month` |
 | GET | `/reports/receivables` | fiado em aberto |
 | GET | `/reports/products-ranking` | `?from&to&level=product\|variant&order=desc\|asc` |
-| GET | `/reports/:name.csv` | exportação CSV de cada relatório |
+| GET | `/reports/sales.csv` · `/reports/receivables.csv` · `/reports/products-ranking.csv` | exportação CSV (`;`, vírgula decimal, UTF-8 com BOM) |
 | GET | `/closings/:date` | cálculo do dia + snapshot salvo + diferenças |
 | PUT | `/closings/:date` | `{ countedCashCents, notes? }` salva/refaz |
 | GET | `/dashboard` | dados do Início: alertas de estoque, rascunhos, envios pendentes, retornos pendentes, devoluções de valor pendentes, pendências fiscais, fiado em atraso, resumo de hoje |
