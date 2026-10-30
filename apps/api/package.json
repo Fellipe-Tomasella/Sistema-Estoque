@@ -1,0 +1,26 @@
+{
+  "name": "@estoque/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/app.ts"
+  },
+  "scripts": {
+    "dev": "bun --env-file=../../.env --watch src/index.ts",
+    "start": "bun src/index.ts",
+    "test": "bun test --env-file=../../.env",
+    "db:generate": "bun --env-file=../../.env x drizzle-kit generate",
+    "db:migrate": "bun --env-file=../../.env src/db/migrate.ts",
+    "db:seed": "bun --env-file=../../.env src/db/seed.ts"
+  },
+  "dependencies": {
+    "@estoque/shared": "workspace:*",
+    "drizzle-orm": "^0.45.4",
+    "elysia": "^1.4.30",
+    "postgres": "^3"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.11"
+  }
+}

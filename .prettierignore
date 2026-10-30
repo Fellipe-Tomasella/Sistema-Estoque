@@ -1,0 +1,4 @@
+docs/
+*.md
+bun.lock
+apps/api/src/db/migrations/

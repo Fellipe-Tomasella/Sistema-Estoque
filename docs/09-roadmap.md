@@ -1,0 +1,160 @@
+# 09 — Roadmap de desenvolvimento
+
+Trabalhar **na ordem**. Cada etapa termina com: testes passando, critérios de aceite conferidos, checkboxes marcados aqui,
+`decisoes.md` atualizado se algo mudou, commit. Não começar a próxima com a anterior quebrada.
+
+Como pedir ao Claude Code (modelo de prompt para cada etapa):
+
+> Leia `CLAUDE.md` e os docs citados na Etapa N do `docs/09-roadmap.md`. Faça um plano curto da etapa (arquivos que vai criar/alterar
+> e testes), espere meu ok, depois implemente. Ao final rode lint, typecheck e testes, confira os critérios de aceite e marque os
+> checkboxes da etapa.
+
+---
+
+## Etapa 0 — Fundação do repositório
+Docs: 02, 08 §2.
+> **Front-end adiado (decisão 016):** nas etapas abaixo, itens de tela ficam marcados “(front)” e são feitos depois da Etapa 10.
+
+- [x] Monorepo Bun workspaces (`apps/api`, `packages/shared`; `apps/web` com o front), `tsconfig.base.json` strict, scripts raiz (ver CLAUDE.md).
+- [x] ESLint + Prettier configurados para TS (Vue entra com o front).
+- [x] `docker-compose.dev.yml` + `docker/dev-init.sql` (banco de teste + extensões).
+- [x] API: Elysia com `/api/health`, `config/env.ts` validando variáveis, `error-handler`, `db/client.ts`, drizzle-kit configurado, primeira migration (extensões).
+- [x] `container.ts` (instâncias de repositories/services) e padrão de módulo de exemplo (`modules/health`).
+- [ ] Setup de testes (`test/setup.ts`; `factories.ts` nasce na Etapa 2 com as primeiras entidades) rodando contra `estoque_test`.
+- [ ] (front) Web: Vite + Vue + TS + Router + Pinia + vue-query + Tailwind v4 + shadcn-vue inicializado; `lib/api.ts` com Eden Treaty consumindo `/api/health`.
+- [ ] (front) Proxy do Vite `/api → localhost:3000` (mesma origem em dev).
+- [x] `packages/shared`: `money.ts` (com testes de `parseBRL`, `formatBRL`, `allocateDiscount`), `sizes.ts`, `enums.ts`.
+- [x] CI básico (`ci.yml`).
+- [x] Registrar versões instaladas em `decisoes.md`.
+
+**Aceite:** `bun run dev` sobe a API e `/api/health` responde `db: true`; `bun run test` passa; CI verde.
+
+## Etapa 1 — Acesso, layout e configurações
+Docs: 02 §3.6, 04 RN-ACE, 06 §2 e §3.8.
+- [ ] Tabelas `users`, `sessions`, `password_resets`, `store_settings`, `audit_log`.
+- [ ] Login/logout/logout-all/me, sessão com cookie seguro, rate limit, origin-check.
+- [ ] Esqueci/redefinir senha (SMTP opcional) + scripts `create-user` e `reset-password`.
+- [ ] `AppLayout` responsivo (sidebar desktop / barra inferior mobile), guard de rotas, tela de login.
+- [ ] Configurações: dados da loja, UF, fuso, regime, switch fiscal, rodapé, alterar senha, sair de todos, tema.
+- [ ] Componentes comuns: `PageHeader`, `MoneyInput`, `MoneyText`, `DateText`, `StatusBadge`, `ConfirmDialog`, `EmptyState`, toasts, banner off-line.
+- [ ] `business-date.ts` com testes (virada de dia no fuso da loja).
+
+**Aceite:** só entra logado; sessão vale no notebook e no celular; reset de senha funciona por script; layout ok em 375px e 1280px.
+
+## Etapa 2 — Produtos e variações
+Docs: 03 §3.3, 04 RN-PRO, RN-EST-02, 05 Produtos, 06 §3.2.
+- [ ] Schema `products`, `variants`, `stock_movements` (o `StockService` nasce aqui com `initial`).
+- [ ] CRUD de produto com variações, gerar combinações, quantidade inicial e mínimo.
+- [ ] Busca sem acento + filtros; `/variants/search`; sugestões de cor/tamanho/categoria.
+- [ ] Inativar/reativar; excluir só sem histórico; corrigir rótulo com auditoria.
+- [ ] Telas: lista, formulário, detalhe com grade cor × tamanho.
+
+**Aceite:** RN-PRO-01…11 testadas; criar “Blusa básica” com Preta/P, Preta/M, Branca/M e saldos → aparecem certos na grade.
+
+## Etapa 3 — Estoque: entradas, acertos, histórico, alertas, importação
+Docs: 04 RN-EST, RN-IMP, 05 Estoque, 06 §3.3.
+- [ ] Entradas (`stock_entries`, itens, movimentos `purchase_entry`) com idempotência.
+- [ ] Acertos (contagem / perda / avaria / erro / outro).
+- [ ] Histórico por variação e geral.
+- [ ] Visão geral do estoque com “sem estoque” e “repor”; mínimo em massa.
+- [ ] Importação: modelo, prévia, erros por linha, efetivar idempotente.
+- [ ] `scripts/check-integrity.ts` (invariante 1).
+
+**Aceite:** cenário A7; saldo nunca negativo; importar planilha de exemplo (fixture com erros) mostra erros e efetiva o resto; integridade ok.
+
+## Etapa 4 — Clientes
+Docs: 04 RN-CLI, 05 Clientes.
+- [ ] CRUD, busca por nome/telefone, CPF/CNPJ validados, endereço opcional, inativar.
+- [ ] Componente `CustomerPicker` com cadastro rápido (usado no PDV).
+
+**Aceite:** dois clientes “Maria” distinguíveis em toda lista/busca.
+
+## Etapa 5 — PDV e vendas
+Docs: 04 RN-VEN, RN-PAG, RN-ENV, RN-FIS-01…05, 05 Vendas, 06 §3.4–3.5.
+- [ ] Schema `sales`, `sale_items`, `payments`, `receivables`, `receivable_allocations`, `receivable_adjustments`, sequence de número.
+- [ ] Rascunho no servidor com `version`, recalcular totais, motivo de bloqueio.
+- [ ] Desconto R$/% substitutivo; rateio na confirmação.
+- [ ] Pagamentos múltiplos, toggle de confirmação Pix/cartão, troco, **entrada + fiado** (cria dívida).
+- [ ] Confirmação transacional com lock e idempotência (testes A1, A6, A10).
+- [ ] Envio simples (situação, endereço, UF, rastreio).
+- [ ] Classificação fiscal na confirmação.
+- [ ] Histórico de vendas com filtros; detalhe com linha do tempo; troca de forma de pagamento.
+- [ ] Comprovante PDF + página de impressão + compartilhar.
+- [ ] Telas: PDV desktop (2 colunas) e mobile (passos), atalhos de teclado.
+
+**Aceite:** A1, A5, A6, A10 passando; venda com entrada + fiado gera dívida certa; comprovante de venda com fiado mostra pago e saldo, e o aviso “não é documento fiscal”.
+
+## Etapa 6 — Fiado
+Docs: 04 RN-FIA, 05 Fiado, 06 §3.6.
+- [ ] Lista de clientes com saldo, “em atraso” só com data combinada vencida.
+- [ ] Detalhe de dívidas por cliente.
+- [ ] Recebimento com prévia e distribuição editável, idempotente; comprovante de recebimento.
+- [ ] Estorno de recebimento com motivo.
+- [ ] Alterar data combinada.
+- [ ] *(Opcional, só se a cliente confirmar)* Saldo anterior de fiado — RN-FIA-11.
+
+**Aceite:** A2; tentar receber acima do saldo é bloqueado; estorno reabre saldo; invariante 2 ok.
+
+## Etapa 7 — Cancelamento
+Docs: 04 RN-CAN, RN-DEV-07/08, 05 Cancelamento/Devoluções (receber peça, refunds), 06 §3.5.
+- [ ] `cancel-preview` e `cancel` com as duas situações (peças com a loja / com a cliente).
+- [ ] `returns` tipo `cancellation` + receber peça (apta/avariada).
+- [ ] `refunds`: pendente → devolvido (forma/data) / anulado.
+- [ ] Alerta fiscal `cancel_pending`.
+- [ ] Tela de Pendências (retornos, devoluções de valor).
+
+**Aceite:** A3, A4; exemplo R$ 150 / pago R$ 50 → dívida R$ 100 cancelada e R$ 50 a devolver; cancelar 2× não duplica nada.
+
+## Etapa 8 — Devolução parcial e troca
+Docs: 04 RN-DEV, 05 Devoluções, 06 §3.5.
+- [ ] Prévia e execução de devolução parcial (abate fiado → devolução de valor).
+- [ ] Troca em transação única com nova venda e `exchange_credit`.
+- [ ] Fórmula de valor proporcional sem perda de centavos (testes com desconto e quantidades ímpares).
+- [ ] `returned_qty` e limites de quantidade.
+
+**Aceite:** A8, A9; devolver 1 de 3 peças com desconto e depois as outras 2 soma exatamente o total da linha; invariante 4 ok.
+
+## Etapa 9 — Relatórios e fechamento diário
+Docs: 04 RN-REL, RN-FEC, 05 Relatórios, 06 §3.7.
+- [ ] Vendas por período (dia/semana/mês) com canceladas e devoluções separadas.
+- [ ] Fiado em aberto.
+- [ ] Mais e menos vendidos (produto e variação, incluindo sem venda).
+- [ ] Fechamento: cálculo, dinheiro contado, salvar snapshot, “alterado depois”.
+- [ ] CSV de cada relatório.
+- [ ] Início (`/dashboard`) com todos os cartões de aviso.
+
+**Aceite:** um dia de teste com venda à vista, venda fiado, recebimento de fiado antigo, cancelamento com devolução de valor e estorno →
+fechamento bate com conta feita à mão (teste automatizado com esse roteiro).
+
+## Etapa 10 — Fiscal (registro manual)
+Docs: 07, 04 RN-FIS, 05 Fiscal.
+- [ ] `fiscal_documents` + registrar/corrigir/cancelar.
+- [ ] Pendências fiscais (aba + Início), faixa “aguardando validação do contador”.
+- [ ] Número da NF no comprovante quando registrada.
+
+**Aceite:** venda para cliente com CNPJ aparece como pendência até registrar a NF; envio para outra UF aparece como “revisar”.
+
+## Etapa 11 — PWA e acabamento mobile
+Docs: 06 §5.
+- [ ] `vite-plugin-pwa`: manifest, ícones, SW só app shell, `/api` NetworkOnly, aviso de nova versão.
+- [ ] Revisão de todas as telas em 375px; barra inferior; PDV em passos.
+- [ ] Tela “Instalar no celular”.
+
+**Aceite:** instala no Android e no iPhone; sem internet mostra o aviso e não tenta salvar; Lighthouse PWA sem erros de instalabilidade.
+
+## Etapa 12 — Produção
+Docs: 08.
+- [ ] Dockerfile, entrypoint com migrations, compose de produção, `backup.sh`, exemplo de Nginx.
+- [ ] `release.yml` (GHCR).
+- [ ] Exportação ZIP (RN-ACE-04).
+- [ ] Testes E2E Playwright dos cenários A1–A10 + login.
+- [ ] Subir na VPS seguindo o runbook; testar restauração de backup.
+- [ ] README com operação básica para o dev.
+
+**Aceite:** sistema no ar com HTTPS, backup diário gerado e restaurado em teste, E2E verde.
+
+---
+
+## Depois da v1 (só com confirmação)
+Saldo anterior de fiado (se não entrou na 6) · canal de venda · taxa de entrega · reserva de peças · abertura/retiradas de caixa ·
+foto do produto · emissão fiscal integrada · app nativo.
