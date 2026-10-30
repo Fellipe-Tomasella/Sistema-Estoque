@@ -36,7 +36,7 @@ Docs: 02 §3.6, 04 RN-ACE, 06 §2 e §3.8.
 - [x] Esqueci/redefinir senha (SMTP opcional) + scripts `create-user` e `reset-password` (`bun run --filter @estoque/api user:create -- --name … --email …`).
 - [x] (front) `AppLayout` responsivo (sidebar desktop / barra inferior mobile), guard de rotas, tela de login, esqueci/redefinir senha, busca global (Ctrl+K) e Início.
 - [x] Configurações (API): dados da loja, UF, fuso, regime, switch fiscal, rodapé, alterar senha, sair de todos. Tema fica no front.
-- [ ] (front) Componentes comuns: `PageHeader`, `MoneyInput`, `MoneyText`, `DateText`, `StatusBadge`, `ConfirmDialog`, `EmptyState`, toasts, banner off-line.
+- [x] (front) Componentes comuns: `PageHeader`, `MoneyInput`, `MoneyText`, datas via `lib/format`, `StatusBadge`, `ConfirmDialog`, `EmptyState`, toasts, banner off-line.
 - [x] `business-date.ts` com testes (virada de dia no fuso da loja).
 
 **Aceite:** só entra logado; sessão vale no notebook e no celular; reset de senha funciona por script; layout ok em 375px e 1280px (front).

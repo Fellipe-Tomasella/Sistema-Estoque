@@ -78,8 +78,18 @@ const appRoutes: RouteRecordRaw[] = [
     component: () => import('@/modules/pos/pages/PosPage.vue'),
     meta: { title: 'Nova venda' },
   },
-  { path: 'vendas', name: 'sales', component: soon, meta: { title: 'Vendas' } },
-  { path: 'vendas/:id', name: 'sale', component: soon, meta: { title: 'Venda' } },
+  {
+    path: 'vendas',
+    name: 'sales',
+    component: () => import('@/modules/sales/pages/SalesListPage.vue'),
+    meta: { title: 'Vendas' },
+  },
+  {
+    path: 'vendas/:id',
+    name: 'sale',
+    component: () => import('@/modules/sales/pages/SaleDetailPage.vue'),
+    meta: { title: 'Venda' },
+  },
   {
     path: 'clientes',
     name: 'customers',
