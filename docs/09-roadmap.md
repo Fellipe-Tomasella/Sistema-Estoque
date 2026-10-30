@@ -67,7 +67,7 @@ Docs: 04 RN-EST, RN-IMP, 05 Estoque, 06 §3.3.
 ## Etapa 4 — Clientes
 Docs: 04 RN-CLI, 05 Clientes.
 - [x] CRUD, busca por nome/telefone, CPF/CNPJ validados, endereço opcional, inativar. (`openBalanceCents` na lista entra com o fiado, Etapa 6.)
-- [ ] (front, entra com o PDV) Componente `CustomerPicker` com cadastro rápido (usado no PDV) — a API já aceita o cadastro só com nome + telefone.
+- [x] (front) Componente `CustomerPicker` com cadastro rápido (usado no PDV) — a API já aceita o cadastro só com nome + telefone.
 
 - [x] (front) Telas: lista com busca e fiado em aberto, cadastro/edição, detalhe com dívidas e compras.
 
@@ -84,7 +84,7 @@ Docs: 04 RN-VEN, RN-PAG, RN-ENV, RN-FIS-01…05, 05 Vendas, 06 §3.4–3.5.
 - [x] Classificação fiscal na confirmação.
 - [x] Histórico de vendas com filtros; detalhe com linha do tempo; troca de forma de pagamento.
 - [x] Comprovante PDF. (front) Página de impressão + compartilhar.
-- [ ] (front) Telas: PDV desktop (2 colunas) e mobile (passos), atalhos de teclado.
+- [x] (front) Telas: PDV desktop (2 colunas) e mobile (passos), atalhos de teclado (/, F2, F4, Ctrl+Enter), rascunhos.
 
 **Aceite:** A1, A5, A6, A10 passando; venda com entrada + fiado gera dívida certa; comprovante de venda com fiado mostra pago e saldo, e o aviso “não é documento fiscal”.
 

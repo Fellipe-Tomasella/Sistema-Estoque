@@ -23,6 +23,8 @@ const debounced = refDebounced(term, 200)
 const open = ref(false)
 const highlighted = ref(0)
 const root = useTemplateRef<HTMLElement>('root')
+const input = useTemplateRef<{ $el: HTMLInputElement }>('input')
+defineExpose({ focus: () => input.value?.$el.focus() })
 onClickOutside(root, () => (open.value = false))
 
 const { data, isFetching } = useQuery({
@@ -54,6 +56,7 @@ function onKey(event: KeyboardEvent) {
   <div ref="root" class="relative">
     <Search class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
     <Input
+      ref="input"
       v-model="term"
       :placeholder="props.placeholder"
       :autofocus="props.autofocus"
