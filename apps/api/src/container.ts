@@ -6,6 +6,8 @@ import { AuditRepository } from './modules/audit/audit.repository'
 import { AuditService } from './modules/audit/audit.service'
 import { AuthRepository } from './modules/auth/auth.repository'
 import { AuthService } from './modules/auth/auth.service'
+import { CustomersRepository } from './modules/customers/customers.repository'
+import { CustomersService } from './modules/customers/customers.service'
 import { HealthRepository } from './modules/health/health.repository'
 import { HealthService } from './modules/health/health.service'
 import { ImportsRepository } from './modules/imports/imports.repository'
@@ -28,6 +30,7 @@ export function createContainer() {
   const repositories = {
     audit: new AuditRepository(db),
     auth: new AuthRepository(db),
+    customers: new CustomersRepository(db),
     health: new HealthRepository(db),
     imports: new ImportsRepository(db),
     integrity: new IntegrityRepository(db),
@@ -49,6 +52,7 @@ export function createContainer() {
     stock,
     products,
     auth: new AuthService(repositories.auth, audit, mailer, env.appOrigin),
+    customers: new CustomersService(repositories.customers, audit),
     health: new HealthService(repositories.health, pkg.version),
     imports: new ImportsService(repositories.imports, products, audit),
     integrity: new IntegrityService(repositories.integrity),

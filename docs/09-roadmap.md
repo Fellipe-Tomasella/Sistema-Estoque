@@ -64,8 +64,8 @@ Docs: 04 RN-EST, RN-IMP, 05 Estoque, 06 §3.3.
 
 ## Etapa 4 — Clientes
 Docs: 04 RN-CLI, 05 Clientes.
-- [ ] CRUD, busca por nome/telefone, CPF/CNPJ validados, endereço opcional, inativar.
-- [ ] Componente `CustomerPicker` com cadastro rápido (usado no PDV).
+- [x] CRUD, busca por nome/telefone, CPF/CNPJ validados, endereço opcional, inativar. (`openBalanceCents` na lista entra com o fiado, Etapa 6.)
+- [ ] (front) Componente `CustomerPicker` com cadastro rápido (usado no PDV) — a API já aceita o cadastro só com nome + telefone.
 
 **Aceite:** dois clientes “Maria” distinguíveis em toda lista/busca.
 

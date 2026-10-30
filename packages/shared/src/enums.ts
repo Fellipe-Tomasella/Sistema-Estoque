@@ -16,6 +16,9 @@ export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode]
 export const TAX_REGIMES = ['mei', 'simples', 'other'] as const
 export type TaxRegime = (typeof TAX_REGIMES)[number]
 
+export const DOCUMENT_TYPES = ['cpf', 'cnpj'] as const
+export type DocumentType = (typeof DOCUMENT_TYPES)[number]
+
 // Estoque
 
 export const STOCK_MOVEMENT_TYPES = [
