@@ -14,6 +14,26 @@ export function createUser(overrides: { name?: string; email?: string; password?
   })
 }
 
+/** Produto com variações; `variants` no formato `[cor, tamanho, saldo inicial]`. */
+export async function createProduct(
+  userId: string,
+  options: { name?: string; basePriceCents?: number; variants?: [string, string, number][] } = {},
+) {
+  sequence += 1
+  return services.products.create(
+    {
+      name: options.name ?? `Produto ${sequence}`,
+      basePriceCents: options.basePriceCents ?? 5000,
+      variants: (options.variants ?? [['Preta', 'M', 3]]).map(([color, size, initialQty]) => ({
+        color,
+        size,
+        initialQty,
+      })),
+    },
+    userId,
+  )
+}
+
 /** Cria uma usuária e devolve o cookie de sessão já logado. */
 export async function loggedIn() {
   const user = await createUser()

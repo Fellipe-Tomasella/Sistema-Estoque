@@ -61,6 +61,13 @@ describe('configurações da loja', () => {
     expect(res.body.error.message).toBe(message)
   })
 
+  test('campo não enviado não é alterado', async () => {
+    const { cookie } = await loggedIn()
+    await request('PUT', '/settings/store', { cookie, body: { taxRegime: 'simples' } })
+    const res = await request('PUT', '/settings/store', { cookie, body: { city: 'Cuiabá' } })
+    expect(res.body).toMatchObject({ taxRegime: 'simples', city: 'Cuiabá' })
+  })
+
   test('business_date usa o fuso configurado', async () => {
     const { user } = await loggedIn()
     await services.settings.update({ timezone: 'America/Sao_Paulo' }, user.id)

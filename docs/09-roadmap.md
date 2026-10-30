@@ -43,11 +43,11 @@ Docs: 02 §3.6, 04 RN-ACE, 06 §2 e §3.8.
 
 ## Etapa 2 — Produtos e variações
 Docs: 03 §3.3, 04 RN-PRO, RN-EST-02, 05 Produtos, 06 §3.2.
-- [ ] Schema `products`, `variants`, `stock_movements` (o `StockService` nasce aqui com `initial`).
-- [ ] CRUD de produto com variações, gerar combinações, quantidade inicial e mínimo.
-- [ ] Busca sem acento + filtros; `/variants/search`; sugestões de cor/tamanho/categoria.
-- [ ] Inativar/reativar; excluir só sem histórico; corrigir rótulo com auditoria.
-- [ ] Telas: lista, formulário, detalhe com grade cor × tamanho.
+- [x] Schema `products`, `variants`, `stock_movements` (o `StockService` nasce aqui com `initial`).
+- [x] CRUD de produto com variações, quantidade inicial e mínimo (“gerar combinações” é da tela; a API recebe a lista).
+- [x] Busca sem acento + filtros; `/variants/search`; sugestões de cor/tamanho/categoria.
+- [x] Inativar/reativar; excluir só sem histórico; corrigir rótulo com auditoria.
+- [ ] (front) Telas: lista, formulário, detalhe com grade cor × tamanho.
 
 **Aceite:** RN-PRO-01…11 testadas; criar “Blusa básica” com Preta/P, Preta/M, Branca/M e saldos → aparecem certos na grade.
 

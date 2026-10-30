@@ -1,5 +1,6 @@
 import { TAX_REGIMES } from '@estoque/shared'
 import { t } from 'elysia'
+import { OneOf } from '../../shared/schemas'
 
 const nullableText = (maxLength = 200) => t.Optional(t.Nullable(t.String({ maxLength })))
 
@@ -14,7 +15,7 @@ export const UpdateStoreSettingsBody = t.Object({
   phone: nullableText(30),
   email: t.Optional(t.Nullable(t.String({ format: 'email', maxLength: 200 }))),
   timezone: t.Optional(t.String({ minLength: 1, maxLength: 60 })),
-  taxRegime: t.Optional(t.UnionEnum(TAX_REGIMES)),
+  taxRegime: t.Optional(OneOf(TAX_REGIMES)),
   receiptFooter: nullableText(500),
   fiscalRulesValidated: t.Optional(t.Boolean()),
 })

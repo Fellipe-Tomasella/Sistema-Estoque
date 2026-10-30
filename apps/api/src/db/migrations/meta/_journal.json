@@ -15,6 +15,13 @@
       "when": 1793376631405,
       "tag": "0001_auth_settings_audit",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793376915439,
+      "tag": "0002_products_stock",
+      "breakpoints": true
     }
   ]
 }
