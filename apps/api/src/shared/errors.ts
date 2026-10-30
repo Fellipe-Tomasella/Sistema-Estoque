@@ -44,6 +44,12 @@ export class ConflictError extends AppError {
   }
 }
 
+export class TooManyAttemptsError extends AppError {
+  constructor(message: string) {
+    super(429, ErrorCode.TOO_MANY_ATTEMPTS, message)
+  }
+}
+
 /** Regra de negócio violada. `code` específico (ex.: INSUFFICIENT_STOCK) ajuda o front a reagir. */
 export class BusinessRuleError extends AppError {
   constructor(message: string, code: string = ErrorCode.BUSINESS_RULE, details?: Record<string, unknown>) {

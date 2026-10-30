@@ -207,7 +207,7 @@ Formato único da API:
 ```json
 { "error": { "code": "INSUFFICIENT_STOCK", "message": "Só há 2 unidades de Blusa básica Preta/M.", "details": { "variantId": "…", "available": 2 } } }
 ```
-Códigos em `packages/shared/enums.ts` (`ErrorCode`). HTTP: 400 validação, 401, 403, 404, 409 conflito/estado, 422 regra de negócio.
+Códigos em `packages/shared/enums.ts` (`ErrorCode`). HTTP: 400 validação, 401, 403, 404, 409 conflito/estado, 422 regra de negócio, 429 muitas tentativas de login.
 
 ### 3.5 Idempotência e concorrência
 - **Confirmar venda**: operação sobre um rascunho já existente (`POST /sales/:id/confirm`). Dentro da transação:

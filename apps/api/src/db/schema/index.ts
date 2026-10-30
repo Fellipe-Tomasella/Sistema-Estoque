@@ -1,2 +1,4 @@
-// Um arquivo por agregado (products.ts, stock.ts, sales.ts…), reexportados aqui.
-export {}
+// Um arquivo por agregado, reexportados aqui.
+export * from './audit'
+export * from './auth'
+export * from './settings'

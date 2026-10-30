@@ -25,6 +25,7 @@ Formato: data · decisão · motivo · quem decidiu. Mais recentes no fim. **Nã
 | 018 | 30/10/2026 | Deploy em **stack Docker Swarm** no Portainer (não compose simples). O compose de produção da Etapa 12 segue o exemplo que o dev vai enviar. | Infra existente do dev. | Dev |
 | 019 | 30/10/2026 | TypeScript fixado em 6.0 e postgres.js em 3.x (não as majors mais novas). | typescript-eslint ainda não suporta TS 7; Drizzle é testado com postgres.js 3. | Claude |
 | 020 | 30/10/2026 | Repositório: github.com/Fellipe-Tomasella/Sistema-Estoque, push a cada etapa. | Versionamento para poder voltar etapas. | Dev |
+| 021 | 30/10/2026 | Origin-check recusa escrita com `Origin` diferente de `APP_ORIGIN`; requisição sem `Origin` (scripts, ferramentas) passa — o cookie SameSite=Lax já barra o envio cross-site. Login bloqueado após 5 erros em 15 min por IP+e-mail (HTTP 429). | Navegadores sempre enviam `Origin` em POST; exigir o cabeçalho quebraria scripts sem ganho de segurança. | Claude |
 
 ## Versões instaladas (Etapa 0)
 

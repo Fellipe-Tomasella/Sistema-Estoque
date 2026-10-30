@@ -31,15 +31,15 @@ Docs: 02, 08 §2.
 
 ## Etapa 1 — Acesso, layout e configurações
 Docs: 02 §3.6, 04 RN-ACE, 06 §2 e §3.8.
-- [ ] Tabelas `users`, `sessions`, `password_resets`, `store_settings`, `audit_log`.
-- [ ] Login/logout/logout-all/me, sessão com cookie seguro, rate limit, origin-check.
-- [ ] Esqueci/redefinir senha (SMTP opcional) + scripts `create-user` e `reset-password`.
-- [ ] `AppLayout` responsivo (sidebar desktop / barra inferior mobile), guard de rotas, tela de login.
-- [ ] Configurações: dados da loja, UF, fuso, regime, switch fiscal, rodapé, alterar senha, sair de todos, tema.
-- [ ] Componentes comuns: `PageHeader`, `MoneyInput`, `MoneyText`, `DateText`, `StatusBadge`, `ConfirmDialog`, `EmptyState`, toasts, banner off-line.
-- [ ] `business-date.ts` com testes (virada de dia no fuso da loja).
+- [x] Tabelas `users`, `sessions`, `password_resets`, `store_settings`, `audit_log`.
+- [x] Login/logout/logout-all/me, sessão com cookie seguro, rate limit, origin-check.
+- [x] Esqueci/redefinir senha (SMTP opcional) + scripts `create-user` e `reset-password` (`bun run --filter @estoque/api user:create -- --name … --email …`).
+- [ ] (front) `AppLayout` responsivo (sidebar desktop / barra inferior mobile), guard de rotas, tela de login.
+- [x] Configurações (API): dados da loja, UF, fuso, regime, switch fiscal, rodapé, alterar senha, sair de todos. Tema fica no front.
+- [ ] (front) Componentes comuns: `PageHeader`, `MoneyInput`, `MoneyText`, `DateText`, `StatusBadge`, `ConfirmDialog`, `EmptyState`, toasts, banner off-line.
+- [x] `business-date.ts` com testes (virada de dia no fuso da loja).
 
-**Aceite:** só entra logado; sessão vale no notebook e no celular; reset de senha funciona por script; layout ok em 375px e 1280px.
+**Aceite:** só entra logado; sessão vale no notebook e no celular; reset de senha funciona por script; layout ok em 375px e 1280px (front).
 
 ## Etapa 2 — Produtos e variações
 Docs: 03 §3.3, 04 RN-PRO, RN-EST-02, 05 Produtos, 06 §3.2.
