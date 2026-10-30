@@ -1,0 +1,97 @@
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.store'
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    title?: string
+    public?: boolean
+  }
+}
+
+/** Telas ainda não implementadas apontam para cá (substituídas etapa por etapa). */
+const soon = () => import('@/components/common/ComingSoonPage.vue')
+
+const appRoutes: RouteRecordRaw[] = [
+  {
+    path: '',
+    name: 'home',
+    component: () => import('@/modules/dashboard/pages/HomePage.vue'),
+    meta: { title: 'Início' },
+  },
+  { path: 'produtos', name: 'products', component: soon, meta: { title: 'Produtos e estoque' } },
+  { path: 'produtos/novo', name: 'product-new', component: soon, meta: { title: 'Novo produto' } },
+  { path: 'produtos/:id', name: 'product', component: soon, meta: { title: 'Produto' } },
+  { path: 'estoque/entradas', name: 'stock-entries', component: soon, meta: { title: 'Entradas de estoque' } },
+  { path: 'estoque/entradas/nova', name: 'stock-entry-new', component: soon, meta: { title: 'Nova entrada' } },
+  { path: 'estoque/acertos/novo', name: 'stock-adjustment-new', component: soon, meta: { title: 'Acerto de estoque' } },
+  { path: 'estoque/importar', name: 'stock-import', component: soon, meta: { title: 'Importar planilha' } },
+  { path: 'estoque/movimentos', name: 'stock-movements', component: soon, meta: { title: 'Movimentos de estoque' } },
+  { path: 'vender/:draftId?', name: 'pos', component: soon, meta: { title: 'Nova venda' } },
+  { path: 'vendas', name: 'sales', component: soon, meta: { title: 'Vendas' } },
+  { path: 'vendas/:id', name: 'sale', component: soon, meta: { title: 'Venda' } },
+  { path: 'clientes', name: 'customers', component: soon, meta: { title: 'Clientes e fiado' } },
+  { path: 'clientes/:id', name: 'customer', component: soon, meta: { title: 'Cliente' } },
+  { path: 'fiado', name: 'receivables', component: soon, meta: { title: 'Fiado em aberto' } },
+  { path: 'fiado/receber', name: 'receive', component: soon, meta: { title: 'Receber fiado' } },
+  { path: 'pendencias', name: 'pending', component: soon, meta: { title: 'Pendências' } },
+  { path: 'relatorios/vendas', name: 'report-sales', component: soon, meta: { title: 'Vendas por período' } },
+  { path: 'relatorios/fiado', name: 'report-receivables', component: soon, meta: { title: 'Fiado em aberto' } },
+  {
+    path: 'relatorios/mais-vendidos',
+    name: 'report-ranking',
+    component: soon,
+    meta: { title: 'Mais e menos vendidos' },
+  },
+  { path: 'fechamento/:data?', name: 'closing', component: soon, meta: { title: 'Fechamento do dia' } },
+  { path: 'configuracoes', name: 'settings', component: soon, meta: { title: 'Configurações' } },
+]
+
+const routes: RouteRecordRaw[] = [
+  // Layout persistente: o menu é montado uma vez; só a área de conteúdo troca.
+  // Vem antes do layout de acesso: os dois têm path '/', e '/' precisa cair aqui.
+  { path: '/', component: () => import('@/layouts/AppLayout.vue'), children: appRoutes },
+  {
+    path: '/',
+    component: () => import('@/layouts/AuthLayout.vue'),
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: () => import('@/modules/auth/pages/LoginPage.vue'),
+        meta: { public: true, title: 'Entrar' },
+      },
+      {
+        path: 'esqueci-senha',
+        name: 'forgot-password',
+        component: () => import('@/modules/auth/pages/ForgotPasswordPage.vue'),
+        meta: { public: true, title: 'Esqueci a senha' },
+      },
+      {
+        path: 'redefinir-senha',
+        name: 'reset-password',
+        component: () => import('@/modules/auth/pages/ResetPasswordPage.vue'),
+        meta: { public: true, title: 'Nova senha' },
+      },
+    ],
+  },
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/components/common/NotFoundPage.vue') },
+]
+
+export const router = createRouter({
+  history: createWebHistory(),
+  routes,
+  scrollBehavior: (_to, _from, saved) => saved ?? { top: 0 },
+})
+
+// RN-ACE-01: tudo exige login, exceto as telas públicas de acesso.
+router.beforeEach(async (to) => {
+  const auth = useAuthStore()
+  if (!auth.checked) await auth.loadSession().catch(() => null)
+  if (to.meta.public) return auth.user && to.name === 'login' ? { name: 'home' } : true
+  if (!auth.user) return { name: 'login', query: to.fullPath === '/' ? {} : { voltar: to.fullPath } }
+  return true
+})
+
+router.afterEach((to) => {
+  document.title = to.meta.title ? `${to.meta.title} · Estoque` : 'Estoque'
+})

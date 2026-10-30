@@ -21,8 +21,8 @@ Docs: 02, 08 §2.
 - [x] API: Elysia com `/api/health`, `config/env.ts` validando variáveis, `error-handler`, `db/client.ts`, drizzle-kit configurado, primeira migration (extensões).
 - [x] `container.ts` (instâncias de repositories/services) e padrão de módulo de exemplo (`modules/health`).
 - [x] Setup de testes (`test/setup.ts`; `factories.ts` nasce na Etapa 2 com as primeiras entidades) rodando contra `estoque_test`.
-- [ ] (front) Web: Vite + Vue + TS + Router + Pinia + vue-query + Tailwind v4 + shadcn-vue inicializado; `lib/api.ts` com Eden Treaty consumindo `/api/health`.
-- [ ] (front) Proxy do Vite `/api → localhost:3000` (mesma origem em dev).
+- [x] (front) Web: Vite + Vue + TS + Router + Pinia + vue-query + Tailwind v4 + shadcn-vue inicializado; `lib/api.ts` com Eden Treaty.
+- [x] (front) Proxy do Vite `/api → 127.0.0.1:3000` (mesma origem em dev).
 - [x] `packages/shared`: `money.ts` (com testes de `parseBRL`, `formatBRL`, `allocateDiscount`), `sizes.ts`, `enums.ts`.
 - [x] CI básico (`ci.yml`).
 - [x] Registrar versões instaladas em `decisoes.md`.
@@ -34,7 +34,7 @@ Docs: 02 §3.6, 04 RN-ACE, 06 §2 e §3.8.
 - [x] Tabelas `users`, `sessions`, `password_resets`, `store_settings`, `audit_log`.
 - [x] Login/logout/logout-all/me, sessão com cookie seguro, rate limit, origin-check.
 - [x] Esqueci/redefinir senha (SMTP opcional) + scripts `create-user` e `reset-password` (`bun run --filter @estoque/api user:create -- --name … --email …`).
-- [ ] (front) `AppLayout` responsivo (sidebar desktop / barra inferior mobile), guard de rotas, tela de login.
+- [x] (front) `AppLayout` responsivo (sidebar desktop / barra inferior mobile), guard de rotas, tela de login, esqueci/redefinir senha, busca global (Ctrl+K) e Início.
 - [x] Configurações (API): dados da loja, UF, fuso, regime, switch fiscal, rodapé, alterar senha, sair de todos. Tema fica no front.
 - [ ] (front) Componentes comuns: `PageHeader`, `MoneyInput`, `MoneyText`, `DateText`, `StatusBadge`, `ConfirmDialog`, `EmptyState`, toasts, banner off-line.
 - [x] `business-date.ts` com testes (virada de dia no fuso da loja).

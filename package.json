@@ -2,9 +2,12 @@
   "name": "sistema-estoque",
   "private": true,
   "type": "module",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "bun run --filter @estoque/api dev",
+    "dev": "bun run --filter @estoque/api --filter @estoque/web dev",
     "db:up": "docker compose -f docker-compose.dev.yml up -d",
     "db:down": "docker compose -f docker-compose.dev.yml down",
     "db:generate": "bun run --filter @estoque/api db:generate",
@@ -13,15 +16,18 @@
     "test": "bun test --cwd packages/shared && bun run --filter @estoque/api test",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "typecheck": "tsc -p packages/shared --noEmit && tsc -p apps/api --noEmit"
+    "typecheck": "tsc -p packages/shared --noEmit && tsc -p apps/api --noEmit && bun run --filter @estoque/web typecheck",
+    "build": "bun run --filter @estoque/web build"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/bun": "^1.4.4",
     "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.12.0",
     "prettier": "^3.9.10",
     "typescript": "~6.0",
-    "typescript-eslint": "^8.72.1"
+    "typescript-eslint": "^8.72.1",
+    "vue-eslint-parser": "^10.4.1"
   }
 }

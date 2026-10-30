@@ -30,7 +30,7 @@ Foco: **notebook (desktop)**. Celular: consulta e operações simples, instaláv
 
 - Monorepo com **Bun workspaces**: `apps/api`, `apps/web`, `packages/shared`.
 - API: **Bun + Elysia + TypeScript**, validação com TypeBox (`t` do Elysia), **Drizzle ORM** + `postgres` (postgres.js), **PostgreSQL**.
-- Web: **Vue 3 + Vite + TypeScript**, Vue Router, Pinia, TanStack Query (vue-query), **shadcn-vue + Tailwind CSS v4**, lucide-vue-next, vee-validate + zod.
+- Web: **Vue 3 + Vite + TypeScript**, Vue Router, Pinia, TanStack Query (vue-query), **shadcn-vue + Tailwind CSS v4**, @lucide/vue, vee-validate + zod 3. Visual: `design/stitch` (decisão 031).
 - Cliente HTTP tipado: **Eden Treaty** (tipos vêm direto da API).
 - PWA: `vite-plugin-pwa` (instalável; sem cache de dados da API).
 - Deploy: Docker (1 imagem `app` que serve API + SPA) + Postgres + backup, atrás do **Nginx já existente** na VPS, gerenciado pelo Portainer.
@@ -40,7 +40,7 @@ Foco: **notebook (desktop)**. Celular: consulta e operações simples, instaláv
 ```bash
 cp .env.example .env             # primeira vez
 bun install                      # instala tudo (workspaces)
-bun run dev                      # sobe a api (3000); web (5173) entra quando o front for feito
+bun run dev                      # sobe api (3000) e web (5173) juntos — abra http://localhost:5173
 bun run db:up                    # Postgres via docker-compose.dev.yml (db:down para parar)
                                  # ou Postgres instalado: role/senha estoque, bancos estoque e estoque_test
 bun run db:generate              # gera migration a partir do schema Drizzle
