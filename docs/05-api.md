@@ -101,7 +101,8 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 | GET | `/customers/:id/receivables` | dívidas abertas e quitadas com alocações e ajustes |
 | POST | `/receipts/preview` | `{ customerId, amountCents, allocations? }` → sugestão/validação da distribuição |
 | POST | `/receipts` | **[IK]** `{ customerId, date, method, cardType?, amountCents, allocations: [{ receivableId, amountCents }], notes? }` |
-| POST | `/receipts/:id/void` | `{ reason }` |
+| GET | `/receipts/:id` | recebimento com dívidas abatidas e saldo restante |
+| POST | `/receipts/:id/void` | `{ reason }` — idempotente |
 | GET | `/receipts/:id/receipt.pdf` | comprovante do recebimento |
 | POST | `/receivables/previous-balance` | **[A]** RN-FIA-11 (só se confirmado) |
 | PATCH | `/receivables/:id` | `{ dueDate }` |

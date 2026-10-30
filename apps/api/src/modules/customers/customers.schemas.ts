@@ -36,6 +36,8 @@ export type UpdateCustomerInput = typeof UpdateCustomerBody.static
 export const ListCustomersQuery = t.Object({
   q: t.Optional(t.String({ maxLength: 100 })),
   status: t.Optional(OneOf(['active', 'inactive', 'all'])),
+  /** Só clientes com saldo em aberto no fiado. */
+  withOpenBalance: t.Optional(t.Boolean()),
   page: t.Optional(t.Integer({ minimum: 1, default: 1 })),
   pageSize: t.Optional(t.Integer({ minimum: 1, maximum: 200, default: 50 })),
 })

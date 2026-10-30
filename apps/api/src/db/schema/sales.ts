@@ -220,3 +220,25 @@ export type Sale = typeof sales.$inferSelect
 export type SaleItem = typeof saleItems.$inferSelect
 export type Payment = typeof payments.$inferSelect
 export type Receivable = typeof receivables.$inferSelect
+
+/** Quanto de cada pagamento abateu cada dívida (RN-FIA-04). */
+export const receivableAllocations = pgTable(
+  'receivable_allocations',
+  {
+    id: id(),
+    paymentId: uuid()
+      .notNull()
+      .references(() => payments.id),
+    receivableId: uuid()
+      .notNull()
+      .references(() => receivables.id),
+    amountCents: integer().notNull(),
+  },
+  (table) => [
+    check('receivable_allocations_amount_check', sql`${table.amountCents} > 0`),
+    uniqueIndex('receivable_allocations_payment_receivable_uq').on(table.paymentId, table.receivableId),
+    index().on(table.receivableId),
+  ],
+)
+
+export type ReceivableAllocation = typeof receivableAllocations.$inferSelect

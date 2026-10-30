@@ -86,11 +86,11 @@ Docs: 04 RN-VEN, RN-PAG, RN-ENV, RN-FIS-01…05, 05 Vendas, 06 §3.4–3.5.
 
 ## Etapa 6 — Fiado
 Docs: 04 RN-FIA, 05 Fiado, 06 §3.6.
-- [ ] Lista de clientes com saldo, “em atraso” só com data combinada vencida.
-- [ ] Detalhe de dívidas por cliente.
-- [ ] Recebimento com prévia e distribuição editável, idempotente; comprovante de recebimento.
-- [ ] Estorno de recebimento com motivo.
-- [ ] Alterar data combinada.
+- [x] Lista de clientes com saldo (`/customers?withOpenBalance=true`), “em atraso” só com data combinada vencida.
+- [x] Detalhe de dívidas por cliente.
+- [x] Recebimento com prévia e distribuição editável, idempotente; comprovante de recebimento.
+- [x] Estorno de recebimento com motivo.
+- [x] Alterar data combinada.
 - [ ] *(Opcional, só se a cliente confirmar)* Saldo anterior de fiado — RN-FIA-11.
 
 **Aceite:** A2; tentar receber acima do saldo é bloqueado; estorno reabre saldo; invariante 2 ok.

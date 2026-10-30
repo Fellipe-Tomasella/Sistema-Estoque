@@ -4,13 +4,14 @@ import type { Address, Customer } from '../../db/schema'
 import { ConflictError, NotFoundError, ValidationError } from '../../shared/errors'
 import { isUniqueViolation } from '../../shared/sql'
 import type { AuditService } from '../audit/audit.service'
+import type { SettingsService } from '../settings/settings.service'
 import type { CustomersRepository, CustomerValues } from './customers.repository'
 import type { CreateCustomerInput, ListCustomersFilters, UpdateCustomerInput } from './customers.schemas'
 
 const text = (value: string | null | undefined) => (value?.trim() ? value.trim().replace(/\s+/g, ' ') : null)
 
 /** Lista e busca sempre mostram algo além do nome, para diferenciar homônimos (RN-CLI-02). */
-export function toCustomerDto(customer: Customer) {
+export function toCustomerDto<T extends Customer>(customer: T) {
   const detail = customer.phone ?? customer.email ?? customer.document
   return { ...customer, label: detail ? `${customer.name} · ${detail}` : customer.name }
 }
@@ -19,16 +20,20 @@ export type CustomerDto = ReturnType<typeof toCustomerDto>
 export class CustomersService {
   constructor(
     private readonly repo: CustomersRepository,
+    private readonly settings: SettingsService,
     private readonly audit: AuditService,
   ) {}
 
+  /** Lista com saldo em aberto no fiado e “em atraso”; `withOpenBalance` traz só quem deve. */
   async list(filters: ListCustomersFilters) {
-    const result = await this.repo.list(filters)
+    const result = await this.repo.list(filters, await this.settings.businessDate())
     return { ...result, items: result.items.map(toCustomerDto) }
   }
 
-  async get(id: string, tx?: DbOrTx) {
-    return toCustomerDto(await this.require(id, tx))
+  async get(id: string) {
+    const customer = await this.repo.findWithBalance(id, await this.settings.businessDate())
+    if (!customer) throw new NotFoundError('Cliente não encontrado.')
+    return toCustomerDto(customer)
   }
 
   /** RN-CLI-01: só o nome é obrigatório. Serve também ao cadastro rápido do PDV (RN-CLI-04). */

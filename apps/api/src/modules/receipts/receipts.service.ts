@@ -2,6 +2,7 @@ import { formatBRL } from '@estoque/shared'
 import type { Content } from 'pdfmake/interfaces'
 import type { StoreSettings } from '../../db/schema'
 import { BusinessRuleError } from '../../shared/errors'
+import type { ReceivableReceiptsService } from '../receivables/receivable-receipts.service'
 import type { SalesService } from '../sales/sales.service'
 import type { SettingsService } from '../settings/settings.service'
 import { formatDateTime, NOT_FISCAL, renderPdf, row } from './pdf'
@@ -58,7 +59,40 @@ export class ReceiptsService {
   constructor(
     private readonly sales: SalesService,
     private readonly settings: SettingsService,
+    private readonly receivableReceipts: ReceivableReceiptsService,
   ) {}
+
+  /** RN-FIA-08: cliente, data, valor, forma, dívidas abatidas e saldo restante. */
+  async receivableReceiptPdf(paymentId: string) {
+    const { content } = await this.receivableReceiptContent(paymentId)
+    return { fileName: `recebimento-${paymentId.slice(0, 8)}.pdf`, pdf: await renderPdf(content) }
+  }
+
+  async receivableReceiptContent(paymentId: string) {
+    const receipt = await this.receivableReceipts.view(paymentId)
+    const store = await this.settings.get()
+    const content: Content[] = [
+      ...storeHeader(store),
+      { text: 'Comprovante de recebimento', bold: true, fontSize: 11 },
+      { text: formatDateTime(receipt.receivedAt, store.timezone), style: 'muted', margin: [0, 0, 0, 4] },
+      ...(receipt.status === 'voided'
+        ? [{ text: `RECEBIMENTO ESTORNADO: ${receipt.voidReason}`, style: 'alert', margin: [0, 2, 0, 4] } as Content]
+        : []),
+      { text: `Cliente: ${receipt.customer.name}`, margin: [0, 0, 0, 6] },
+      row('Valor recebido', formatBRL(receipt.amountCents), 'total'),
+      row('Forma', METHOD_NAMES[receipt.method] ?? receipt.method),
+      { text: 'Dívidas abatidas', bold: true, margin: [0, 8, 0, 2] },
+      ...receipt.allocations.map((a) => row(a.description, formatBRL(a.amountCents))),
+      row('Saldo restante em aberto', formatBRL(receipt.openBalanceCents), 'total'),
+      {
+        text: 'Comprovante de recebimento — não é documento fiscal.',
+        bold: true,
+        alignment: 'center',
+        margin: [0, 14, 0, 0],
+      },
+    ]
+    return { content }
+  }
 
   async salePdf(saleId: string): Promise<{ fileName: string; pdf: Buffer }> {
     const { number, content } = await this.saleContent(saleId)

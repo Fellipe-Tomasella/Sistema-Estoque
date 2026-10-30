@@ -34,6 +34,44 @@ export async function createProduct(
   )
 }
 
+export function createCustomer(name = 'Maria', extra: Record<string, unknown> = {}) {
+  return services.customers.create({ name, ...extra })
+}
+
+interface SaleOptions {
+  /** `[variantId, quantidade]`. Sem itens, cria um produto que custa `totalCents` e vende 1 peça. */
+  items?: [string, number][]
+  totalCents?: number
+  customerId?: string
+  payments?: { method: 'cash' | 'pix' | 'card'; amountCents: number }[]
+  fiado?: boolean
+  fiadoDueDate?: string
+  shipping?: boolean
+}
+
+/** Venda confirmada pelo mesmo caminho da API (rascunho → edição → confirmação). */
+export async function createConfirmedSale(userId: string, options: SaleOptions = {}) {
+  let items = options.items
+  if (!items) {
+    const product = await createProduct(userId, {
+      basePriceCents: options.totalCents ?? 5000,
+      variants: [['Preta', 'M', 10]],
+    })
+    items = [[product.variants[0]!.id, 1]]
+  }
+  const draft = await services.saleDrafts.create(userId)
+  await services.saleDrafts.update(draft.id, {
+    version: draft.version,
+    items: items.map(([variantId, quantity]) => ({ variantId, quantity })),
+    customerId: options.customerId ?? null,
+    payments: (options.payments ?? []).map((p) => ({ id: crypto.randomUUID(), confirmed: true, ...p })),
+    fiado: options.fiado ?? false,
+    fiadoDueDate: options.fiadoDueDate ?? null,
+    ...(options.shipping ? { shipping: { enabled: true } } : {}),
+  })
+  return services.saleConfirmation.confirm(draft.id, userId)
+}
+
 /** Cria uma usuária e devolve o cookie de sessão já logado. */
 export async function loggedIn() {
   const user = await createUser()

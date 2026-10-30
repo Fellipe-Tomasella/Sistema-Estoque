@@ -14,4 +14,26 @@ export class IntegrityRepository {
       group by v.id
       having v.stock_qty <> coalesce(sum(m.quantity_delta), 0)`)
   }
+
+  /** Invariante 2: `receivables.paid_cents` = soma dos abatimentos de pagamentos válidos. */
+  receivablePaidMismatches() {
+    return this.db.execute<{ receivable_id: string; paid_cents: number; allocated_cents: number }>(sql`
+      select r.id as receivable_id, r.paid_cents, coalesce(sum(a.amount_cents) filter (where p.status = 'valid'), 0)::int as allocated_cents
+      from receivables r
+      left join receivable_allocations a on a.receivable_id = r.id
+      left join payments p on p.id = a.payment_id
+      group by r.id
+      having r.paid_cents <> coalesce(sum(a.amount_cents) filter (where p.status = 'valid'), 0)`)
+  }
+
+  /** Invariante 6: situação de pagamento da venda confirmada coerente com o saldo do fiado. */
+  salePaymentStatusMismatches() {
+    return this.db.execute<{ sale_id: string; payment_status: string; balance_cents: number | null }>(sql`
+      select s.id as sale_id, s.payment_status, r.balance_cents
+      from sales s
+      left join receivables r on r.sale_id = s.id
+      where s.status = 'confirmed'
+        and ((coalesce(r.balance_cents, 0) = 0 and s.payment_status <> 'paid')
+          or (coalesce(r.balance_cents, 0) > 0 and s.payment_status = 'paid'))`)
+  }
 }

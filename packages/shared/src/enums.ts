@@ -77,6 +77,11 @@ export const RECEIVABLE_ORIGINS = ['sale', 'previous_balance'] as const
 export const RECEIVABLE_STATUSES = ['open', 'settled', 'cancelled'] as const
 export type ReceivableStatus = (typeof RECEIVABLE_STATUSES)[number]
 
+/** RN-FIA-03: “em atraso” só com data combinada vencida e saldo em aberto. Datas no formato AAAA-MM-DD. */
+export function isOverdue(balanceCents: number, dueDate: string | null, today: string): boolean {
+  return balanceCents > 0 && dueDate !== null && dueDate < today
+}
+
 export const IMPORT_STATUSES = ['previewed', 'committed', 'discarded'] as const
 export type ImportStatus = (typeof IMPORT_STATUSES)[number]
 
