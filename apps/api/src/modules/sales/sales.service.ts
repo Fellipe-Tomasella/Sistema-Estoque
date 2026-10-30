@@ -5,6 +5,7 @@ import { BusinessRuleError, NotFoundError, ValidationError } from '../../shared/
 import type { AuditService } from '../audit/audit.service'
 import type { PaymentsRepository } from '../payments/payments.repository'
 import type { ReceivablesRepository } from '../receivables/receivables.repository'
+import type { FiscalRepository } from '../fiscal/fiscal.repository'
 import type { RefundsRepository } from '../returns/refunds.repository'
 import type { ReturnsRepository } from '../returns/returns.repository'
 import { type CartLine, calculateCart } from './sale-calculator'
@@ -30,6 +31,7 @@ export class SalesService {
     private readonly receivables: ReceivablesRepository,
     private readonly returns: ReturnsRepository,
     private readonly refunds: RefundsRepository,
+    private readonly fiscal: FiscalRepository,
     private readonly audit: AuditService,
   ) {}
 
@@ -73,15 +75,16 @@ export class SalesService {
     const items = await this.repo.items(id, tx)
     if (sale.status === 'draft') return draftView(sale, this.calculate(sale, await this.cartLines(items, tx)))
 
-    const [payments, receivable, returns, refunds, history] = await Promise.all([
+    const [payments, receivable, returns, refunds, fiscalDocuments, history] = await Promise.all([
       this.payments.bySale(id, tx),
       this.receivables.bySale(id, tx),
       this.returns.bySale(id, tx),
       this.refunds.bySale(id, tx),
+      this.fiscal.bySale(id, tx),
       this.audit.history('sale', id, tx),
     ])
     const timeline = buildTimeline(sale, payments, returns, refunds, history)
-    return confirmedView(sale, items, payments, receivable, returns, refunds, timeline)
+    return { ...confirmedView(sale, items, payments, receivable, returns, refunds, timeline), fiscalDocuments }
   }
 
   async list(filters: ListSalesFilters) {

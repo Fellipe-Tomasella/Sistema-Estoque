@@ -3,6 +3,7 @@ import { db, type DbOrTx } from '../../db/client'
 import type { Receivable, Sale, SaleItem } from '../../db/schema'
 import { BusinessRuleError, ValidationError } from '../../shared/errors'
 import type { AuditService } from '../audit/audit.service'
+import type { FiscalService } from '../fiscal/fiscal.service'
 import type { ReceivablesRepository } from '../receivables/receivables.repository'
 import type { ReceivablesService } from '../receivables/receivables.service'
 import type { RefundsRepository } from '../returns/refunds.repository'
@@ -36,6 +37,7 @@ export class CancellationsService {
     private readonly receivables: ReceivablesService,
     private readonly stock: StockService,
     private readonly settings: SettingsService,
+    private readonly fiscal: FiscalService,
     private readonly audit: AuditService,
   ) {}
 
@@ -44,7 +46,8 @@ export class CancellationsService {
     const sale = await this.sales.require(saleId)
     this.assertCancellable(sale)
     const items = await this.salesRepo.items(saleId)
-    return this.plan(sale, items, await this.receivablesRepo.bySale(saleId), itemsWithStore)
+    const plan = this.plan(sale, items, await this.receivablesRepo.bySale(saleId), itemsWithStore)
+    return { ...plan, fiscalAlert: await this.fiscal.cancelAlert(saleId) }
   }
 
   async cancel(saleId: string, input: { reason: string; itemsWithStore: boolean }, userId: string) {
@@ -109,6 +112,8 @@ export class CancellationsService {
         { status: 'cancelled', cancelledAt: now, cancelReason: reason, cancelledBy: userId, version: sale.version + 1 },
         tx,
       )
+      // RN-CAN-10: nota registrada fica “cancelamento pendente”; o sistema nunca a declara cancelada.
+      const fiscalAlert = await this.fiscal.onSaleCancelled(saleId, tx)
       if (plan.receivableCancelledCents > 0) {
         await this.receivables.applyAdjustment(tx, receivable!, plan.receivableCancelledCents, 'sale_cancelled', {
           refType: 'sale',
@@ -123,7 +128,7 @@ export class CancellationsService {
         )
       }
       await this.audit.record({ entity: 'sale', entityId: saleId, action: 'cancel', after: plan, reason, userId }, tx)
-      return { alreadyProcessed: false, effects: plan }
+      return { alreadyProcessed: false, effects: { ...plan, fiscalAlert } }
     })
 
     return { ...(await this.sales.view(saleId)), ...result }

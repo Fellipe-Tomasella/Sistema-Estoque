@@ -64,6 +64,13 @@
       "when": 1793379602939,
       "tag": "0008_daily_closings",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1793380453977,
+      "tag": "0009_fiscal_documents",
+      "breakpoints": true
     }
   ]
 }

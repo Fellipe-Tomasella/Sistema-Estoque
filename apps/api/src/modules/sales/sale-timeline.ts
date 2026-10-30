@@ -87,6 +87,16 @@ export function buildTimeline(
         `Peça recebida de volta: ${condition === 'sellable' ? 'apta' : 'avariada'}`,
       )
     }
+    if (entry.action === 'fiscal_registered') {
+      push(
+        entry.createdAt,
+        'fiscal_registered',
+        `Nota fiscal registrada: nº ${(entry.after as { number: string }).number}`,
+      )
+    }
+    if (entry.action === 'fiscal_cancelled') {
+      push(entry.createdAt, 'fiscal_cancelled', 'Nota fiscal registrada como cancelada no emissor')
+    }
     if (entry.action === 'refund_cancelled') {
       push(entry.createdAt, 'refund_cancelled', `Devolução de valor anulada: ${entry.reason}`)
     }

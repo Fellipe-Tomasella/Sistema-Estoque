@@ -1,6 +1,7 @@
 import { Elysia } from 'elysia'
 import { authRoutes } from './modules/auth/auth.routes'
 import { customersRoutes } from './modules/customers/customers.routes'
+import { fiscalRoutes } from './modules/fiscal/fiscal.routes'
 import { healthRoutes } from './modules/health/health.routes'
 import { importsRoutes } from './modules/imports/imports.routes'
 import { productsRoutes } from './modules/products/products.routes'
@@ -30,6 +31,7 @@ export function createApp() {
     .use(receivablesRoutes)
     .use(returnsRoutes)
     .use(reportsRoutes)
+    .use(fiscalRoutes)
 }
 
 /** Tipo consumido pelo Eden Treaty no front. */

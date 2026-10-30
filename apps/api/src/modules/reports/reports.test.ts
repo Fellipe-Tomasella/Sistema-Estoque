@@ -133,7 +133,9 @@ describe('RN-REL relatórios', () => {
     await services.partialReturns.execute(
       crypto.randomUUID(),
       a.id,
-      { items: [{ saleItemId: (a.items[0] as { id: string }).id, quantity: 1, received: true, condition: 'sellable' }] },
+      {
+        items: [{ saleItemId: (a.items[0] as { id: string }).id, quantity: 1, received: true, condition: 'sellable' }],
+      },
       userId,
     )
 

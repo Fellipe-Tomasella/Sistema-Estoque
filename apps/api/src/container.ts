@@ -9,6 +9,8 @@ import { AuthService } from './modules/auth/auth.service'
 import { CancellationsService } from './modules/cancellations/cancellations.service'
 import { CustomersRepository } from './modules/customers/customers.repository'
 import { CustomersService } from './modules/customers/customers.service'
+import { FiscalRepository } from './modules/fiscal/fiscal.repository'
+import { FiscalService } from './modules/fiscal/fiscal.service'
 import { HealthRepository } from './modules/health/health.repository'
 import { HealthService } from './modules/health/health.service'
 import { ImportsRepository } from './modules/imports/imports.repository'
@@ -54,6 +56,7 @@ export function createContainer() {
     closings: new ClosingsRepository(db),
     customers: new CustomersRepository(db),
     dashboard: new DashboardRepository(db),
+    fiscal: new FiscalRepository(db),
     health: new HealthRepository(db),
     imports: new ImportsRepository(db),
     integrity: new IntegrityRepository(db),
@@ -80,8 +83,10 @@ export function createContainer() {
     repositories.receivables,
     repositories.returns,
     repositories.refunds,
+    repositories.fiscal,
     audit,
   )
+  const fiscal = new FiscalService(repositories.fiscal, repositories.sales, settings, audit)
   const receivables = new ReceivablesService(
     repositories.receivables,
     repositories.payments,
@@ -120,6 +125,7 @@ export function createContainer() {
     sales,
     receivables,
     receivableReceipts,
+    fiscal,
     auth: new AuthService(repositories.auth, audit, mailer, env.appOrigin),
     health: new HealthService(repositories.health, pkg.version),
     imports: new ImportsService(repositories.imports, products, audit),
@@ -133,6 +139,7 @@ export function createContainer() {
       receivables,
       stock,
       settings,
+      fiscal,
       audit,
     ),
     returns: new ReturnsService(repositories.returns, stock, settings, audit),

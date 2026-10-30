@@ -57,6 +57,12 @@ export type BuyerType = (typeof BUYER_TYPES)[number]
 export const FISCAL_REQUIREMENTS = ['not_required', 'required', 'review'] as const
 export type FiscalRequirement = (typeof FISCAL_REQUIREMENTS)[number]
 
+export const FISCAL_DOC_TYPES = ['nfe', 'nfce', 'nfa_e', 'other'] as const
+export type FiscalDocType = (typeof FISCAL_DOC_TYPES)[number]
+/** `registered` = a dona informou que a nota foi autorizada no emissor externo. */
+export const FISCAL_DOC_STATUSES = ['registered', 'cancel_pending', 'cancelled'] as const
+export type FiscalDocStatus = (typeof FISCAL_DOC_STATUSES)[number]
+
 /** Formas de dinheiro de verdade. Fiado não é forma de pagamento: é o que fica em aberto. */
 export const MONEY_METHODS = ['cash', 'pix', 'card'] as const
 export type MoneyMethod = (typeof MONEY_METHODS)[number]

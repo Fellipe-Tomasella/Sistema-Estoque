@@ -24,8 +24,10 @@ export class DashboardRepository {
         (select count(*) from returns where status = 'awaiting_items')::int as returns_awaiting,
         (select count(*) from refunds where status = 'pending')::int as refunds_pending,
         (select coalesce(sum(amount_cents), 0) from refunds where status = 'pending')::int as refunds_pending_cents,
-        (select count(*) from sales where status = 'confirmed' and fiscal_requirement in ('required', 'review'))::int
-          as fiscal_pending,
+        ((select count(*) from sales s where s.status = 'confirmed' and s.fiscal_requirement in ('required', 'review')
+            and not exists (select 1 from fiscal_documents fd
+              where fd.sale_id = s.id and fd.status in ('registered', 'cancel_pending')))
+          + (select count(*) from fiscal_documents where status = 'cancel_pending'))::int as fiscal_pending,
         (select count(distinct customer_id) from receivables
           where status = 'open' and balance_cents > 0 and due_date < ${today})::int as overdue_customers,
         (select count(*) from sales where status = 'confirmed' and business_date = ${today})::int as sales_today,

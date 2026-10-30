@@ -100,7 +100,7 @@ Docs: 04 RN-CAN, RN-DEV-07/08, 05 Cancelamento/Devoluções (receber peça, refu
 - [x] `cancel-preview` e `cancel` com as duas situações (peças com a loja / com a cliente).
 - [x] `returns` tipo `cancellation` + receber peça (apta/avariada).
 - [x] `refunds`: pendente → devolvido (forma/data) / anulado.
-- [ ] Alerta fiscal `cancel_pending` — entra na Etapa 10, junto com `fiscal_documents` (sem nota registrada não há o que marcar).
+- [x] Alerta fiscal `cancel_pending` (feito na Etapa 10, junto com `fiscal_documents`).
 - [x] Pendências na API (`GET /returns`, `GET /refunds?status=pending`). (front) Tela de Pendências.
 
 **Aceite:** A3, A4; exemplo R$ 150 / pago R$ 50 → dívida R$ 100 cancelada e R$ 50 a devolver; cancelar 2× não duplica nada.
@@ -128,9 +128,9 @@ fechamento bate com conta feita à mão (teste automatizado com esse roteiro).
 
 ## Etapa 10 — Fiscal (registro manual)
 Docs: 07, 04 RN-FIS, 05 Fiscal.
-- [ ] `fiscal_documents` + registrar/corrigir/cancelar.
-- [ ] Pendências fiscais (aba + Início), faixa “aguardando validação do contador”.
-- [ ] Número da NF no comprovante quando registrada.
+- [x] `fiscal_documents` + registrar/corrigir/cancelar.
+- [x] Pendências fiscais (`/fiscal/pending` + Início), faixa “aguardando validação do contador”. (front) Aba na tela de Pendências.
+- [x] Número da NF no comprovante quando registrada.
 
 **Aceite:** venda para cliente com CNPJ aparece como pendência até registrar a NF; envio para outra UF aparece como “revisar”.
 

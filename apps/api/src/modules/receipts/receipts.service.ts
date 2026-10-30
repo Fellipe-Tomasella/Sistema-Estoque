@@ -7,6 +7,7 @@ import type { SalesService } from '../sales/sales.service'
 import type { SettingsService } from '../settings/settings.service'
 import { formatDateTime, NOT_FISCAL, renderPdf, row } from './pdf'
 
+const DOC_NAMES: Record<string, string> = { nfe: 'NF-e', nfce: 'NFC-e', nfa_e: 'NFA-e', other: 'Nota fiscal' }
 const METHOD_NAMES: Record<string, string> = {
   cash: 'Dinheiro',
   pix: 'Pix',
@@ -119,6 +120,16 @@ export class ReceiptsService {
       row('Subtotal', formatBRL(sale.subtotalCents)),
       ...(sale.discountCents > 0 ? [row('Desconto', `− ${formatBRL(sale.discountCents)}`)] : []),
       row('Total', formatBRL(sale.totalCents), 'total'),
+      ...('fiscalDocuments' in sale
+        ? sale.fiscalDocuments
+            .filter((doc) => doc.status === 'registered')
+            .map((doc) =>
+              row(
+                DOC_NAMES[doc.docType] ?? 'Nota fiscal',
+                `nº ${doc.number}${doc.series ? ` série ${doc.series}` : ''}`,
+              ),
+            )
+        : []),
       { text: 'Pagamentos', bold: true, margin: [0, 8, 0, 2] },
       ...sale.payments
         .filter((p) => p.status === 'valid' && p.kind !== 'receivable_receipt')
