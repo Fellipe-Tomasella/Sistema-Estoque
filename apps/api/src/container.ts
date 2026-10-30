@@ -9,6 +9,8 @@ import { AuthService } from './modules/auth/auth.service'
 import { CancellationsService } from './modules/cancellations/cancellations.service'
 import { CustomersRepository } from './modules/customers/customers.repository'
 import { CustomersService } from './modules/customers/customers.service'
+import { ExportsRepository } from './modules/exports/exports.repository'
+import { ExportsService } from './modules/exports/exports.service'
 import { FiscalRepository } from './modules/fiscal/fiscal.repository'
 import { FiscalService } from './modules/fiscal/fiscal.service'
 import { HealthRepository } from './modules/health/health.repository'
@@ -56,6 +58,7 @@ export function createContainer() {
     closings: new ClosingsRepository(db),
     customers: new CustomersRepository(db),
     dashboard: new DashboardRepository(db),
+    exports: new ExportsRepository(db),
     fiscal: new FiscalRepository(db),
     health: new HealthRepository(db),
     imports: new ImportsRepository(db),
@@ -130,6 +133,7 @@ export function createContainer() {
     health: new HealthService(repositories.health, pkg.version),
     imports: new ImportsService(repositories.imports, products, audit),
     integrity: new IntegrityService(repositories.integrity),
+    exports: new ExportsService(repositories.exports, settings, audit),
     cancellations: new CancellationsService(
       repositories.sales,
       sales,

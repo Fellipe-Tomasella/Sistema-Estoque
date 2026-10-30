@@ -146,7 +146,7 @@ Docs: 06 §5.
 Docs: 08.
 - [ ] Dockerfile, entrypoint com migrations, compose de produção, `backup.sh`, exemplo de Nginx.
 - [ ] `release.yml` (GHCR).
-- [ ] Exportação ZIP (RN-ACE-04).
+- [x] Exportação ZIP (RN-ACE-04) — `GET /api/exports/full.zip`.
 - [ ] Testes E2E Playwright dos cenários A1–A10 + login.
 - [ ] Subir na VPS seguindo o runbook; testar restauração de backup.
 - [ ] README com operação básica para o dev.

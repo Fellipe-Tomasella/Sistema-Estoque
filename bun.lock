@@ -23,6 +23,7 @@
         "drizzle-orm": "^0.45.4",
         "elysia": "^1.4.30",
         "exceljs": "^4.4.0",
+        "fflate": "^0.8.3",
         "nodemailer": "^10.3.1",
         "papaparse": "^5.7.0",
         "pdfmake": "^0.3.13",
