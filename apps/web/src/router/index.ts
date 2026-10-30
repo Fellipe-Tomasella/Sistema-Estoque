@@ -9,7 +9,6 @@ declare module 'vue-router' {
 }
 
 /** Telas ainda não implementadas apontam para cá (substituídas etapa por etapa). */
-const soon = () => import('@/components/common/ComingSoonPage.vue')
 
 const appRoutes: RouteRecordRaw[] = [
   {
@@ -150,7 +149,12 @@ const appRoutes: RouteRecordRaw[] = [
     component: () => import('@/modules/reports/pages/ClosingPage.vue'),
     meta: { title: 'Fechamento do dia' },
   },
-  { path: 'configuracoes', name: 'settings', component: soon, meta: { title: 'Configurações' } },
+  {
+    path: 'configuracoes',
+    name: 'settings',
+    component: () => import('@/modules/settings/pages/SettingsPage.vue'),
+    meta: { title: 'Configurações' },
+  },
 ]
 
 const routes: RouteRecordRaw[] = [

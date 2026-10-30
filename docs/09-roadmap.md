@@ -141,9 +141,9 @@ Docs: 07, 04 RN-FIS, 05 Fiscal.
 
 ## Etapa 11 — PWA e acabamento mobile
 Docs: 06 §5.
-- [ ] `vite-plugin-pwa`: manifest, ícones, SW só app shell, `/api` NetworkOnly, aviso de nova versão.
+- [x] `vite-plugin-pwa`: manifest, ícones, SW só app shell, `/api` NetworkOnly, aviso de nova versão.
 - [ ] Revisão de todas as telas em 375px; barra inferior; PDV em passos.
-- [ ] Tela “Instalar no celular”.
+- [x] Tela “Instalar no celular” (em Configurações).
 
 **Aceite:** instala no Android e no iPhone; sem internet mostra o aviso e não tenta salvar; Lighthouse PWA sem erros de instalabilidade.
 

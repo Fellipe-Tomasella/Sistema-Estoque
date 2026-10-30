@@ -38,6 +38,7 @@ Formato: data · decisão · motivo · quem decidiu. Mais recentes no fim. **Nã
 | 031 | 30/10/2026 | Front segue os modelos do Stitch (`design/stitch`) como referência de estilo, não como especificação: o que aparece lá fora do escopo (curva ABC, giro, margem, ticket médio, condicional, abertura de caixa, fotos, WhatsApp) não entra; tela que faltar é criada no mesmo padrão. | Pedido do dev. | Dev |
 | 032 | 30/10/2026 | Layout persistente: `AppLayout` (barra lateral, cabeçalho, barra inferior do celular) montado uma vez e as telas como rotas filhas carregadas sob demanda. Bibliotecas prontas sempre que possível: shadcn-vue/Reka UI, vee-validate + zod 3, TanStack Query/Table, VueUse, vue-sonner, vite-plugin-pwa. | Pedido do dev: não recriar menu por página e usar frameworks. | Dev |
 | 033 | 30/10/2026 | Eden Treaty com `parseDate: false`: datas chegam como texto e `lib/format` decide se é dia da loja (AAAA-MM-DD) ou instante. Ícones em `@lucide/vue` (nome novo do pacote); zod fixado em 3 (a ponte do vee-validate não suporta o 4). | O Eden transformava `business_date` em meia-noite UTC, mostrando o dia anterior no fuso da loja. | Claude |
+| 034 | 30/10/2026 | PWA com `registerType: 'prompt'`: o service worker guarda só o app (HTML/JS/CSS/ícones), `/api` fora do cache e do fallback de navegação; nova versão aparece como aviso “Atualizar” em vez de recarregar sozinha. Ícones gerados de `public/icon.svg` com `@vite-pwa/assets-generator`. | Não recarregar no meio de uma venda; sem dados velhos de API (06 §5, decisão 006). | Claude |
 
 ## Versões instaladas (Etapa 0)
 
@@ -49,7 +50,7 @@ Formato: data · decisão · motivo · quem decidiu. Mais recentes no fim. **Nã
 | postgres (postgres.js) | 3.4.9 |
 | PostgreSQL (imagem) | 18-alpine |
 | TypeScript / ESLint | 6.0.3 / 10.14.0 |
-| Vue / Vite | (front adiado — decisão 016) |
-| Tailwind CSS | (front adiado) |
-| shadcn-vue | (front adiado) |
-| vite-plugin-pwa | (front adiado) |
+| Vue / Vite | 3.5.44 / 8.3.5 |
+| Tailwind CSS | 4.3.3 |
+| shadcn-vue (Reka UI) | 2.11.0 |
+| vite-plugin-pwa | 2.0.0 |
