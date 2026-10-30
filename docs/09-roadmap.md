@@ -96,6 +96,7 @@ Docs: 04 RN-FIA, 05 Fiado, 06 §3.6.
 - [x] Estorno de recebimento com motivo.
 - [x] Alterar data combinada.
 - [ ] *(Opcional, só se a cliente confirmar)* Saldo anterior de fiado — RN-FIA-11.
+- [x] (front) Telas: fiado em aberto com painel de recebimento (distribuição sugerida e editável, prévia do saldo), receber no celular, estorno e data combinada no detalhe da cliente.
 
 **Aceite:** A2; tentar receber acima do saldo é bloqueado; estorno reabre saldo; invariante 2 ok.
 

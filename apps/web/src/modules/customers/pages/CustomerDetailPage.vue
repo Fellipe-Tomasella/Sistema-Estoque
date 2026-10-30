@@ -15,6 +15,10 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { client, unwrap } from '@/lib/api'
 import { formatDate } from '@/lib/format'
 import { keys } from '@/lib/query'
+import { Input } from '@/components/ui/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import VoidReceiptDialog from '@/modules/receivables/components/VoidReceiptDialog.vue'
+import { useReceivableMutations } from '@/modules/receivables/composables/useReceivables'
 import CustomerFormDialog from '../components/CustomerFormDialog.vue'
 import { initials, useCustomer, useCustomerMutations, useCustomerReceivables } from '../composables/useCustomers'
 
@@ -28,6 +32,18 @@ const { data: sales } = useQuery({
 })
 const { setActive } = useCustomerMutations()
 const editing = ref(false)
+const voiding = ref<{ paymentId: string; amountCents: number } | null>(null)
+const newDueDate = ref('')
+const dueDateFor = ref<string | null>(null)
+const { dueDate } = useReceivableMutations()
+
+/** Data combinada opcional: só com ela a dívida pode ficar “em atraso” (RN-FIA-03). */
+async function saveDueDate(receivableId: string, value: string | null) {
+  await dueDate.mutateAsync({ id: receivableId, dueDate: value })
+  dueDateFor.value = null
+  newDueDate.value = ''
+  toast.success(value ? `Pagamento combinado para ${formatDate(value)}.` : 'Data combinada removida.')
+}
 const confirmToggle = ref(false)
 
 const address = computed(() => {
@@ -144,6 +160,29 @@ async function toggle() {
             <p class="mt-1 text-xs text-muted-foreground">
               {{ formatDate(debt.businessDate) }} · valor original <MoneyText :cents="debt.originalCents" />
               <template v-if="debt.dueDate"> · combinado para {{ formatDate(debt.dueDate) }}</template>
+              <Popover
+                v-if="debt.status === 'open'"
+                :open="dueDateFor === debt.id"
+                @update:open="dueDateFor = $event ? debt.id : null"
+              >
+                <PopoverTrigger class="ml-2 font-medium text-brand hover:underline">
+                  {{ debt.dueDate ? 'alterar data' : 'combinar data' }}
+                </PopoverTrigger>
+                <PopoverContent class="w-64 space-y-3">
+                  <p class="text-sm font-medium">Data combinada para pagar</p>
+                  <Input
+                    type="date"
+                    :default-value="debt.dueDate ?? ''"
+                    @change="newDueDate = ($event.target as HTMLInputElement).value"
+                  />
+                  <div class="flex gap-2">
+                    <Button size="sm" class="flex-1" @click="saveDueDate(debt.id, newDueDate || null)">Salvar</Button>
+                    <Button v-if="debt.dueDate" size="sm" variant="ghost" @click="saveDueDate(debt.id, null)"
+                      >Remover</Button
+                    >
+                  </div>
+                </PopoverContent>
+              </Popover>
             </p>
             <ul v-if="debt.receipts.length || debt.adjustments.length" class="mt-2 space-y-1 text-xs">
               <li
@@ -153,6 +192,19 @@ async function toggle() {
               >
                 Recebido {{ formatDate(r.businessDate) }} · {{ METHOD[r.method] ?? r.method }} ·
                 <MoneyText :cents="r.amountCents" />
+                <template v-if="r.status === 'voided'"> (estornado: {{ r.voidReason }})</template>
+                <template v-else>
+                  ·
+                  <a
+                    :href="`/api/receipts/${r.paymentId}/receipt.pdf`"
+                    target="_blank"
+                    rel="noopener"
+                    class="text-brand hover:underline"
+                    >comprovante</a
+                  >
+                  ·
+                  <button type="button" class="text-red-700 hover:underline" @click="voiding = r">estornar</button>
+                </template>
               </li>
               <li v-for="a in debt.adjustments" :key="a.id" class="text-muted-foreground">
                 {{ a.reason === 'sale_cancelled' ? 'Cancelado' : 'Peças devolvidas' }} ·
@@ -184,6 +236,7 @@ async function toggle() {
     </div>
 
     <CustomerFormDialog v-model:open="editing" :customer="customer" />
+    <VoidReceiptDialog :receipt="voiding" @close="voiding = null" />
     <ConfirmDialog
       v-model:open="confirmToggle"
       :title="customer.active ? 'Inativar cliente?' : 'Reativar cliente?'"
