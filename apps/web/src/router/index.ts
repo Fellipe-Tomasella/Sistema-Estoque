@@ -120,7 +120,12 @@ const appRoutes: RouteRecordRaw[] = [
     component: () => import('@/modules/receivables/pages/ReceivePage.vue'),
     meta: { title: 'Receber fiado' },
   },
-  { path: 'pendencias', name: 'pending', component: soon, meta: { title: 'Pendências' } },
+  {
+    path: 'pendencias',
+    name: 'pending',
+    component: () => import('@/modules/pending/pages/PendingPage.vue'),
+    meta: { title: 'Pendências' },
+  },
   { path: 'relatorios/vendas', name: 'report-sales', component: soon, meta: { title: 'Vendas por período' } },
   { path: 'relatorios/fiado', name: 'report-receivables', component: soon, meta: { title: 'Fiado em aberto' } },
   {
