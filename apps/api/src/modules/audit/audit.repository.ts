@@ -11,8 +11,8 @@ export class AuditRepository {
     await tx.insert(auditLog).values(entry)
   }
 
-  listFor(entity: string, entityId: string) {
-    return this.db
+  listFor(entity: string, entityId: string, tx: DbOrTx = this.db) {
+    return tx
       .select()
       .from(auditLog)
       .where(and(eq(auditLog.entity, entity), eq(auditLog.entityId, entityId)))

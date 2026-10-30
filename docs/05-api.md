@@ -70,7 +70,7 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 | POST | `/sales` | cria rascunho vazio → `{ id, version }` |
 | GET | `/sales/drafts` | rascunhos abertos |
 | GET | `/sales/:id` | venda completa: itens, pagamentos, dívida, devoluções, reembolsos, NF, linha do tempo |
-| PATCH | `/sales/:id` | rascunho: `{ version, items?, customerId?, discount?, payments?, fiadoDueDate?, shipping?, notes? }` → rascunho recalculado (totais, avisos de saldo, motivo de bloqueio da confirmação) |
+| PATCH | `/sales/:id` | rascunho: `{ version, items?, customerId?, discount?: { kind, value }, payments?: [{ id, method, amountCents, confirmed, cardType?, installments?, cashGivenCents? }], fiado?: boolean, fiadoDueDate?, shipping?: { enabled, address?, uf?, trackingCode? }, notes?, fiscalRequested? }` → rascunho recalculado (`warnings`, `blockers`, `canConfirm`). `items` e `payments` substituem a lista inteira. |
 | DELETE | `/sales/:id` | descarta rascunho |
 | POST | `/sales/:id/confirm` | RN-VEN-07/08 → venda confirmada (`alreadyProcessed?`) |
 | GET | `/sales` | histórico com filtros (`from,to,customerId,status,paymentStatus,shippingStatus,method,number`) |

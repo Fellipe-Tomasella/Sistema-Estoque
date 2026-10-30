@@ -5,6 +5,7 @@ import { healthRoutes } from './modules/health/health.routes'
 import { importsRoutes } from './modules/imports/imports.routes'
 import { productsRoutes } from './modules/products/products.routes'
 import { variantsRoutes } from './modules/products/variants.routes'
+import { salesRoutes } from './modules/sales/sales.routes'
 import { settingsRoutes } from './modules/settings/settings.routes'
 import { stockRoutes } from './modules/stock/stock.routes'
 import { errorHandler } from './shared/error-handler'
@@ -22,6 +23,7 @@ export function createApp() {
     .use(stockRoutes)
     .use(importsRoutes)
     .use(customersRoutes)
+    .use(salesRoutes)
 }
 
 /** Tipo consumido pelo Eden Treaty no front. */

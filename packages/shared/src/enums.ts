@@ -37,6 +37,46 @@ export type AdjustmentReason = (typeof ADJUSTMENT_REASONS)[number]
 export const STOCK_REF_TYPES = ['stock_entry', 'sale', 'return_item', 'import', 'manual'] as const
 export type StockRefType = (typeof STOCK_REF_TYPES)[number]
 
+// Vendas e pagamentos
+
+export const SALE_STATUSES = ['draft', 'confirmed', 'cancelled'] as const
+export type SaleStatus = (typeof SALE_STATUSES)[number]
+
+export const PAYMENT_STATUSES_OF_SALE = ['paid', 'partially_paid', 'unpaid'] as const
+export type SalePaymentStatus = (typeof PAYMENT_STATUSES_OF_SALE)[number]
+
+export const SHIPPING_STATUSES = ['none', 'pending', 'shipped', 'delivered'] as const
+export type ShippingStatus = (typeof SHIPPING_STATUSES)[number]
+
+export const DISCOUNT_KINDS = ['none', 'amount', 'percent'] as const
+export type DiscountKind = (typeof DISCOUNT_KINDS)[number]
+
+export const BUYER_TYPES = ['consumer_pf', 'company_pj'] as const
+export type BuyerType = (typeof BUYER_TYPES)[number]
+
+export const FISCAL_REQUIREMENTS = ['not_required', 'required', 'review'] as const
+export type FiscalRequirement = (typeof FISCAL_REQUIREMENTS)[number]
+
+/** Formas de dinheiro de verdade. Fiado não é forma de pagamento: é o que fica em aberto. */
+export const MONEY_METHODS = ['cash', 'pix', 'card'] as const
+export type MoneyMethod = (typeof MONEY_METHODS)[number]
+
+/** `exchange_credit` = crédito de troca (Etapa 8), não é dinheiro. */
+export const PAYMENT_METHODS = [...MONEY_METHODS, 'exchange_credit'] as const
+export type PaymentMethod = (typeof PAYMENT_METHODS)[number]
+
+export const PAYMENT_KINDS = ['sale_checkout', 'receivable_receipt', 'exchange_credit'] as const
+export type PaymentKind = (typeof PAYMENT_KINDS)[number]
+
+export const CARD_TYPES = ['credit', 'debit'] as const
+export type CardType = (typeof CARD_TYPES)[number]
+
+export const RECORD_STATUSES = ['valid', 'voided'] as const
+
+export const RECEIVABLE_ORIGINS = ['sale', 'previous_balance'] as const
+export const RECEIVABLE_STATUSES = ['open', 'settled', 'cancelled'] as const
+export type ReceivableStatus = (typeof RECEIVABLE_STATUSES)[number]
+
 export const IMPORT_STATUSES = ['previewed', 'committed', 'discarded'] as const
 export type ImportStatus = (typeof IMPORT_STATUSES)[number]
 

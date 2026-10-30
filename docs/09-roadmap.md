@@ -71,16 +71,16 @@ Docs: 04 RN-CLI, 05 Clientes.
 
 ## Etapa 5 — PDV e vendas
 Docs: 04 RN-VEN, RN-PAG, RN-ENV, RN-FIS-01…05, 05 Vendas, 06 §3.4–3.5.
-- [ ] Schema `sales`, `sale_items`, `payments`, `receivables`, `receivable_allocations`, `receivable_adjustments`, sequence de número.
-- [ ] Rascunho no servidor com `version`, recalcular totais, motivo de bloqueio.
-- [ ] Desconto R$/% substitutivo; rateio na confirmação.
-- [ ] Pagamentos múltiplos, toggle de confirmação Pix/cartão, troco, **entrada + fiado** (cria dívida).
-- [ ] Confirmação transacional com lock e idempotência (testes A1, A6, A10).
-- [ ] Envio simples (situação, endereço, UF, rastreio).
-- [ ] Classificação fiscal na confirmação.
-- [ ] Histórico de vendas com filtros; detalhe com linha do tempo; troca de forma de pagamento.
-- [ ] Comprovante PDF + página de impressão + compartilhar.
-- [ ] Telas: PDV desktop (2 colunas) e mobile (passos), atalhos de teclado.
+- [x] Schema `sales`, `sale_items`, `payments`, `receivables`, sequence de número (`receivable_allocations`/`receivable_adjustments` nascem nas Etapas 6 e 7, onde são usadas).
+- [x] Rascunho no servidor com `version`, recalcular totais, motivo de bloqueio.
+- [x] Desconto R$/% substitutivo; rateio na confirmação.
+- [x] Pagamentos múltiplos, toggle de confirmação Pix/cartão, troco, **entrada + fiado** (cria dívida).
+- [x] Confirmação transacional com lock e idempotência (testes A1, A6, A10).
+- [x] Envio simples (situação, endereço, UF, rastreio).
+- [x] Classificação fiscal na confirmação.
+- [x] Histórico de vendas com filtros; detalhe com linha do tempo; troca de forma de pagamento.
+- [x] Comprovante PDF. (front) Página de impressão + compartilhar.
+- [ ] (front) Telas: PDV desktop (2 colunas) e mobile (passos), atalhos de teclado.
 
 **Aceite:** A1, A5, A6, A10 passando; venda com entrada + fiado gera dívida certa; comprovante de venda com fiado mostra pago e saldo, e o aviso “não é documento fiscal”.
 

@@ -14,8 +14,15 @@ import { ImportsRepository } from './modules/imports/imports.repository'
 import { ImportsService } from './modules/imports/imports.service'
 import { IntegrityRepository } from './modules/integrity/integrity.repository'
 import { IntegrityService } from './modules/integrity/integrity.service'
+import { PaymentsRepository } from './modules/payments/payments.repository'
 import { ProductsRepository } from './modules/products/products.repository'
 import { ProductsService } from './modules/products/products.service'
+import { ReceivablesRepository } from './modules/receivables/receivables.repository'
+import { ReceiptsService } from './modules/receipts/receipts.service'
+import { SaleConfirmationService } from './modules/sales/sale-confirmation.service'
+import { SaleDraftsService } from './modules/sales/sale-drafts.service'
+import { SalesRepository } from './modules/sales/sales.repository'
+import { SalesService } from './modules/sales/sales.service'
 import { SettingsRepository } from './modules/settings/settings.repository'
 import { SettingsService } from './modules/settings/settings.service'
 import { StockAdjustmentsService } from './modules/stock/stock-adjustments.service'
@@ -34,7 +41,10 @@ export function createContainer() {
     health: new HealthRepository(db),
     imports: new ImportsRepository(db),
     integrity: new IntegrityRepository(db),
+    payments: new PaymentsRepository(db),
     products: new ProductsRepository(db),
+    receivables: new ReceivablesRepository(db),
+    sales: new SalesRepository(db),
     settings: new SettingsRepository(db),
     stock: new StockRepository(db),
     stockEntries: new StockEntriesRepository(db),
@@ -44,6 +54,8 @@ export function createContainer() {
   const settings = new SettingsService(repositories.settings, audit)
   const stock = new StockService(repositories.stock)
   const products = new ProductsService(repositories.products, stock, settings, audit)
+  const customers = new CustomersService(repositories.customers, audit)
+  const sales = new SalesService(repositories.sales, repositories.payments, repositories.receivables, audit)
 
   return {
     mailer,
@@ -51,11 +63,24 @@ export function createContainer() {
     settings,
     stock,
     products,
+    customers,
+    sales,
     auth: new AuthService(repositories.auth, audit, mailer, env.appOrigin),
-    customers: new CustomersService(repositories.customers, audit),
     health: new HealthService(repositories.health, pkg.version),
     imports: new ImportsService(repositories.imports, products, audit),
     integrity: new IntegrityService(repositories.integrity),
+    receipts: new ReceiptsService(sales, settings),
+    saleConfirmation: new SaleConfirmationService(
+      repositories.sales,
+      sales,
+      repositories.payments,
+      repositories.receivables,
+      stock,
+      settings,
+      customers,
+      audit,
+    ),
+    saleDrafts: new SaleDraftsService(repositories.sales, sales, customers),
     stockAdjustments: new StockAdjustmentsService(stock, settings, audit),
     stockEntries: new StockEntriesService(repositories.stockEntries, stock, settings),
   }

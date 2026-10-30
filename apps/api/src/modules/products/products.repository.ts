@@ -1,6 +1,6 @@
 import { and, asc, count, eq, exists, inArray, isNotNull, lte, type SQL, sql } from 'drizzle-orm'
 import type { DbOrTx } from '../../db/client'
-import { type Product, products, type Variant, variants } from '../../db/schema'
+import { type Product, products, saleItems, type Variant, variants } from '../../db/schema'
 import { containsPattern, equalsIgnoreCase, searchable } from '../../shared/sql'
 import type { ListProductsFilters } from './products.schemas'
 
@@ -57,6 +57,16 @@ export class ProductsRepository {
   async deleteProduct(id: string, tx: DbOrTx) {
     await tx.delete(variants).where(eq(variants.productId, id))
     await tx.delete(products).where(eq(products.id, id))
+  }
+
+  async hasSaleItems(variantIds: string[], tx: DbOrTx = this.db): Promise<boolean> {
+    if (variantIds.length === 0) return false
+    const [row] = await tx
+      .select({ one: sql`1` })
+      .from(saleItems)
+      .where(inArray(saleItems.variantId, variantIds))
+      .limit(1)
+    return Boolean(row)
   }
 
   async deleteVariant(id: string, tx: DbOrTx) {

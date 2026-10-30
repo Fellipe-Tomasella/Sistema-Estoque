@@ -29,6 +29,8 @@ Formato: data · decisão · motivo · quem decidiu. Mais recentes no fim. **Nã
 | 022 | 30/10/2026 | Sem rota `/stock/overview`: `/products` (com `stock=out\|low`) já traz produto + variações + saldo + situação, e a grade é montada na tela. | Evita duas consultas com o mesmo conteúdo. | Claude |
 | 023 | 30/10/2026 | Importação: o `custo` de cada linha vai para a variação; referência e categoria do produto vêm da primeira linha que as tiver. Na efetivação o plano é refeito sobre o catálogo atual; se surgiu variação igual depois da prévia, a importação pede nova prévia (409). | Planilha tem uma linha por variação; refazer o plano impede contar estoque duas vezes. | Claude |
 | 024 | 30/10/2026 | Enums opcionais em query/body usam `OneOf` (união de literais), não `t.UnionEnum`. | O Elysia preenche `UnionEnum` ausente com o primeiro valor — um filtro não pedido seria aplicado. | Claude |
+| 025 | 30/10/2026 | Fiado no rascunho é uma escolha (`fiado: true`), não uma linha de pagamento: o que os pagamentos não cobrem vira a dívida. O id de cada pagamento do rascunho é gerado pelo front e vira o `id` em `payments`. | Bate com a tela (“o restante vira fiado se a dona escolher Fiado”) e mantém a confirmação idempotente. | Claude |
+| 026 | 30/10/2026 | Na confirmação, preço e situação (ativo) das variações são lidos de novo com as variações travadas; se algo saiu de venda ou falta saldo, nada é gravado. | RN-PRO-06 (rascunho acompanha o cadastro) e RN-VEN-07. | Claude |
 
 ## Versões instaladas (Etapa 0)
 

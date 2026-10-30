@@ -282,9 +282,10 @@ export class ProductsService {
     }
   }
 
+  /** Histórico = movimento de estoque ou item em qualquer venda (inclusive rascunho). */
   private async assertNoHistory(variantIds: string[], tx: DbOrTx, message: string) {
-    // Itens de venda entram nesta checagem quando o módulo de vendas existir (Etapa 5).
-    if (await this.stock.hasMovements(variantIds, tx)) throw new BusinessRuleError(message)
+    const hasHistory = (await this.stock.hasMovements(variantIds, tx)) || (await this.repo.hasSaleItems(variantIds, tx))
+    if (hasHistory) throw new BusinessRuleError(message)
   }
 
   /** Corrida entre dois aparelhos criando a mesma variação: o índice único do banco decide. */

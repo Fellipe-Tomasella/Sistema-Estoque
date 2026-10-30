@@ -30,7 +30,7 @@ export class AuditService {
     )
   }
 
-  history(entity: string, entityId: string) {
-    return this.repo.listFor(entity, entityId)
+  history(entity: string, entityId: string, tx?: DbOrTx) {
+    return this.repo.listFor(entity, entityId, tx)
   }
 }
