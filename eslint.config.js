@@ -21,8 +21,9 @@ export default tseslint.config(
     languageOptions: { parserOptions: { parser: tseslint.parser, extraFileExtensions: ['.vue'] } },
   },
   {
-    files: ['apps/web/**/*.{ts,vue}'],
-    languageOptions: { globals: { window: 'readonly', document: 'readonly', crypto: 'readonly' } },
+    // Em TypeScript, variável/tipo indefinido é erro do compilador (recomendação do typescript-eslint).
+    files: ['**/*.{ts,vue}'],
+    rules: { 'no-undef': 'off' },
   },
   prettier,
   {
