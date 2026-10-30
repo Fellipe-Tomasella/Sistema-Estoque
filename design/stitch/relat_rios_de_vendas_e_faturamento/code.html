@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-error-container":"#93000a","surface-container":"#eeedf7","on-tertiary-fixed":"#002114","tertiary-container":"#006e4c","outline-variant":"#c7c4d8","surface-dim":"#dad9e3","inverse-on-surface":"#f1effa","inverse-primary":"#c3c0ff","on-surface-variant":"#464555","tertiary-fixed-dim":"#68dba9","tertiary-fixed":"#85f8c4","on-error":"#ffffff","outline":"#777587","on-secondary-fixed":"#131b2e","surface-tint":"#4d44e3","secondary-fixed-dim":"#bec6e0","surface-container-lowest":"#ffffff","on-primary-fixed-variant":"#3323cc","surface-bright":"#fbf8ff","surface-container-high":"#e8e7f1","on-secondary-container":"#5c647a","on-tertiary-container":"#7df1bd","on-tertiary-fixed-variant":"#005137","error":"#ba1a1a","surface-container-low":"#f4f2fd","on-secondary-fixed-variant":"#3f465c","primary-container":"#4f46e5","on-background":"#1a1b22","on-primary-fixed":"#0f0069","secondary-fixed":"#dae2fd","surface":"#fbf8ff","primary-fixed-dim":"#c3c0ff","on-secondary":"#ffffff","on-surface":"#1a1b22","on-primary":"#ffffff","surface-variant":"#e3e1ec","error-container":"#ffdad6","tertiary":"#005338","inverse-surface":"#2f3038","on-primary-container":"#dad7ff","primary":"#3525cd","primary-fixed":"#e2dfff","secondary":"#565e74","on-tertiary":"#ffffff","secondary-container":"#dae2fd","background":"#fbf8ff","surface-container-highest":"#e3e1ec"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"space-xl":"1.5rem","gutter":"1rem","space-sm":"0.5rem","margin-lg":"2.5rem","gutter-lg":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-md":"0.75rem","margin":"1rem","gutter-md":"1.5rem","margin-md":"1.5rem"},fontFamily:{"label-md":["Geist"],"body-sm":["Geist"],"headline-lg":["Geist"],"body-md":["Geist"],"headline-md":["Geist"],"display":["Geist"],"code-num":["Geist"],"body-lg":["Geist"],"headline-sm":["Geist"],"label-sm":["Geist"],"label-xs":["Geist"]},fontSize:{"label-md":["14px",{lineHeight:"20px",letterSpacing:"0",fontWeight:"500"}],"body-sm":["13px",{lineHeight:"18px",letterSpacing:"0",fontWeight:"400"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.02em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0",fontWeight:"400"}],"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.015em",fontWeight:"600"}],"display":["32px",{lineHeight:"40px",letterSpacing:"-0.025em",fontWeight:"600"}],"code-num":["13px",{lineHeight:"18px",letterSpacing:"0",fontWeight:"500"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"400"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"600"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.01em",fontWeight:"500"}],"label-xs":["11px",{lineHeight:"14px",letterSpacing:"0.02em",fontWeight:"600"}]}}}};</script></head><body class="bg-background font-body-md text-body-md text-on-surface"><aside class="fixed left-0 top-0 bottom-0 w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm"><img alt="Logo Loja Exemplo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL10c8ED2T8P3LSNp2BP5_3zdAxd1VxAaMQM0ieaMHdrDL2bXONDRCmFaDj1-FbOgL9ZZV3pp-thLDfqTnzzBIoc9Zv5NNFKz0TXMAk890C9XAhmYp-NvRPTohUhOzwZPUxbJx09RgD8Y4KFyXq85wdSmRdgQBBhRSNTC04fHaUbrRGhBQBpDAjX9j89h9ob05d06mf98_yop-hka4C8aARmSWSAO5vgDG2-1MTPpK"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">Loja Exemplo</span><span class="font-label-xs text-label-xs text-on-surface-variant">Painel de Gestão</span></div></div><nav class="flex flex-col gap-space-xs px-space-md py-space-md" data-active-classes="bg-secondary-container text-on-secondary-fixed font-label-md"><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inicio" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">home</span><span>Início</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="produtos-e-estoque" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Produtos e estoque</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="vendas" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Vendas</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="clientes-e-fiado" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">group</span><span>Clientes e fiado</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="pendencias" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">notification_important</span><span>Pendências</span></div><span class="font-label-xs text-label-xs bg-error-container text-on-error-container px-space-xs py-0.5 rounded-full">4</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="relatorios" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span>Relatórios</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="configuracoes" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">settings</span><span>Configurações</span></div></a></nav></div><div class="p-space-md m-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-sm"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary-container"></span><span class="font-label-xs text-label-xs text-on-surface-variant">Conectado à nuvem</span></div><a class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary hover:text-on-surface transition-colors" data-path="suporte" href="#"><span class="material-symbols-outlined text-[16px]">help</span><span>Suporte e ajuda</span></a></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-gutter-lg gap-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-[20px] text-on-surface-variant pointer-events-none">search</span><input class="w-full h-9 pl-10 pr-16 bg-surface-container-low text-on-surface placeholder:text-on-surface-variant rounded-xl font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Buscar produto, cliente ou venda #... (Ctrl+K)" type="text"/><kbd class="absolute right-space-md font-code-num text-code-num bg-surface-container px-space-xs py-0.5 rounded text-on-surface-variant">⌘K</kbd></div></div><div class="flex items-center gap-space-lg"><button class="h-9 px-space-lg bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md rounded-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex items-center gap-space-sm transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span>Nova venda</span></button><div class="flex items-center gap-space-md"><button class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="relative"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary-container ring-2 ring-surface-container-lowest"></span></div><div class="hidden lg:flex flex-col text-left"><span class="font-label-sm text-label-sm text-on-surface font-semibold leading-tight">Loja Exemplo</span><span class="font-label-xs text-label-xs text-tertiary font-medium">Online</span></div></div></div></div></header><div class="hidden fixed top-16 left-64 right-0 bg-error-container text-on-error-container px-gutter-lg py-space-xs font-label-sm text-label-sm flex items-center gap-space-sm z-30 shadow-[0_1px_8px_rgba(0,0,0,0.04)]" id="offline-banner"><span class="material-symbols-outlined text-[16px]">wifi_off</span><span>Você está offline. As alterações serão sincronizadas assim que a conexão retornar.</span></div><main class="w-full pt-16 flex-1 px-margin-lg py-space-xl bg-background"><div class="flex flex-col w-full gap-space-xl">
+<!-- Sub-header & Contextual Breadcrumb Navigation -->
+<div class="flex flex-col gap-space-xs">
+<nav aria-label="Breadcrumb" class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="hover:text-on-surface cursor-pointer transition-colors">Início</span>
+<span class="text-outline-variant">/</span>
+<span class="hover:text-on-surface cursor-pointer transition-colors">Relatórios</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface font-semibold">Desempenho de Vendas</span>
+</nav>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mt-space-xs">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Relatórios de Vendas &amp; Faturamento</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Acompanhamento consolidado de vendas líquidas, ticket médio, canais e margem operacional da boutique.</p>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="h-9 px-space-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-xl flex items-center gap-space-xs transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">download</span>
+<span>Exportar Relatório (PDF/XLS)</span>
+</button>
+<button class="h-9 px-space-lg bg-on-background hover:bg-inverse-surface text-surface-container-lowest font-label-sm text-label-sm rounded-xl flex items-center gap-space-xs transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">event_available</span>
+<span>Agendar Fechamento Mensal</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Operational Filters & Time Selectors Toolbar -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md">
+<!-- Period Buttons Segment -->
+<div class="inline-flex p-1 bg-surface-container-low rounded-xl gap-0.5 self-start overflow-x-auto max-w-full">
+<button class="px-space-md py-1.5 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" type="button">Hoje</button>
+<button class="px-space-md py-1.5 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" type="button">Últimos 7 dias</button>
+<button class="px-space-md py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container-lowest text-on-surface shadow-sm font-semibold transition-all" type="button">Este Mês (Outubro)</button>
+<button class="px-space-md py-1.5 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" type="button">Últimos 90 dias</button>
+<button class="px-space-md py-1.5 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-1" type="button">
+<span>Personalizado</span>
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+</button>
+</div>
+<!-- Canal Selector & Quick Status -->
+<div class="flex items-center gap-space-sm self-end md:self-auto">
+<div class="flex items-center gap-2 bg-surface-container-low px-space-md py-1.5 rounded-xl">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">storefront</span>
+<select class="bg-transparent font-label-sm text-label-sm text-on-surface focus:outline-none cursor-pointer pr-space-xs">
+<option value="all">Todos os canais (Balcão, Insta/Whats, Site)</option>
+<option value="direct">Instagram &amp; WhatsApp</option>
+<option value="store">Balcão Presencial</option>
+<option value="link">Catálogo / Link de Pagamento</option>
+</select>
+</div>
+<div class="h-6 w-px bg-surface-container"></div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary-container/15 text-tertiary font-label-xs text-label-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+        Sincronizado
+      </span>
+</div>
+</div>
+<!-- KPI Cards Grid (4 Primary Metrics) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Card 1: Faturamento Bruto -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-on-surface-variant tracking-wider uppercase">Faturamento Bruto</span>
+<span class="font-headline-lg text-headline-lg text-on-surface mt-1 tracking-tight">R$ 28.450,00</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs mt-space-md pt-space-xs">
+<span class="inline-flex items-center text-tertiary font-code-num text-code-num font-semibold">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+          +14,2%
+        </span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">vs. mês anterior (R$ 24.912)</span>
+</div>
+</div>
+<!-- Card 2: Faturamento Líquido -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-on-surface-variant tracking-wider uppercase">Faturamento Líquido</span>
+<span class="font-headline-lg text-headline-lg text-on-surface mt-1 tracking-tight">R$ 26.890,00</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs mt-space-md pt-space-xs">
+<span class="inline-flex items-center text-tertiary font-code-num text-code-num font-semibold">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+          +12,8%
+        </span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">deduzidos R$ 1.560 em descontos</span>
+</div>
+</div>
+<!-- Card 3: Ticket Médio -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-on-surface-variant tracking-wider uppercase">Ticket Médio / Venda</span>
+<span class="font-headline-lg text-headline-lg text-on-surface mt-1 tracking-tight">R$ 174,60</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs mt-space-md pt-space-xs">
+<span class="inline-flex items-center text-tertiary font-code-num text-code-num font-semibold">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+          +5,4%
+        </span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">média de 2,4 peças / pedido</span>
+</div>
+</div>
+<!-- Card 4: Margem Média -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-on-surface-variant tracking-wider uppercase">Margem Média Realizada</span>
+<span class="font-headline-lg text-headline-lg text-on-surface mt-1 tracking-tight">54,2%</span>
+</div>
+<div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs mt-space-md pt-space-xs">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-fixed font-code-num text-code-num font-semibold">Markup 2.2x</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Custo médio R$ 79,90/peça</span>
+</div>
+</div>
+</div>
+<!-- Main Section: Sales Velocity Chart & Channel Breakdown (Bento Grid) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- 8 cols: Timeline / Daily & Weekly Sales Pulse Chart -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Evolução Diária &amp; Picos de Reposição</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Concentração de faturamento ao longo dos 31 dias de Outubro.</p>
+</div>
+<div class="flex items-center gap-space-md text-label-xs font-label-xs">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-sm bg-primary-container"></span>
+<span class="text-on-surface-variant">Dias Regulares</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-sm bg-tertiary"></span>
+<span class="text-on-surface-variant">Sábados &amp; Lançamento Coleção</span>
+</div>
+</div>
+</div>
+<!-- High-Fidelity SVG Bar & Curve Visualizer -->
+<div class="w-full bg-surface-container-low/50 rounded-xl p-space-md flex flex-col gap-space-xs">
+<div class="relative w-full h-52 flex items-end">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 700 200">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4f46e5" stop-opacity="0.18"></stop>
+<stop offset="100%" stop-color="#4f46e5" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Grid lines -->
+<line stroke="#dad9e3" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="700" y1="40" y2="40"></line>
+<line stroke="#dad9e3" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="700" y1="90" y2="90"></line>
+<line stroke="#dad9e3" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="700" y1="140" y2="140"></line>
+<line stroke="#c7c4d8" stroke-width="1" x1="0" x2="700" y1="190" y2="190"></line>
+<!-- Area Fill -->
+<path d="M 15 170 Q 60 160 110 130 T 210 70 T 310 140 T 410 40 T 510 120 T 610 50 T 685 85 L 685 190 L 15 190 Z" fill="url(#chartGradient)"></path>
+<!-- Trend Polyline -->
+<path d="M 15 170 Q 60 160 110 130 T 210 70 T 310 140 T 410 40 T 510 120 T 610 50 T 685 85" fill="none" stroke="#4f46e5" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Column Markers & Highlights -->
+<!-- Sáb 05 / Reposição Novidades -->
+<rect fill="#005338" height="120" rx="3" width="14" x="203" y="70"></rect>
+<!-- Sáb 12 / Dia das Crianças / Feriado -->
+<rect fill="#4f46e5" height="50" rx="3" width="14" x="303" y="140"></rect>
+<!-- Sáb 19 / Lançamento Cápsula Verão (Pico Maior) -->
+<rect fill="#005338" height="150" rx="3" width="14" x="403" y="40"></rect>
+<!-- Sáb 26 / Sexta & Sábado de Ação Relâmpago -->
+<rect fill="#005338" height="140" rx="3" width="14" x="603" y="50"></rect>
+<!-- Mid-week sample bars -->
+<rect fill="#c3c0ff" height="40" rx="2" width="10" x="50" y="150"></rect>
+<rect fill="#c3c0ff" height="65" rx="2" width="10" x="110" y="125"></rect>
+<rect fill="#c3c0ff" height="55" rx="2" width="10" x="160" y="135"></rect>
+<rect fill="#c3c0ff" height="35" rx="2" width="10" x="260" y="155"></rect>
+<rect fill="#c3c0ff" height="85" rx="2" width="10" x="360" y="105"></rect>
+<rect fill="#c3c0ff" height="70" rx="2" width="10" x="460" y="120"></rect>
+<rect fill="#c3c0ff" height="60" rx="2" width="10" x="510" y="130"></rect>
+<rect fill="#c3c0ff" height="80" rx="2" width="10" x="560" y="110"></rect>
+<rect fill="#c3c0ff" height="105" rx="2" width="10" x="660" y="85"></rect>
+<!-- Peak Callout Dot & Label -->
+<circle cx="410" cy="40" fill="#ffffff" r="4" stroke="#005338" stroke-width="2.5"></circle>
+</svg>
+</div>
+<!-- Axis Labels -->
+<div class="flex justify-between items-center text-label-xs font-label-xs text-on-surface-variant px-2 pt-1 border-t border-surface-container">
+<span>01 Out</span>
+<span class="font-semibold text-tertiary">Sáb 05 (Reposição)</span>
+<span>10 Out</span>
+<span>Sáb 12</span>
+<span class="font-semibold text-tertiary">Sáb 19 (Pico Cápsula)</span>
+<span>24 Out</span>
+<span class="font-semibold text-tertiary">Sáb 26</span>
+<span>31 Out</span>
+</div>
+</div>
+<!-- Quick Analysis Callout strip -->
+<div class="mt-space-md p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between gap-space-md flex-wrap text-label-sm font-label-sm">
+<div class="flex items-center gap-space-xs text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-tertiary">tips_and_updates</span>
+<span><strong>Insight:</strong> 42,6% do faturamento concentrou-se nos 4 sábados do mês, impulsionados pela live de provador e peças exclusivas.</span>
+</div>
+<span class="font-code-num text-code-num text-secondary">R$ 12.120 nos fins de semana</span>
+</div>
+</div>
+<!-- 4 cols: Visual Breakdown por Canal de Venda -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Canais de Atendimento</h2>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">forum</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Origem das conversões registradas no mês.</p>
+</div>
+<!-- Mini Donut / Progress Bars Representation -->
+<div class="flex flex-col gap-space-md my-space-md">
+<!-- Canal 1: Insta / WhatsApp -->
+<div class="flex flex-col gap-1.5 p-space-sm bg-surface-container-low rounded-xl">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[15px]">chat</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Instagram &amp; WhatsApp</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">94 pedidos diretos</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-code-num text-code-num font-semibold text-on-surface">R$ 16.480,00</span>
+<span class="font-label-xs text-label-xs block text-primary font-medium">61,3%</span>
+</div>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 61.3%;"></div>
+</div>
+</div>
+<!-- Canal 2: Balcão Presencial -->
+<div class="flex flex-col gap-1.5 p-space-sm bg-surface-container-low rounded-xl">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-surface-container-high text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[15px]">store</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Balcão Presencial / Retirada</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">51 pedidos na loja física</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-code-num text-code-num font-semibold text-on-surface">R$ 8.920,00</span>
+<span class="font-label-xs text-label-xs block text-secondary font-medium">33,2%</span>
+</div>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 33.2%;"></div>
+</div>
+</div>
+<!-- Canal 3: Link / Catálogo Online -->
+<div class="flex flex-col gap-1.5 p-space-sm bg-surface-container-low rounded-xl">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-surface-container text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[15px]">link</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Catálogo Online / Link</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">9 pedidos automáticos</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-code-num text-code-num font-semibold text-on-surface">R$ 1.490,00</span>
+<span class="font-label-xs text-label-xs block text-on-surface-variant font-medium">5,5%</span>
+</div>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-outline rounded-full" style="width: 5.5%;"></div>
+</div>
+</div>
+</div>
+<div class="pt-space-xs border-t border-surface-container-low flex items-center justify-between text-label-xs font-label-xs text-on-surface-variant">
+<span>Total de transações: <strong>154 vendas</strong></span>
+<span class="text-tertiary font-semibold">100% conciliado</span>
+</div>
+</div>
+</div>
+<!-- Row: Payment Split & MEI Micro-tax Alert Card -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- 7 cols: Meios de Pagamento & Liquidação -->
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Composição de Recebimentos &amp; Meios de Pagamento</h2>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">credit_card</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Distribuição financeira por fluxo de caixa imediato vs. parcelado e fiado.</p>
+</div>
+<!-- Segmented Bar Indicator -->
+<div class="my-space-md">
+<div class="w-full h-3 rounded-full overflow-hidden flex bg-surface-container gap-0.5">
+<div class="h-full bg-tertiary-container transition-all" style="width: 52%;" title="Pix 52%"></div>
+<div class="h-full bg-primary-container transition-all" style="width: 33%;" title="Cartões 33%"></div>
+<div class="h-full bg-secondary-container transition-all" style="width: 15%;" title="Fiado 15%"></div>
+</div>
+</div>
+<!-- Cards Grid for Payment methods -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-tertiary font-label-xs text-label-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+            Pix Direto (52%)
+          </div>
+<span class="font-code-num text-code-num font-semibold text-on-surface mt-1">R$ 13.982,80</span>
+<span class="font-label-xs text-label-xs text-tertiary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+            Liquidação instantânea
+          </span>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-primary-container font-label-xs text-label-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+            Cartão Débito/Crédito (33%)
+          </div>
+<span class="font-code-num text-code-num font-semibold text-on-surface mt-1">R$ 8.873,70</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Taxa líquida est. 2,1%</span>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-secondary font-label-xs text-label-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+            Fiado / Crediário (15%)
+          </div>
+<span class="font-code-num text-code-num font-semibold text-on-surface mt-1">R$ 4.033,50</span>
+<span class="font-label-xs text-label-xs text-tertiary font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+            87,5% pontualidade
+          </span>
+</div>
+</div>
+</div>
+<!-- 5 cols: MEI Fiscal Ceiling Alert & Health Gauge -->
+<div class="lg:col-span-5 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div>
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-secondary-container text-on-secondary-fixed font-label-xs text-label-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">balance</span>
+            Controle Tributário MEI
+          </span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Ano Fiscal 2024</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-space-sm">Acompanhamento do Teto MEI Anual</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Monitore os ingressos para prevenir desenquadramento involuntário do Simples Nacional.</p>
+</div>
+<!-- Linear Gauge with Target & Status -->
+<div class="my-space-md flex flex-col gap-space-xs">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-headline-md text-headline-md text-on-surface">R$ 46.850,00</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant ml-1 font-normal">faturados em 2024</span>
+</div>
+<div class="text-right">
+<span class="font-code-num text-code-num font-semibold text-on-surface">57,8%</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant block">de R$ 81.000,00</span>
+</div>
+</div>
+<div class="w-full h-3 bg-surface-container-high rounded-full overflow-hidden flex">
+<div class="h-full bg-primary-container rounded-full" style="width: 57.8%;"></div>
+</div>
+<div class="flex items-center justify-between text-label-xs font-label-xs text-on-surface-variant pt-1">
+<span>Início do ano (R$ 0)</span>
+<span class="font-semibold text-on-surface">Limite Máx: R$ 81.000,00</span>
+</div>
+</div>
+<!-- Actionable Notification Banner -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Margem Segura: R$ 34.150,00 restantes</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Estimativa de segurança para Nov/Dez: ~R$ 17.075/mês</span>
+</div>
+</div>
+<button class="h-7 px-space-sm bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-xs text-label-xs rounded-lg transition-colors shadow-sm" type="button">
+          Extrato MEI
+        </button>
+</div>
+</div>
+</div>
+<!-- Weekly Consolidated Performance Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Table Header with Context & Total pieces -->
+<div class="p-space-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm border-b border-surface-container-low">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Resumo Semanal Consolidado (Outubro 2024)</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Detalhamento operacional de pedidos, giro de estoque por peças e descontos praticados.</p>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low font-label-xs text-label-xs text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-primary">checkroom</span>
+          Total: <strong>369 peças vendidas</strong>
+</span>
+</div>
+</div>
+<!-- Responsive Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-xs text-label-xs uppercase tracking-wider h-10">
+<th class="px-space-lg py-2.5 font-semibold">Período / Semana</th>
+<th class="px-space-md py-2.5 text-center font-semibold">Qtd. Vendas</th>
+<th class="px-space-md py-2.5 text-center font-semibold">Peças Vendidas</th>
+<th class="px-space-md py-2.5 text-right font-semibold">Ticket Médio</th>
+<th class="px-space-md py-2.5 text-right font-semibold">Descontos Concedidos</th>
+<th class="px-space-lg py-2.5 text-right font-semibold">Faturamento Líquido</th>
+<th class="px-space-md py-2.5 text-center font-semibold">Status Meta</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low font-body-sm text-body-sm text-on-surface">
+<!-- Semana 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-lg py-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-lg bg-surface-container text-on-surface font-code-num text-code-num font-semibold flex items-center justify-center">01</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Semana 1 (01 a 07 de Out)</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Reposição de Jeans &amp; Croppeds</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-center font-code-num text-code-num">34</td>
+<td class="px-space-md py-space-md text-center font-code-num text-code-num">82 peças</td>
+<td class="px-space-md py-space-md text-right font-code-num text-code-num">R$ 171,17</td>
+<td class="px-space-md py-space-md text-right font-code-num text-code-num text-error-container text-on-error-container font-medium">- R$ 340,00</td>
+<td class="px-space-lg py-space-md text-right font-code-num text-code-num font-bold text-on-surface">R$ 5.820,00</td>
+<td class="px-space-md py-space-md text-center">
+<span class="inline-flex px-2 py-0.5 rounded text-label-xs font-label-xs bg-tertiary-container/15 text-tertiary font-semibold">
+                Superada (104%)
+              </span>
+</td>
+</tr>
+<!-- Semana 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-lg py-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-lg bg-surface-container text-on-surface font-code-num text-code-num font-semibold flex items-center justify-center">02</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Semana 2 (08 a 14 de Out)</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Semana de Feriado Prolongado</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-center font-code-num text-code-num">31</td>
+<td class="px-space-md py-space-md text-center font-code-num text-code-num">68 peças</td>
+<td class="px-space-md py-space-md text-right font-code-num text-code-num">R$ 164,19</td>
+<td class="px-space-md py-space-md text-right font-code-num text-code-num text-on-surface-variant">- R$ 220,00</td>
+<td class="px-space-lg py-space-md text-right font-code-num text-code-num font-bold text-on-surface">R$ 5.090,00</td>
+<td class="px-space-md py-space-md text-center">
+<span class="inline-flex px-2 py-0.5 rounded text-label-xs font-label-xs bg-secondary-container text-on-secondary-fixed font-semibold">
+                Atingida (98%)
+              </span>
+</td>
+</tr>
+<!-- Semana 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-lg py-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-lg bg-surface-container text-on-surface font-code-num text-code-num font-semibold flex items-center justify-center">03</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Semana 3 (15 a 21 de Out)</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Lançamento Cápsula Alto Verão</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-center font-code-num text-code-num">48</td>
+<td class="px-space-md py-space-md text-center font-code-num text-code-num">124 peças</td>
+<td class="px-space-md py-space-md text-right font-code-num text-code-num">R$ 184,58</td>
+<td class="px-space-md py-space-md text-right font-code-num text-code-num text-on-surface-variant">- R$ 510,00</td>
+<td class="px-space-lg py-space-md text-right font-code-num text-code-num font-bold text-on-surface">R$ 8.860,00</td>
+<td class="px-space-md py-space-md text-center">
+<span class="inline-flex px-2 py-0.5 rounded text-label-xs font-label-xs bg-tertiary-container/15 text-tertiary font-semibold">
+                Destaque (142%)
+              </span>
+</td>
+</tr>
+<!-- Semana 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-lg py-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-lg bg-surface-container text-on-surface font-code-num text-code-num font-semibold flex items-center justify-center">04</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Semana 4 (22 a 31 de Out)</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Fechamento &amp; Ação Provador Instagram</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-center font-code-num text-code-num">41</td>
+<td class="px-space-md py-space-md text-center font-code-num text-code-num">95 peças</td>
+<td class="px-space-md py-space-md text-right font-code-num text-code-num">R$ 173,65</td>
+<td class="px-space-md py-space-md text-right font-code-num text-code-num text-on-surface-variant">- R$ 490,00</td>
+<td class="px-space-lg py-space-md text-right font-code-num text-code-num font-bold text-on-surface">R$ 7.120,00</td>
+<td class="px-space-md py-space-md text-center">
+<span class="inline-flex px-2 py-0.5 rounded text-label-xs font-label-xs bg-tertiary-container/15 text-tertiary font-semibold">
+                Superada (112%)
+              </span>
+</td>
+</tr>
+</tbody>
+<tfoot class="bg-surface-container-low font-label-sm text-label-sm font-semibold text-on-surface border-t border-surface-container">
+<tr>
+<td class="px-space-lg py-space-md">Consolidado Total (4 Semanas)</td>
+<td class="px-space-md py-space-md text-center font-code-num text-code-num">154 vendas</td>
+<td class="px-space-md py-space-md text-center font-code-num text-code-num">369 peças</td>
+<td class="px-space-md py-space-md text-right font-code-num text-code-num">R$ 174,60</td>
+<td class="px-space-md py-space-md text-right font-code-num text-code-num text-error-container text-on-error-container">- R$ 1.560,00</td>
+<td class="px-space-lg py-space-md text-right font-code-num text-code-num text-headline-sm text-primary">R$ 26.890,00</td>
+<td class="px-space-md py-space-md text-center">
+<span class="inline-flex items-center gap-1 text-tertiary font-label-xs">
+<span class="material-symbols-outlined text-[14px]">check</span>
+                Meta Batida
+              </span>
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- Operational Footer Notes & Direct Actions -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md text-label-sm font-label-sm">
+<div class="flex items-center gap-space-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] text-on-surface">info</span>
+<span>Relatório gerado em <strong>31 de Outubro às 19:42</strong>. Os dados de vendas a prazo refletem a posição em tempo real do livro de clientes.</span>
+</div>
+<div class="flex items-center gap-space-md">
+<button class="text-primary hover:text-on-primary-fixed-variant font-label-sm text-label-sm font-semibold flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">print</span>
+        Imprimir Extrato da Boutique
+      </button>
+<button class="text-secondary hover:text-on-surface font-label-sm text-label-sm font-semibold flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">share</span>
+        Compartilhar com Contabilidade
+      </button>
+</div>
+</div>
+</div></main></div></body></html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-error-container":"#93000a","surface-container":"#eeedf7","on-tertiary-fixed":"#002114","tertiary-container":"#006e4c","outline-variant":"#c7c4d8","surface-dim":"#dad9e3","inverse-on-surface":"#f1effa","inverse-primary":"#c3c0ff","on-surface-variant":"#464555","tertiary-fixed-dim":"#68dba9","tertiary-fixed":"#85f8c4","on-error":"#ffffff","outline":"#777587","on-secondary-fixed":"#131b2e","surface-tint":"#4d44e3","secondary-fixed-dim":"#bec6e0","surface-container-lowest":"#ffffff","on-primary-fixed-variant":"#3323cc","surface-bright":"#fbf8ff","surface-container-high":"#e8e7f1","on-secondary-container":"#5c647a","on-tertiary-container":"#7df1bd","on-tertiary-fixed-variant":"#005137","error":"#ba1a1a","surface-container-low":"#f4f2fd","on-secondary-fixed-variant":"#3f465c","primary-container":"#4f46e5","on-background":"#1a1b22","on-primary-fixed":"#0f0069","secondary-fixed":"#dae2fd","surface":"#fbf8ff","primary-fixed-dim":"#c3c0ff","on-secondary":"#ffffff","on-surface":"#1a1b22","on-primary":"#ffffff","surface-variant":"#e3e1ec","error-container":"#ffdad6","tertiary":"#005338","inverse-surface":"#2f3038","on-primary-container":"#dad7ff","primary":"#3525cd","primary-fixed":"#e2dfff","secondary":"#565e74","on-tertiary":"#ffffff","secondary-container":"#dae2fd","background":"#fbf8ff","surface-container-highest":"#e3e1ec"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"space-xl":"1.5rem","gutter":"1rem","space-sm":"0.5rem","margin-lg":"2.5rem","gutter-lg":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-md":"0.75rem","margin":"1rem","gutter-md":"1.5rem","margin-md":"1.5rem"},fontFamily:{"label-md":["Geist"],"body-sm":["Geist"],"headline-lg":["Geist"],"body-md":["Geist"],"headline-md":["Geist"],"display":["Geist"],"code-num":["Geist"],"body-lg":["Geist"],"headline-sm":["Geist"],"label-sm":["Geist"],"label-xs":["Geist"]},fontSize:{"label-md":["14px",{lineHeight:"20px",letterSpacing:"0",fontWeight:"500"}],"body-sm":["13px",{lineHeight:"18px",letterSpacing:"0",fontWeight:"400"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.02em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0",fontWeight:"400"}],"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.015em",fontWeight:"600"}],"display":["32px",{lineHeight:"40px",letterSpacing:"-0.025em",fontWeight:"600"}],"code-num":["13px",{lineHeight:"18px",letterSpacing:"0",fontWeight:"500"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"400"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"600"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.01em",fontWeight:"500"}],"label-xs":["11px",{lineHeight:"14px",letterSpacing:"0.02em",fontWeight:"600"}]}}}};</script></head><body class="bg-background font-body-md text-body-md text-on-surface"><aside class="fixed left-0 top-0 bottom-0 w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm"><img alt="Logo Loja Exemplo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL10c8ED2T8P3LSNp2BP5_3zdAxd1VxAaMQM0ieaMHdrDL2bXONDRCmFaDj1-FbOgL9ZZV3pp-thLDfqTnzzBIoc9Zv5NNFKz0TXMAk890C9XAhmYp-NvRPTohUhOzwZPUxbJx09RgD8Y4KFyXq85wdSmRdgQBBhRSNTC04fHaUbrRGhBQBpDAjX9j89h9ob05d06mf98_yop-hka4C8aARmSWSAO5vgDG2-1MTPpK"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">Loja Exemplo</span><span class="font-label-xs text-label-xs text-on-surface-variant">Painel de Gestão</span></div></div><nav class="flex flex-col gap-space-xs px-space-md py-space-md" data-active-classes="bg-secondary-container text-on-secondary-fixed font-label-md"><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inicio" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">home</span><span>Início</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="produtos-e-estoque" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Produtos e estoque</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="vendas" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Vendas</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="clientes-e-fiado" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">group</span><span>Clientes e fiado</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="pendencias" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">notification_important</span><span>Pendências</span></div><span class="font-label-xs text-label-xs bg-error-container text-on-error-container px-space-xs py-0.5 rounded-full">4</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="relatorios" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span>Relatórios</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="configuracoes" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">settings</span><span>Configurações</span></div></a></nav></div><div class="p-space-md m-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-sm"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary-container"></span><span class="font-label-xs text-label-xs text-on-surface-variant">Conectado à nuvem</span></div><a class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary hover:text-on-surface transition-colors" data-path="suporte" href="#"><span class="material-symbols-outlined text-[16px]">help</span><span>Suporte e ajuda</span></a></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-gutter-lg gap-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-[20px] text-on-surface-variant pointer-events-none">search</span><input class="w-full h-9 pl-10 pr-16 bg-surface-container-low text-on-surface placeholder:text-on-surface-variant rounded-xl font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Buscar produto, cliente ou venda #... (Ctrl+K)" type="text"/><kbd class="absolute right-space-md font-code-num text-code-num bg-surface-container px-space-xs py-0.5 rounded text-on-surface-variant">⌘K</kbd></div></div><div class="flex items-center gap-space-lg"><button class="h-9 px-space-lg bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md rounded-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex items-center gap-space-sm transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span>Nova venda</span></button><div class="flex items-center gap-space-md"><button class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="relative"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary-container ring-2 ring-surface-container-lowest"></span></div><div class="hidden lg:flex flex-col text-left"><span class="font-label-sm text-label-sm text-on-surface font-semibold leading-tight">Loja Exemplo</span><span class="font-label-xs text-label-xs text-tertiary font-medium">Online</span></div></div></div></div></header><div class="hidden fixed top-16 left-64 right-0 bg-error-container text-on-error-container px-gutter-lg py-space-xs font-label-sm text-label-sm flex items-center gap-space-sm z-30 shadow-[0_1px_8px_rgba(0,0,0,0.04)]" id="offline-banner"><span class="material-symbols-outlined text-[16px]">wifi_off</span><span>Você está offline. As alterações serão sincronizadas assim que a conexão retornar.</span></div><main class="w-full pt-16 flex-1 px-margin-lg py-space-xl bg-background"><div class="flex flex-col w-full gap-space-xl">
+<!-- Page Header & Key Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span>Clientes e fiado</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Fiado em aberto</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Clientes e fiado</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Controle central de crediário próprio, cobranças e recebimento ágil de dívidas.</p>
+</div>
+<div class="flex items-center gap-space-md">
+<button class="h-9 px-space-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md rounded-xl transition-all flex items-center gap-space-xs shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>+ Nova cliente</span>
+</button>
+<button class="h-9 px-space-lg bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md rounded-xl shadow-sm flex items-center gap-space-xs transition-all" onclick="focusPaymentCard()" type="button">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>Receber fiado rápido</span>
+</button>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex items-center gap-space-xs border-b border-surface-container-highest/60 pb-px">
+<button class="relative px-space-md py-space-sm font-label-md text-label-md text-primary flex items-center gap-space-sm font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary">
+<span>Fiado em aberto</span>
+<span class="px-space-xs py-0.5 bg-error-container text-on-error-container font-label-xs text-label-xs rounded-full">3 em atraso</span>
+</button>
+<button class="px-space-md py-space-sm font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors">
+      Todas as clientes
+    </button>
+<button class="px-space-md py-space-sm font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors">
+      Histórico de recebimentos
+    </button>
+</div>
+<!-- KPI Summary Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+<!-- Total Aberto -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total em aberto</span>
+<div class="w-8 h-8 rounded-xl bg-secondary-container/70 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-space-md flex flex-col">
+<span class="font-display text-display text-on-surface tracking-tight">R$ 1.840,00</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-space-xs mt-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+          14 vendas ativas no crediário
+        </span>
+</div>
+<div class="mt-space-lg flex items-center justify-between text-on-surface-variant font-label-xs text-label-xs pt-space-sm border-t border-surface-container-high/40">
+<span>Limite total concedido</span>
+<span class="font-semibold text-on-surface">R$ 4.500,00</span>
+</div>
+</div>
+<!-- Total Vencido / Em atraso -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total vencido</span>
+<div class="w-8 h-8 rounded-xl bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+</div>
+<div class="mt-space-md flex flex-col">
+<span class="font-display text-display text-error tracking-tight">R$ 420,00</span>
+<span class="font-label-sm text-label-sm text-error flex items-center gap-space-xs mt-space-xs font-medium">
+<span class="px-1.5 py-0.5 rounded bg-error-container text-on-error-container font-label-xs text-label-xs font-semibold">3 clientes em atraso</span>
+<span>(22.8% do saldo)</span>
+</span>
+</div>
+<div class="mt-space-lg flex items-center justify-between text-on-surface-variant font-label-xs text-label-xs pt-space-sm border-t border-surface-container-high/40">
+<span>Atraso médio</span>
+<span class="font-semibold text-on-surface">11 dias corridos</span>
+</div>
+</div>
+<!-- Recebido no Mês -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Recebido este mês</span>
+<div class="w-8 h-8 rounded-xl bg-tertiary-fixed/40 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</div>
+</div>
+<div class="mt-space-md flex flex-col">
+<span class="font-display text-display text-tertiary tracking-tight">R$ 1.280,00</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-space-xs mt-space-xs">
+<span class="text-tertiary font-semibold flex items-center">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +14.2%
+          </span>
+<span>vs. mês anterior</span>
+</span>
+</div>
+<div class="mt-space-lg flex items-center justify-between text-on-surface-variant font-label-xs text-label-xs pt-space-sm border-t border-surface-container-high/40">
+<span>Taxa de adimplência</span>
+<span class="font-semibold text-tertiary">87.5% pontual</span>
+</div>
+</div>
+</div>
+<!-- Operational Alert Callout -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex items-center gap-space-md pl-space-xs">
+<div class="w-9 h-9 rounded-xl bg-error-container flex items-center justify-center text-error flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">3 clientes ultrapassaram a data limite combinada</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Lembretes amigáveis via WhatsApp aumentam em 68% a recuperação nas primeiras 48h.</span>
+</div>
+</div>
+<button class="h-8 px-space-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-xl transition-colors flex items-center gap-space-xs flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px] text-tertiary">chat</span>
+<span>Disparar lembretes WhatsApp</span>
+</button>
+</div>
+<!-- Main Layout Split: Table (7 cols) + Liquidation Panel (5 cols) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- Table & Filters Section -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Filter Bar -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col sm:flex-row gap-space-md items-center justify-between">
+<div class="relative w-full sm:w-72 flex items-center">
+<span class="material-symbols-outlined absolute left-space-md text-[18px] text-on-surface-variant pointer-events-none">search</span>
+<input class="w-full h-9 pl-9 pr-space-md bg-surface-container-low text-on-surface placeholder:text-on-surface-variant rounded-xl font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" id="clientSearchInput" placeholder="Buscar cliente por nome ou WhatsApp..." type="text"/>
+</div>
+<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+<button class="h-9 px-space-md rounded-xl font-label-sm text-label-sm flex items-center gap-space-xs transition-colors bg-surface-container hover:bg-surface-container-high text-on-surface" id="filterAtrasoBtn" onclick="toggleLateFilter()">
+<span class="material-symbols-outlined text-[16px] text-error">filter_list</span>
+<span>Apenas em atraso</span>
+</button>
+<div class="relative">
+<select class="h-9 px-space-md bg-surface-container hover:bg-surface-container-high text-on-surface rounded-xl font-label-sm text-label-sm cursor-pointer appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors">
+<option value="saldo">Maior saldo devedor</option>
+<option value="data">Data combinada mais antiga</option>
+<option value="nome">Nome da cliente (A-Z)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[16px] text-on-surface-variant pointer-events-none">unfold_more</span>
+</div>
+</div>
+</div>
+<!-- Clients List Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Table Column Headers -->
+<div class="bg-surface-container-low px-space-lg py-space-sm flex items-center justify-between font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">
+<span class="w-2/5">Cliente &amp; Contato</span>
+<span class="w-1/5 text-center">Vencimento</span>
+<span class="w-1/5 text-right">Saldo Devedor</span>
+<span class="w-1/5 text-right">Ação</span>
+</div>
+<!-- Row 1: Maria Souza (Selected by default) -->
+<div class="p-space-lg bg-primary-fixed/30 hover:bg-primary-fixed/40 transition-colors cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-space-md border-l-4 border-primary" id="row-maria-souza" onclick="selectClient('Maria Souza', '(11) 98765-4321', 179.80, 2, '10/11/2024', 'No prazo')">
+<div class="w-full sm:w-2/5 flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center flex-shrink-0 shadow-sm">
+              MS
+            </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Maria Souza</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-xs text-label-xs font-semibold">2 compras</span>
+</div>
+<span class="font-code-num text-code-num text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">call</span> (11) 98765-4321
+              </span>
+</div>
+</div>
+<div class="w-full sm:w-1/5 flex sm:flex-col items-center sm:items-center justify-between sm:justify-center">
+<span class="font-code-num text-code-num text-on-surface">10/11/2024</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-md">No prazo</span>
+</div>
+<div class="w-full sm:w-1/5 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center">
+<span class="font-headline-sm text-headline-sm text-on-surface">R$ 179,80</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">2 pendências</span>
+</div>
+<div class="w-full sm:w-1/5 flex items-center justify-end gap-space-xs">
+<button class="h-8 px-space-sm bg-primary text-on-primary font-label-xs text-label-xs rounded-xl shadow-sm flex items-center gap-1 hover:bg-on-primary-fixed-variant transition-colors" title="Receber agora" type="button">
+<span class="material-symbols-outlined text-[14px]">point_of_sale</span>
+<span>Receber</span>
+</button>
+<button class="h-8 w-8 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center justify-center transition-colors" title="Ver ficha completa" type="button">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="h-px bg-surface-container"></div>
+<!-- Row 2: Maria Oliveira (Atrasada) -->
+<div class="p-space-lg hover:bg-surface-container-low transition-colors cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-space-md border-l-4 border-transparent" id="row-maria-oliveira" onclick="selectClient('Maria Oliveira', '(11) 97123-4567', 139.90, 1, '20/10/2024', 'Em atraso - 9 dias')">
+<div class="w-full sm:w-2/5 flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary font-headline-sm text-headline-sm flex items-center justify-center flex-shrink-0">
+              MO
+            </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Maria Oliveira</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-xs text-label-xs font-semibold">1 compra</span>
+</div>
+<span class="font-code-num text-code-num text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">chat</span> (11) 97123-4567
+              </span>
+</div>
+</div>
+<div class="w-full sm:w-1/5 flex sm:flex-col items-center sm:items-center justify-between sm:justify-center">
+<span class="font-code-num text-code-num text-error font-semibold">20/10/2024</span>
+<span class="px-2 py-0.5 bg-error-container text-on-error-container font-label-xs text-label-xs rounded-md font-semibold">Atraso 9d</span>
+</div>
+<div class="w-full sm:w-1/5 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center">
+<span class="font-headline-sm text-headline-sm text-error">R$ 139,90</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">1 pendência</span>
+</div>
+<div class="w-full sm:w-1/5 flex items-center justify-end gap-space-xs">
+<button class="h-8 px-space-sm bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-xl flex items-center gap-1 transition-colors" title="Receber agora" type="button">
+<span class="material-symbols-outlined text-[14px]">point_of_sale</span>
+<span>Receber</span>
+</button>
+<button class="h-8 w-8 rounded-xl bg-tertiary-fixed/30 hover:bg-tertiary-fixed/60 text-tertiary flex items-center justify-center transition-colors" onclick="event.stopPropagation(); alert('Abrindo WhatsApp para Maria Oliveira...')" title="Cobrar no WhatsApp" type="button">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+</button>
+</div>
+</div>
+<div class="h-px bg-surface-container"></div>
+<!-- Row 3: Ana Paula (Atrasada) -->
+<div class="p-space-lg hover:bg-surface-container-low transition-colors cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-space-md border-l-4 border-transparent" id="row-ana-paula" onclick="selectClient('Ana Paula', '(11) 98222-3344', 280.10, 3, '15/10/2024', 'Em atraso - 14 dias')">
+<div class="w-full sm:w-2/5 flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-fixed font-headline-sm text-headline-sm flex items-center justify-center flex-shrink-0">
+              AP
+            </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Ana Paula</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-xs text-label-xs font-semibold">3 compras</span>
+</div>
+<span class="font-code-num text-code-num text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">chat</span> (11) 98222-3344
+              </span>
+</div>
+</div>
+<div class="w-full sm:w-1/5 flex sm:flex-col items-center sm:items-center justify-between sm:justify-center">
+<span class="font-code-num text-code-num text-error font-semibold">15/10/2024</span>
+<span class="px-2 py-0.5 bg-error-container text-on-error-container font-label-xs text-label-xs rounded-md font-semibold">Atraso 14d</span>
+</div>
+<div class="w-full sm:w-1/5 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center">
+<span class="font-headline-sm text-headline-sm text-error">R$ 280,10</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">3 pendências</span>
+</div>
+<div class="w-full sm:w-1/5 flex items-center justify-end gap-space-xs">
+<button class="h-8 px-space-sm bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-xl flex items-center gap-1 transition-colors" title="Receber agora" type="button">
+<span class="material-symbols-outlined text-[14px]">point_of_sale</span>
+<span>Receber</span>
+</button>
+<button class="h-8 w-8 rounded-xl bg-tertiary-fixed/30 hover:bg-tertiary-fixed/60 text-tertiary flex items-center justify-center transition-colors" onclick="event.stopPropagation(); alert('Abrindo WhatsApp para Ana Paula...')" title="Cobrar no WhatsApp" type="button">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+</button>
+</div>
+</div>
+<div class="h-px bg-surface-container"></div>
+<!-- Row 4: Juliana Costa (No prazo) -->
+<div class="p-space-lg hover:bg-surface-container-low transition-colors cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-space-md border-l-4 border-transparent" id="row-juliana-costa" onclick="selectClient('Juliana Costa', '(11) 99456-7890', 80.00, 1, '05/11/2024', 'No prazo')">
+<div class="w-full sm:w-2/5 flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center flex-shrink-0">
+              JC
+            </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Juliana Costa</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-xs text-label-xs font-semibold">1 compra</span>
+</div>
+<span class="font-code-num text-code-num text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">call</span> (11) 99456-7890
+              </span>
+</div>
+</div>
+<div class="w-full sm:w-1/5 flex sm:flex-col items-center sm:items-center justify-between sm:justify-center">
+<span class="font-code-num text-code-num text-on-surface">05/11/2024</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-md">No prazo</span>
+</div>
+<div class="w-full sm:w-1/5 flex sm:flex-col items-center sm:items-end justify-between sm:justify-center">
+<span class="font-headline-sm text-headline-sm text-on-surface">R$ 80,00</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">1 pendência</span>
+</div>
+<div class="w-full sm:w-1/5 flex items-center justify-end gap-space-xs">
+<button class="h-8 px-space-sm bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-xl flex items-center gap-1 transition-colors" title="Receber agora" type="button">
+<span class="material-symbols-outlined text-[14px]">point_of_sale</span>
+<span>Receber</span>
+</button>
+<button class="h-8 w-8 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center justify-center transition-colors" title="Ver ficha" type="button">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Pagination / Summary helper -->
+<div class="flex items-center justify-between px-space-sm text-on-surface-variant font-label-xs text-label-xs">
+<span>Exibindo 4 de 14 clientes com fiado ativo</span>
+<div class="flex items-center gap-space-xs">
+<button class="px-2 py-1 rounded bg-surface-container text-on-surface font-semibold">1</button>
+<button class="px-2 py-1 rounded hover:bg-surface-container">2</button>
+<button class="px-2 py-1 rounded hover:bg-surface-container">Próximo</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Interactive Liquidation Panel (Tela 19) -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg" id="liquidationPanel">
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-md flex flex-col gap-space-lg relative overflow-hidden">
+<!-- Header of Panel -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[22px]">receipt_long</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Registrar Recebimento</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Liquidação direta ou amortização parcial</span>
+</div>
+</div>
+<span class="px-2 py-0.5 bg-tertiary-fixed/30 text-tertiary font-label-xs text-label-xs rounded-full font-semibold">Caixa Aberto</span>
+</div>
+<!-- Selected Customer Card -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-9 h-9 rounded-full bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center flex-shrink-0">
+<span id="panelAvatarText">MS</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold" id="panelClientName">Maria Souza</span>
+<span class="font-code-num text-code-num text-on-surface-variant" id="panelClientPhone">(11) 98765-4321</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase block">Dívida Total</span>
+<span class="font-headline-md text-headline-md text-primary font-bold" id="panelTotalDebt">R$ 179,80</span>
+</div>
+</div>
+<!-- Form: Payment Input -->
+<div class="flex flex-col gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold" for="paymentAmountInput">Valor recebido hoje</label>
+<button class="font-label-xs text-label-xs text-primary hover:underline font-semibold" onclick="setFullPayment()" type="button">Quitar valor total (R$ 179,80)</button>
+</div>
+<div class="relative flex items-center">
+<span class="absolute left-space-md font-body-md text-body-md text-on-surface-variant font-semibold pointer-events-none">R$</span>
+<input class="w-full h-11 pl-10 pr-space-md bg-surface-container-low text-on-surface font-display text-headline-md rounded-xl text-right font-semibold focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" id="paymentAmountInput" oninput="recalculateDistribution()" step="0.01" type="number" value="100.00"/>
+</div>
+</div>
+<!-- Payment Methods Chips -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Forma de pagamento</span>
+<div class="grid grid-cols-3 gap-space-sm" id="methodChipsContainer">
+<button class="pay-method-btn h-9 rounded-xl font-label-sm text-label-sm flex items-center justify-center gap-1 transition-all bg-primary-container text-on-primary shadow-sm font-semibold" onclick="selectPaymentMethod(this, 'Pix')" type="button">
+<span class="material-symbols-outlined text-[16px]">qr_code_2</span>
+<span>Pix</span>
+</button>
+<button class="pay-method-btn h-9 rounded-xl font-label-sm text-label-sm flex items-center justify-center gap-1 transition-all bg-surface-container text-on-surface hover:bg-surface-container-high" onclick="selectPaymentMethod(this, 'Dinheiro')" type="button">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+<span>Dinheiro</span>
+</button>
+<button class="pay-method-btn h-9 rounded-xl font-label-sm text-label-sm flex items-center justify-center gap-1 transition-all bg-surface-container text-on-surface hover:bg-surface-container-high" onclick="selectPaymentMethod(this, 'Débito')" type="button">
+<span class="material-symbols-outlined text-[16px]">credit_card</span>
+<span>Débito</span>
+</button>
+</div>
+</div>
+<!-- Date field -->
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-xl text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+              Data do recebimento
+            </span>
+<span class="font-code-num text-code-num text-on-surface font-medium">Hoje (29/10/2024)</span>
+</div>
+</div>
+<!-- Automatic Debt Distribution Breakdown -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-tertiary">auto_fix_high</span>
+              Distribuição automática
+            </span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Mais antigas primeiro</span>
+</div>
+<div class="space-y-space-xs" id="distributionContainer">
+<!-- Debt 1 -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-xs transition-all">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="font-semibold text-on-surface flex items-center gap-1">
+<span>Venda #000120</span>
+<span class="text-on-surface-variant font-normal">(Vestido midi floral)</span>
+</span>
+<span class="px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-xs text-label-xs font-semibold" id="badgeSale1">Quita 100%</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-code-num text-code-num text-[12px]">
+<span>Saldo original: R$ 79,80</span>
+<span class="text-tertiary font-semibold" id="deductSale1">- R$ 79,80 abatidos</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full transition-all duration-300" id="barSale1" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Debt 2 -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-xs transition-all">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="font-semibold text-on-surface flex items-center gap-1">
+<span>Venda #000123</span>
+<span class="text-on-surface-variant font-normal">(Calça jeans mom)</span>
+</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-fixed font-label-xs text-label-xs font-semibold" id="badgeSale2">Parcial (R$ 79,80 restam)</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-code-num text-code-num text-[12px]">
+<span>Saldo original: R$ 100,00</span>
+<span class="text-primary font-semibold" id="deductSale2">- R$ 20,20 abatidos</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full transition-all duration-300" id="barSale2" style="width: 20.2%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Operation Summary Callout Box -->
+<div class="p-space-md bg-primary-fixed/40 rounded-xl flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[16px]">sync_alt</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Impacto no saldo devedor</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" id="summaryBalanceText">
+              O saldo de <strong class="text-on-surface">Maria Souza</strong> passa de <strong class="text-on-surface">R$ 179,80</strong> para <strong class="text-tertiary">R$ 79,80</strong>.
+            </span>
+</div>
+</div>
+<!-- Action Confirmation Button & Safety Disclaimer -->
+<div class="flex flex-col gap-space-xs">
+<button class="w-full h-11 bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md rounded-xl shadow-md flex items-center justify-center gap-space-sm transition-all" id="confirmPaymentButton" onclick="triggerPaymentConfirmation()" type="button">
+<span class="material-symbols-outlined text-[20px]">check</span>
+<span id="confirmButtonText">Confirmar recebimento (R$ 100,00)</span>
+</button>
+<span class="text-center font-label-xs text-label-xs text-on-surface-variant flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary">verified_user</span>
+            Gera comprovante e atualiza o caixa do dia automaticamente.
+          </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Notification Toast Container (Dynamic Feedback) -->
+<div class="fixed bottom-6 right-6 hidden bg-surface-container-lowest p-space-md rounded-xl shadow-xl border border-tertiary-fixed flex items-center gap-space-md z-50 transition-all duration-300 transform translate-y-2" id="successToast">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Pagamento registrado com sucesso!</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Comprovante gerado e saldo atualizado.</span>
+</div>
+<button class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('successToast').classList.add('hidden')">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+<!-- Interactive Client-side Script for Instant UX -->
+<script>
+  let currentDebt = 179.80;
+  let clientSelectedName = 'Maria Souza';
+
+  function focusPaymentCard() {
+    const input = document.getElementById('paymentAmountInput');
+    if (input) {
+      input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      input.focus();
+      input.select();
+    }
+  }
+
+  function selectPaymentMethod(btn, method) {
+    document.querySelectorAll('.pay-method-btn').forEach(b => {
+      b.className = 'pay-method-btn h-9 rounded-xl font-label-sm text-label-sm flex items-center justify-center gap-1 transition-all bg-surface-container text-on-surface hover:bg-surface-container-high';
+    });
+    btn.className = 'pay-method-btn h-9 rounded-xl font-label-sm text-label-sm flex items-center justify-center gap-1 transition-all bg-primary-container text-on-primary shadow-sm font-semibold';
+  }
+
+  function setFullPayment() {
+    const input = document.getElementById('paymentAmountInput');
+    input.value = currentDebt.toFixed(2);
+    recalculateDistribution();
+  }
+
+  function selectClient(name, phone, debt, salesCount, dueDate, statusText) {
+    clientSelectedName = name;
+    currentDebt = debt;
+
+    // Update highlights in list
+    ['row-maria-souza', 'row-maria-oliveira', 'row-ana-paula', 'row-juliana-costa'].forEach(id => {
+      const row = document.getElementById(id);
+      if (row) {
+        row.classList.remove('bg-primary-fixed/30', 'border-primary');
+        row.classList.add('border-transparent');
+      }
+    });
+
+    const activeRowMap = {
+      'Maria Souza': 'row-maria-souza',
+      'Maria Oliveira': 'row-maria-oliveira',
+      'Ana Paula': 'row-ana-paula',
+      'Juliana Costa': 'row-juliana-costa'
+    };
+
+    if (activeRowMap[name]) {
+      const activeEl = document.getElementById(activeRowMap[name]);
+      if (activeEl) {
+        activeEl.classList.add('bg-primary-fixed/30', 'border-primary');
+        activeEl.classList.remove('border-transparent');
+      }
+    }
+
+    // Update Right Panel UI
+    document.getElementById('panelClientName').textContent = name;
+    document.getElementById('panelClientPhone').textContent = phone;
+    document.getElementById('panelTotalDebt').textContent = 'R$ ' + debt.toFixed(2).replace('.', ',');
+    document.getElementById('panelAvatarText').textContent = name.split(' ').map(n => n[0]).join('').substring(0, 2);
+
+    const input = document.getElementById('paymentAmountInput');
+    input.value = debt > 100 ? '100.00' : debt.toFixed(2);
+
+    recalculateDistribution();
+  }
+
+  function recalculateDistribution() {
+    const input = document.getElementById('paymentAmountInput');
+    let paid = parseFloat(input.value) || 0;
+    if (paid > currentDebt) paid = currentDebt;
+    if (paid < 0) paid = 0;
+
+    const remainingDebt = Math.max(0, currentDebt - paid);
+
+    // Update Confirmation Button Text
+    const confirmBtnText = document.getElementById('confirmButtonText');
+    confirmBtnText.textContent = `Confirmar recebimento (R$ ${paid.toFixed(2).replace('.', ',')})`;
+
+    // Update Summary Message
+    const summaryText = document.getElementById('summaryBalanceText');
+    summaryText.innerHTML = `O saldo de <strong class="text-on-surface">${clientSelectedName}</strong> passa de <strong class="text-on-surface">R$ ${currentDebt.toFixed(2).replace('.', ',')}</strong> para <strong class="text-tertiary">R$ ${remainingDebt.toFixed(2).replace('.', ',')}</strong>.`;
+
+    // Recalculate Distribution for visual simulation
+    const sale1Amount = 79.80;
+    const sale1Paid = Math.min(paid, sale1Amount);
+    const sale2Paid = Math.max(0, paid - sale1Amount);
+    const sale2Remaining = Math.max(0, 100.00 - sale2Paid);
+
+    const badge1 = document.getElementById('badgeSale1');
+    const deduct1 = document.getElementById('deductSale1');
+    const bar1 = document.getElementById('barSale1');
+
+    if (sale1Paid >= sale1Amount) {
+      badge1.textContent = 'Quita 100%';
+      badge1.className = 'px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-xs text-label-xs font-semibold';
+      deduct1.textContent = '- R$ 79,80 abatidos';
+      bar1.style.width = '100%';
+      bar1.className = 'bg-tertiary h-full rounded-full transition-all duration-300';
+    } else {
+      badge1.textContent = `Parcial (R$ ${(sale1Amount - sale1Paid).toFixed(2).replace('.', ',')} restam)`;
+      badge1.className = 'px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-fixed font-label-xs text-label-xs font-semibold';
+      deduct1.textContent = `- R$ ${sale1Paid.toFixed(2).replace('.', ',')} abatidos`;
+      bar1.style.width = `${(sale1Paid / sale1Amount) * 100}%`;
+      bar1.className = 'bg-primary h-full rounded-full transition-all duration-300';
+    }
+
+    const badge2 = document.getElementById('badgeSale2');
+    const deduct2 = document.getElementById('deductSale2');
+    const bar2 = document.getElementById('barSale2');
+
+    if (sale2Paid <= 0) {
+      badge2.textContent = 'Pendente integral';
+      badge2.className = 'px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-xs text-label-xs font-semibold';
+      deduct2.textContent = 'R$ 0,00 abatido';
+      bar2.style.width = '0%';
+    } else if (sale2Paid >= 100.00) {
+      badge2.textContent = 'Quita 100%';
+      badge2.className = 'px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-xs text-label-xs font-semibold';
+      deduct2.textContent = '- R$ 100,00 abatidos';
+      bar2.style.width = '100%';
+      bar2.className = 'bg-tertiary h-full rounded-full transition-all duration-300';
+    } else {
+      badge2.textContent = `Parcial (R$ ${sale2Remaining.toFixed(2).replace('.', ',')} restam)`;
+      badge2.className = 'px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-fixed font-label-xs text-label-xs font-semibold';
+      deduct2.textContent = `- R$ ${sale2Paid.toFixed(2).replace('.', ',')} abatidos`;
+      bar2.style.width = `${sale2Paid}%`;
+      bar2.className = 'bg-primary h-full rounded-full transition-all duration-300';
+    }
+  }
+
+  function triggerPaymentConfirmation() {
+    const toast = document.getElementById('successToast');
+    toast.classList.remove('hidden');
+    toast.classList.remove('translate-y-2');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 4500);
+  }
+
+  let lateOnlyFilterActive = false;
+  function toggleLateFilter() {
+    lateOnlyFilterActive = !lateOnlyFilterActive;
+    const btn = document.getElementById('filterAtrasoBtn');
+    const rowMaria = document.getElementById('row-maria-souza');
+    const rowJuliana = document.getElementById('row-juliana-costa');
+
+    if (lateOnlyFilterActive) {
+      btn.className = 'h-9 px-space-md rounded-xl font-label-sm text-label-sm flex items-center gap-space-xs transition-colors bg-error-container text-on-error-container font-semibold';
+      if (rowMaria) rowMaria.classList.add('hidden');
+      if (rowJuliana) rowJuliana.classList.add('hidden');
+    } else {
+      btn.className = 'h-9 px-space-md rounded-xl font-label-sm text-label-sm flex items-center gap-space-xs transition-colors bg-surface-container hover:bg-surface-container-high text-on-surface';
+      if (rowMaria) rowMaria.classList.remove('hidden');
+      if (rowJuliana) rowJuliana.classList.remove('hidden');
+    }
+  }
+</script></main></div></body></html>

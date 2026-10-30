@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-highest": "#e3e1ec", "background": "#fbf8ff", "on-secondary-container": "#5c647a", "on-primary-container": "#dad7ff", "on-primary": "#ffffff", "tertiary-fixed": "#85f8c4", "error": "#ba1a1a", "on-secondary": "#ffffff", "primary": "#3525cd", "on-primary-fixed-variant": "#3323cc", "surface-tint": "#4d44e3", "surface-container-high": "#e8e7f1", "surface-container-lowest": "#ffffff", "on-background": "#1a1b22", "secondary-fixed-dim": "#bec6e0", "on-error-container": "#93000a", "tertiary": "#005338", "on-secondary-fixed-variant": "#3f465c", "surface-container-low": "#f4f2fd", "primary-fixed": "#e2dfff", "tertiary-fixed-dim": "#68dba9", "tertiary-container": "#006e4c", "outline": "#777587", "on-error": "#ffffff", "outline-variant": "#c7c4d8", "on-primary-fixed": "#0f0069", "surface": "#fbf8ff", "error-container": "#ffdad6", "on-tertiary": "#ffffff", "secondary-fixed": "#dae2fd", "inverse-on-surface": "#f1effa", "surface-container": "#eeedf7", "on-secondary-fixed": "#131b2e", "secondary-container": "#dae2fd", "primary-container": "#4f46e5", "inverse-primary": "#c3c0ff", "on-tertiary-fixed": "#002114", "on-surface": "#1a1b22", "surface-bright": "#fbf8ff", "secondary": "#565e74", "inverse-surface": "#2f3038", "surface-variant": "#e3e1ec", "on-tertiary-fixed-variant": "#005137", "primary-fixed-dim": "#c3c0ff", "on-tertiary-container": "#7df1bd", "on-surface-variant": "#464555", "surface-dim": "#dad9e3" }, borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" }, spacing: { "space-xs": "0.25rem", "gutter": "1rem", "space-lg": "1rem", "margin-lg": "2.5rem", "gutter-lg": "2rem", "margin-md": "1.5rem", "gutter-md": "1.5rem", "margin": "1rem", "space-xl": "1.5rem", "space-sm": "0.5rem", "space-md": "0.75rem" }, fontFamily: { "label-xs": ["Geist"], "label-md": ["Geist"], "body-lg": ["Geist"], "display": ["Geist"], "body-md": ["Geist"], "headline-sm": ["Geist"], "headline-md": ["Geist"], "code-num": ["Geist"], "body-sm": ["Geist"], "label-sm": ["Geist"], "headline-lg": ["Geist"] }, fontSize: { "label-xs": ["11px", { lineHeight: "14px", letterSpacing: "0.02em", fontWeight: "600" }], "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0", fontWeight: "500" }], "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "-0.005em", fontWeight: "400" }], "display": ["32px", { lineHeight: "40px", letterSpacing: "-0.025em", fontWeight: "600" }], "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0", fontWeight: "400" }], "headline-sm": ["16px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "28px", letterSpacing: "-0.015em", fontWeight: "600" }], "code-num": ["13px", { lineHeight: "18px", letterSpacing: "0", fontWeight: "500" }], "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0", fontWeight: "400" }], "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "500" }], "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.02em", fontWeight: "600" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Loja Exemplo</span><span class="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-surface-container-high text-tertiary font-label-xs text-label-xs"><span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>Online</span></div><span class="font-label-xs text-label-xs text-on-surface-variant">Pdv Vender</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notificações" class="w-11 h-11 relative flex items-center justify-center rounded-xl text-on-surface hover:bg-surface-container"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2 right-2 min-w-[16px] h-4 px-1 rounded-full bg-error text-on-error font-label-xs text-[10px] flex items-center justify-center leading-none">4</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full px-margin pb-6 gap-space-md">
+<!-- Stepper Header -->
+<div class="flex flex-col gap-space-xs pt-1">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">Passo 1 de 3</span>
+<span class="font-label-xs text-label-xs font-semibold text-primary">Seleção e Sacola</span>
+</div>
+<div class="grid grid-cols-3 gap-1.5 h-1.5 w-full">
+<div class="bg-primary rounded-full"></div>
+<div class="bg-surface-container-highest rounded-full"></div>
+<div class="bg-surface-container-highest rounded-full"></div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant pt-0.5">
+<span class="font-label-xs text-label-xs font-medium text-primary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> 1. Peças
+      </span>
+<span class="font-label-xs text-label-xs font-medium text-on-surface-variant/70">2. Cliente</span>
+<span class="font-label-xs text-label-xs font-medium text-on-surface-variant/70">3. Pagamento</span>
+</div>
+</div>
+<!-- Search & Barcode Scanner Input -->
+<div class="flex items-center gap-2">
+<div class="flex-1 flex items-center h-12 px-3.5 bg-surface-container-lowest rounded-xl shadow-sm text-on-surface">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant shrink-0 mr-2">search</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none" placeholder="Buscar por nome, ref ou cor..." type="search"/>
+</div>
+<button aria-label="Escanear Código de Barras" class="h-12 w-12 shrink-0 bg-surface-container-lowest text-primary active:bg-primary active:text-on-primary rounded-xl flex items-center justify-center shadow-sm transition-colors" id="scan-btn" type="button">
+<span class="material-symbols-outlined text-[24px]">barcode_scanner</span>
+</button>
+</div>
+<!-- Category Pills (Horizontally Scrollable) -->
+<div class="flex items-center gap-1.5 overflow-x-auto -mx-margin px-margin no-scrollbar py-0.5">
+<button class="h-9 px-4 rounded-full bg-primary text-on-primary font-label-md text-label-md shrink-0 flex items-center shadow-sm">
+      Todos
+    </button>
+<button class="h-9 px-4 rounded-full bg-surface-container-lowest text-on-surface-variant active:bg-surface-container hover:text-on-surface font-label-md text-label-md shrink-0 flex items-center shadow-sm transition-colors">
+      Vestidos
+    </button>
+<button class="h-9 px-4 rounded-full bg-surface-container-lowest text-on-surface-variant active:bg-surface-container hover:text-on-surface font-label-md text-label-md shrink-0 flex items-center shadow-sm transition-colors">
+      Jeans
+    </button>
+<button class="h-9 px-4 rounded-full bg-surface-container-lowest text-on-surface-variant active:bg-surface-container hover:text-on-surface font-label-md text-label-md shrink-0 flex items-center shadow-sm transition-colors">
+      Blusas
+    </button>
+<button class="h-9 px-4 rounded-full bg-surface-container-lowest text-on-surface-variant active:bg-surface-container hover:text-on-surface font-label-md text-label-md shrink-0 flex items-center shadow-sm transition-colors">
+      Croppeds
+    </button>
+<button class="h-9 px-4 rounded-full bg-surface-container-lowest text-on-surface-variant active:bg-surface-container hover:text-on-surface font-label-md text-label-md shrink-0 flex items-center shadow-sm transition-colors">
+      Acessórios
+    </button>
+</div>
+<!-- Rapid Selection / Catalog Feed -->
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">local_fire_department</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Mais Vendidos</span>
+</div>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Toque para adicionar</span>
+</div>
+<!-- Product 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm flex flex-col gap-2.5">
+<div class="flex items-start gap-3">
+<div class="w-16 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Close-up fashion photograph of an elegant modal V-neck black basic blouse on a neutral boutique mannequin with soft studio illumination and subtle fabric texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClTYaz57Ke9rO32BJESGlZ3hIZDM7bJ_8_otV6P_BpGrdM2a1qMkdSBHfn3hExhbzqBmaC4Afg6nF0Jlj5DGPJRlGVj1ST1nsKMCEGi4-jr_SHiRh-aSaBAAiMCwGflPhcn6JKX_v6Bdr6_n07bBwAugvWUevy9BzlMmZ8VjEajI2Fl_h5kK_m8HmGglrgYvY5uyqkuqykHM3skmLVlKmyxmBT2EPKUruFk3i75i-3"/>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase font-medium">Ref #MD-104</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Blusa Básica de Modal Gola V</h3>
+<p class="font-code-num text-code-num text-on-surface font-semibold mt-0.5">R$ 59,90</p>
+<span class="inline-flex items-center gap-1 text-[11px] font-label-xs text-tertiary mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> 20 un. em estoque
+          </span>
+</div>
+</div>
+<!-- Fast Sizing Chips -->
+<div class="flex items-center gap-2 pt-1 border-t-0">
+<button class="flex-1 h-11 px-2 rounded-lg bg-surface-container text-outline font-label-sm text-label-sm flex flex-col items-center justify-center opacity-60 cursor-not-allowed" disabled="">
+<span class="font-semibold leading-tight">P</span>
+<span class="text-[9px] uppercase font-bold text-error leading-tight">Esgotado</span>
+</button>
+<button class="add-to-cart-btn flex-1 h-11 px-2 rounded-lg bg-secondary-container active:scale-95 text-on-secondary-container font-label-sm text-label-sm flex flex-col items-center justify-center transition-transform" data-item="Blusa Modal M" data-price="59.90">
+<span class="font-semibold leading-tight">M</span>
+<span class="text-[9px] font-medium leading-tight text-tertiary">+15 un</span>
+</button>
+<button class="add-to-cart-btn flex-1 h-11 px-2 rounded-lg bg-secondary-container active:scale-95 text-on-secondary-container font-label-sm text-label-sm flex flex-col items-center justify-center transition-transform" data-item="Blusa Modal G" data-price="59.90">
+<span class="font-semibold leading-tight">G</span>
+<span class="text-[9px] font-medium leading-tight text-tertiary">+5 un</span>
+</button>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm flex flex-col gap-2.5">
+<div class="flex items-start gap-3">
+<div class="w-16 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Editorial lookbook shot of a woman wearing a delicate wrap midi dress with subtle floral print against an off-white architectural background, warm atmospheric daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeMISMCDUchI5_W51WtOg4w76gI2YogSE6Rsca3saSm6S7a4UXIsBcRWTPvz335fhAdMAnUc3XX8-3kminxWgPN5Nn6ezQhjnPYhIQnzwPbcr1GUQ_Q5k3b5SiUEmwxMiZVoQUxWbEqip5vOujSBLJBh8AGZUsswBQ0SkrNnWhdBr-bd8to2PNPJIyS3vFTla4NTyn6h5ZHWuNHyXBomO0RvGcV8VCmN-YpeAn_Q3-"/>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase font-medium">Ref #VF-209</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Vestido Midi Floral Transpassado</h3>
+<p class="font-code-num text-code-num text-on-surface font-semibold mt-0.5">R$ 189,90</p>
+<span class="inline-flex items-center gap-1 text-[11px] font-label-xs text-on-secondary-container mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Cores: Off-white / Menta
+          </span>
+</div>
+</div>
+<!-- Fast Sizing Chips -->
+<div class="flex items-center gap-2 pt-1">
+<button class="add-to-cart-btn flex-1 h-11 px-2 rounded-lg bg-primary-container text-on-primary active:scale-95 font-label-sm text-label-sm flex flex-col items-center justify-center transition-transform shadow-sm" data-item="Vestido Floral M" data-price="189.90">
+<span class="font-semibold leading-tight">M (Na Sacola)</span>
+<span class="text-[9px] font-medium leading-tight text-tertiary-fixed">+5 un</span>
+</button>
+<button class="add-to-cart-btn flex-1 h-11 px-2 rounded-lg bg-secondary-container active:scale-95 text-on-secondary-container font-label-sm text-label-sm flex flex-col items-center justify-center transition-transform" data-item="Vestido Floral G" data-price="189.90">
+<span class="font-semibold leading-tight">G</span>
+<span class="text-[9px] font-medium leading-tight text-tertiary">+2 un</span>
+</button>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm flex flex-col gap-2.5">
+<div class="flex items-start gap-3">
+<div class="w-16 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Premium denim jeans neatly folded showing stitch details and stretch fabric texture on polished stone boutique counter top in bright contemporary daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS9_mU8QDgVGIaaa3t8cE6ewapazlOj2j0uqDEn6BSStIZYckg0u3AwfuASNFac3yeESYWQjHRqDGSl48HGdfYKuxn09vQ3an0RpbIXW5eswZoFon8Qp0ZPhOComxHr4Fd6ILB0RYyqN0KEoMxEFeikRQoG1IJdaN4xyUJzMg-GoyQbcn9BFtIoH7mBgSm43gvxaFOElDc_0EEIL7vGWUyT2Y6tI7wI_6PN43ezcCg"/>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase font-medium">Ref #JN-883</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Calça Jeans Skinny Power Stretch</h3>
+<p class="font-code-num text-code-num text-on-surface font-semibold mt-0.5">R$ 139,90</p>
+<span class="inline-flex items-center gap-1 text-[11px] font-label-xs text-tertiary mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Alta elasticidade
+          </span>
+</div>
+</div>
+<!-- Fast Sizing Chips -->
+<div class="grid grid-cols-4 gap-1.5 pt-1">
+<button class="add-to-cart-btn h-11 rounded-lg bg-secondary-container active:scale-95 text-on-secondary-container font-label-sm text-label-sm flex flex-col items-center justify-center transition-transform" data-item="Jeans 36" data-price="139.90">
+<span class="font-semibold leading-tight">36</span>
+<span class="text-[9px] font-medium text-tertiary">3 un</span>
+</button>
+<button class="add-to-cart-btn h-11 rounded-lg bg-secondary-container active:scale-95 text-on-secondary-container font-label-sm text-label-sm flex flex-col items-center justify-center transition-transform" data-item="Jeans 38" data-price="139.90">
+<span class="font-semibold leading-tight">38</span>
+<span class="text-[9px] font-medium text-tertiary">8 un</span>
+</button>
+<button class="add-to-cart-btn h-11 rounded-lg bg-secondary-container active:scale-95 text-on-secondary-container font-label-sm text-label-sm flex flex-col items-center justify-center transition-transform" data-item="Jeans 40" data-price="139.90">
+<span class="font-semibold leading-tight">40</span>
+<span class="text-[9px] font-medium text-tertiary">6 un</span>
+</button>
+<button class="add-to-cart-btn h-11 rounded-lg bg-secondary-container active:scale-95 text-on-secondary-container font-label-sm text-label-sm flex flex-col items-center justify-center transition-transform" data-item="Jeans 42" data-price="139.90">
+<span class="font-semibold leading-tight">42</span>
+<span class="text-[9px] font-medium text-tertiary">1 un</span>
+</button>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm flex flex-col gap-2.5">
+<div class="flex items-start gap-3">
+<div class="w-16 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Ribbed cropped top in beige minimal aesthetic suspended on luxury wooden hanger in boutique display with soft shadow casting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJEdD68r2Mi3UbjtbbCvbqvvwRmBkyR4Yl_5yqMUoV64k5LQbWzFMXuRd0oF0lg6vfPr4i4lSgC60TLbZCI0kpA26OmAuyZmdbcRPqaaMlPshoAdQO4kjefIlNptnhPUj2kIFyx-H7jvqC1Ppgk_g8ejd4nAX-s20TqiNIVKmN2EpTOh52cQA-I-2rtTqHLEt50RUp4M5I2Ot5PWfDsw0RJOn9IhAOGubR18sXoTeX"/>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase font-medium">Ref #CR-330</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Cropped Canelado Gola Média</h3>
+<p class="font-code-num text-code-num text-on-surface font-semibold mt-0.5">R$ 45,00</p>
+<span class="inline-flex items-center gap-1 text-[11px] font-label-xs text-tertiary mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> 12 un. em estoque
+          </span>
+</div>
+</div>
+<!-- Single Size Chip -->
+<div class="pt-1">
+<button class="add-to-cart-btn w-full h-11 rounded-lg bg-secondary-container active:scale-95 text-on-secondary-container font-label-sm text-label-sm flex items-center justify-center gap-2 transition-transform" data-item="Cropped Canelado Único" data-price="45.00">
+<span class="font-semibold">Tamanho Único</span>
+<span class="text-[11px] text-tertiary font-medium">• Adicionar (+12 un disponíveis)</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sticky POS Cart Drawer / Sheet (Pinned right above shell navigation) -->
+<section class="sticky bottom-0 z-30 -mx-margin px-margin pt-2.5 pb-2 bg-surface/95 backdrop-blur-md shadow-[0_-8px_20px_rgba(0,0,0,0.06)] rounded-t-2xl flex flex-col gap-2.5">
+<!-- Header of Sheet: Total & Expand Toggle -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-label-sm">
+<span id="cart-counter">2</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface leading-tight">2 itens na sacola</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Subtotal acumulado</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-headline-md text-headline-md text-primary tracking-tight" id="cart-total">R$ 249,80</span>
+</div>
+</div>
+<!-- Collapsible Quick Breakdown preview -->
+<div class="bg-surface-container-low rounded-xl p-2.5 flex flex-col gap-2">
+<div class="flex items-center justify-between font-body-sm text-body-sm text-on-surface">
+<span class="truncate flex items-center gap-1.5">
+<span class="font-semibold text-primary">1x</span> Blusa Básica Preta / M
+        </span>
+<span class="font-code-num text-code-num font-medium text-on-surface-variant ml-2 shrink-0">R$ 59,90</span>
+</div>
+<div class="flex items-center justify-between font-body-sm text-body-sm text-on-surface">
+<span class="truncate flex items-center gap-1.5">
+<span class="font-semibold text-primary">1x</span> Vestido Floral Transpassado / M
+        </span>
+<span class="font-code-num text-code-num font-medium text-on-surface-variant ml-2 shrink-0">R$ 189,90</span>
+</div>
+</div>
+<!-- Quick Customer Tag with Ledger balance indication -->
+<div class="flex items-center justify-between bg-surface-container-lowest px-3 py-2 rounded-xl shadow-sm">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded-full bg-tertiary/10 text-tertiary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]">account_balance_wallet</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface truncate">Maria Souza</span>
+<span class="font-label-xs text-label-xs text-tertiary truncate">Caderneta: R$ 320,20 disp.</span>
+</div>
+</div>
+<button class="h-8 px-2.5 rounded-lg bg-surface-container-high text-on-surface-variant active:bg-surface-container font-label-xs text-label-xs shrink-0 flex items-center gap-1" type="button">
+<span>Alterar</span>
+<span class="material-symbols-outlined text-[14px]">swap_horiz</span>
+</button>
+</div>
+<!-- Big Ergonomic POS CTA (thumb zone friendly) -->
+<button class="w-full h-13 py-3 px-4 rounded-xl bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-between shadow-[0_4px_14px_rgba(53,37,205,0.3)] active:scale-[0.98] transition-transform" id="proceed-btn" type="button">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">point_of_sale</span>
+<span>Avançar para Pagamento</span>
+</span>
+<div class="flex items-center gap-1 font-headline-sm">
+<span>R$ 249,80</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+</button>
+</section>
+</div>
+<script>
+  // Simple micro-interaction for POS cart feedback
+  document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const item = btn.getAttribute('data-item');
+      
+      // Haptic-like visual pulse
+      btn.classList.add('bg-primary', 'text-on-primary');
+      setTimeout(() => {
+        btn.classList.remove('bg-primary', 'text-on-primary');
+      }, 200);
+
+      // Create toast feedback for quick POS speed
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-inverse-surface text-inverse-on-surface px-4 py-2 rounded-full font-label-sm text-label-sm shadow-lg flex items-center gap-2 transition-all';
+      toast.innerHTML = `<span class="material-symbols-outlined text-[16px] text-tertiary-fixed">check_circle</span> Adicionado: ${item}`;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 200);
+      }, 1500);
+    });
+  });
+
+  // Scanner feedback
+  const scanBtn = document.getElementById('scan-btn');
+  if (scanBtn) {
+    scanBtn.addEventListener('click', () => {
+      scanBtn.classList.add('scale-95');
+      setTimeout(() => scanBtn.classList.remove('scale-95'), 150);
+    });
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-2 py-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="inicio" href="#"><span class="material-symbols-outlined text-[22px]">storefront</span><span class="font-label-xs text-label-xs mt-0.5">Início</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-2 py-1 transition-colors text-primary font-semibold" data-path="pdv-vender" href="#"><div class="w-10 h-10 -mt-3.5 rounded-full bg-primary flex items-center justify-center shadow-[0_4px_10px_rgba(53,37,205,0.35)] text-on-primary"><span class="material-symbols-outlined text-[22px]">point_of_sale</span></div><span class="font-label-xs text-label-xs mt-0.5">PDV</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-2 py-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="produtos" href="#"><span class="material-symbols-outlined text-[22px]">inventory_2</span><span class="font-label-xs text-label-xs mt-0.5">Produtos</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-2 py-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="clientes" href="#"><span class="material-symbols-outlined text-[22px]">group</span><span class="font-label-xs text-label-xs mt-0.5">Clientes</span></a></div></nav></body></html>

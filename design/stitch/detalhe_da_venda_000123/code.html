@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-error-container":"#93000a","surface-container":"#eeedf7","on-tertiary-fixed":"#002114","tertiary-container":"#006e4c","outline-variant":"#c7c4d8","surface-dim":"#dad9e3","inverse-on-surface":"#f1effa","inverse-primary":"#c3c0ff","on-surface-variant":"#464555","tertiary-fixed-dim":"#68dba9","tertiary-fixed":"#85f8c4","on-error":"#ffffff","outline":"#777587","on-secondary-fixed":"#131b2e","surface-tint":"#4d44e3","secondary-fixed-dim":"#bec6e0","surface-container-lowest":"#ffffff","on-primary-fixed-variant":"#3323cc","surface-bright":"#fbf8ff","surface-container-high":"#e8e7f1","on-secondary-container":"#5c647a","on-tertiary-container":"#7df1bd","on-tertiary-fixed-variant":"#005137","error":"#ba1a1a","surface-container-low":"#f4f2fd","on-secondary-fixed-variant":"#3f465c","primary-container":"#4f46e5","on-background":"#1a1b22","on-primary-fixed":"#0f0069","secondary-fixed":"#dae2fd","surface":"#fbf8ff","primary-fixed-dim":"#c3c0ff","on-secondary":"#ffffff","on-surface":"#1a1b22","on-primary":"#ffffff","surface-variant":"#e3e1ec","error-container":"#ffdad6","tertiary":"#005338","inverse-surface":"#2f3038","on-primary-container":"#dad7ff","primary":"#3525cd","primary-fixed":"#e2dfff","secondary":"#565e74","on-tertiary":"#ffffff","secondary-container":"#dae2fd","background":"#fbf8ff","surface-container-highest":"#e3e1ec"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"space-xl":"1.5rem","gutter":"1rem","space-sm":"0.5rem","margin-lg":"2.5rem","gutter-lg":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-md":"0.75rem","margin":"1rem","gutter-md":"1.5rem","margin-md":"1.5rem"},fontFamily:{"label-md":["Geist"],"body-sm":["Geist"],"headline-lg":["Geist"],"body-md":["Geist"],"headline-md":["Geist"],"display":["Geist"],"code-num":["Geist"],"body-lg":["Geist"],"headline-sm":["Geist"],"label-sm":["Geist"],"label-xs":["Geist"]},fontSize:{"label-md":["14px",{lineHeight:"20px",letterSpacing:"0",fontWeight:"500"}],"body-sm":["13px",{lineHeight:"18px",letterSpacing:"0",fontWeight:"400"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.02em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0",fontWeight:"400"}],"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.015em",fontWeight:"600"}],"display":["32px",{lineHeight:"40px",letterSpacing:"-0.025em",fontWeight:"600"}],"code-num":["13px",{lineHeight:"18px",letterSpacing:"0",fontWeight:"500"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"400"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"600"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.01em",fontWeight:"500"}],"label-xs":["11px",{lineHeight:"14px",letterSpacing:"0.02em",fontWeight:"600"}]}}}};</script></head><body class="bg-background font-body-md text-body-md text-on-surface"><aside class="fixed left-0 top-0 bottom-0 w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm"><img alt="Logo Loja Exemplo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL10c8ED2T8P3LSNp2BP5_3zdAxd1VxAaMQM0ieaMHdrDL2bXONDRCmFaDj1-FbOgL9ZZV3pp-thLDfqTnzzBIoc9Zv5NNFKz0TXMAk890C9XAhmYp-NvRPTohUhOzwZPUxbJx09RgD8Y4KFyXq85wdSmRdgQBBhRSNTC04fHaUbrRGhBQBpDAjX9j89h9ob05d06mf98_yop-hka4C8aARmSWSAO5vgDG2-1MTPpK"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">Loja Exemplo</span><span class="font-label-xs text-label-xs text-on-surface-variant">Painel de Gestão</span></div></div><nav class="flex flex-col gap-space-xs px-space-md py-space-md" data-active-classes="bg-secondary-container text-on-secondary-fixed font-label-md"><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inicio" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">home</span><span>Início</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="produtos-e-estoque" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Produtos e estoque</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="vendas" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Vendas</span></div></a><a aria-current="page" class="flex items-center justify-between px-space-md py-space-sm rounded-xl transition-colors bg-secondary-container text-on-secondary-fixed font-label-md" data-path="clientes-e-fiado" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">group</span><span>Clientes e fiado</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="pendencias" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">notification_important</span><span>Pendências</span></div><span class="font-label-xs text-label-xs bg-error-container text-on-error-container px-space-xs py-0.5 rounded-full">4</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="relatorios" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span>Relatórios</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="configuracoes" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">settings</span><span>Configurações</span></div></a></nav></div><div class="p-space-md m-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-sm"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary-container"></span><span class="font-label-xs text-label-xs text-on-surface-variant">Conectado à nuvem</span></div><a class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary hover:text-on-surface transition-colors" data-path="suporte" href="#"><span class="material-symbols-outlined text-[16px]">help</span><span>Suporte e ajuda</span></a></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-gutter-lg gap-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-[20px] text-on-surface-variant pointer-events-none">search</span><input class="w-full h-9 pl-10 pr-16 bg-surface-container-low text-on-surface placeholder:text-on-surface-variant rounded-xl font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Buscar produto, cliente ou venda #... (Ctrl+K)" type="text"/><kbd class="absolute right-space-md font-code-num text-code-num bg-surface-container px-space-xs py-0.5 rounded text-on-surface-variant">⌘K</kbd></div></div><div class="flex items-center gap-space-lg"><button class="h-9 px-space-lg bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md rounded-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex items-center gap-space-sm transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span>Nova venda</span></button><div class="flex items-center gap-space-md"><button class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="relative"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary-container ring-2 ring-surface-container-lowest"></span></div><div class="hidden lg:flex flex-col text-left"><span class="font-label-sm text-label-sm text-on-surface font-semibold leading-tight">Loja Exemplo</span><span class="font-label-xs text-label-xs text-tertiary font-medium">Online</span></div></div></div></div></header><div class="hidden fixed top-16 left-64 right-0 bg-error-container text-on-error-container px-gutter-lg py-space-xs font-label-sm text-label-sm flex items-center gap-space-sm z-30 shadow-[0_1px_8px_rgba(0,0,0,0.04)]" id="offline-banner"><span class="material-symbols-outlined text-[16px]">wifi_off</span><span>Você está offline. As alterações serão sincronizadas assim que a conexão retornar.</span></div><main class="w-full pt-16 flex-1 px-margin-lg py-space-xl bg-background"><div class="flex flex-col w-full gap-space-lg">
+<!-- Interactive Navigation Synchronizer -->
+<script>
+    (function syncSidebar() {
+      try {
+        const navLinks = document.querySelectorAll('aside nav a');
+        navLinks.forEach(link => {
+          if (link.getAttribute('data-path') === 'vendas') {
+            link.className = 'flex items-center justify-between px-space-md py-space-sm rounded-xl bg-secondary-container text-on-secondary-fixed font-label-md transition-colors';
+          } else {
+            link.className = 'flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors';
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  </script>
+<!-- Top Breadcrumb -->
+<nav aria-label="Trilha de navegação" class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<a class="hover:text-on-surface transition-colors" href="#">Vendas</a>
+<span class="text-outline-variant font-normal">/</span>
+<span class="text-on-surface font-semibold">Venda #000123</span>
+</nav>
+<!-- Main Order Header & Command Bar -->
+<div class="bg-surface-container-lowest rounded-xl p-space-xl shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-space-lg">
+<div class="flex flex-col gap-space-sm">
+<div class="flex flex-wrap items-center gap-space-md">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight flex items-center gap-space-sm">
+          Venda #000123
+          <button class="p-1 rounded hover:bg-surface-container text-on-surface-variant transition-colors" onclick="navigator.clipboard?.writeText('#000123'); this.querySelector('span').innerText='check'; setTimeout(()=&gt;this.querySelector('span').innerText='content_copy', 1500);" title="Copiar identificador da venda" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</h1>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-outline">schedule</span>
+          29/10/2024 às 14:20
+        </span>
+</div>
+<!-- Situational Badges Row -->
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="h-[22px] px-2 rounded-md bg-tertiary-container/15 text-tertiary-container font-label-xs text-label-xs flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+          Confirmada
+        </span>
+<span class="h-[22px] px-2 rounded-md bg-amber-100 text-amber-800 font-label-xs text-label-xs flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+          Pagamento Parcial
+        </span>
+<span class="h-[22px] px-2 rounded-md bg-amber-100 text-amber-800 font-label-xs text-label-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">local_shipping</span>
+          Aguardando envio
+        </span>
+<span class="h-[22px] px-2 rounded-md bg-surface-container text-on-surface-variant font-label-xs text-label-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">verified_user</span>
+          Dispensa provável — MEI
+        </span>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-wrap items-center gap-space-xs">
+<button class="h-9 px-space-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-xl flex items-center gap-space-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">print</span>
+<span>Comprovante</span>
+</button>
+<button class="h-9 px-space-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-xl flex items-center gap-space-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">sync_alt</span>
+<span>Devolver / Trocar</span>
+</button>
+<button class="h-9 px-space-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-xl flex items-center gap-space-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>Trocar forma de pagamento</span>
+</button>
+<button class="h-9 px-space-md bg-tertiary-container hover:bg-tertiary text-on-tertiary font-label-sm text-label-sm rounded-xl flex items-center gap-space-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span>Reenviar comprovante</span>
+</button>
+<button class="h-9 px-space-md bg-error-container/60 hover:bg-error-container text-error font-label-sm text-label-sm rounded-xl flex items-center gap-space-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+<span>Cancelar venda</span>
+</button>
+</div>
+</div>
+<!-- Content Split Grid (65% / 35%) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: Operations & Transactional Core (8 cols ~ 66%) -->
+<div class="lg:col-span-8 flex flex-col gap-space-lg">
+<!-- Card: Itens da Venda -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[20px] text-primary">shopping_bag</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Itens da Venda</h2>
+<span class="font-label-xs text-label-xs bg-surface-container text-on-surface-variant px-space-xs py-0.5 rounded-full font-medium">3 peças</span>
+</div>
+<span class="font-code-num text-code-num text-on-surface-variant">Lote Operacional #4029</span>
+</div>
+<!-- Order Items Table -->
+<div class="overflow-x-auto -mx-space-xl px-space-xl">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-xs text-label-xs uppercase tracking-wider">
+<th class="py-space-sm pl-space-md rounded-l-lg">Peça &amp; Detalhes</th>
+<th class="py-space-sm px-space-sm">Referência</th>
+<th class="py-space-sm px-space-sm">Variação</th>
+<th class="py-space-sm px-space-sm text-right">Valor Unit.</th>
+<th class="py-space-sm px-space-sm text-center">Qtd</th>
+<th class="py-space-sm pr-space-md text-right rounded-r-lg">Subtotal</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface font-body-sm text-body-sm">
+<!-- Item 1 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md pl-space-md flex items-center gap-space-md">
+<img alt="Blusa básica preta" class="w-12 h-14 rounded-lg object-cover bg-surface-container flex-shrink-0" data-alt="Close up photographic studio shot of an elegant basic black modal t-shirt placed flat over a neutral light linen fabric, subtle boutique lighting, crisp fabric folds, premium minimalist fashion presentation" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBk_2K3kFqn1mnhO-U2KDdfQ8U4nhhYA2cZjyC-ZPIRq2pHiEk6RJBku3IBu2iCpwn1WQ4aZ6ry7rnH_TqjILORRLNUazdEnLKX937W7D5tPCpmxPpHvguHJtAQq7F4R8-gdO4Qi7POuVMRSXNiuHYfqMqrK9QYL9IwR5jB3-WyUenYm3mom6bxIyCPKq6WGJo5qUfnnhN2ofiYLXO2e_wi2qG4JIUQrLWo4MES17_9"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Blusa básica de modal</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Coleção Essenciais Primavera</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm font-code-num text-code-num text-on-surface-variant">BL-0491</td>
+<td class="py-space-md px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-xs text-label-xs bg-surface-container px-2 py-0.5 rounded text-on-surface">
+<span class="w-2 h-2 rounded-full bg-neutral-900"></span> Preta / M
+                  </span>
+</td>
+<td class="py-space-md px-space-sm text-right font-code-num text-code-num">R$ 59,90</td>
+<td class="py-space-md px-space-sm text-center font-code-num text-code-num">1</td>
+<td class="py-space-md pr-space-md text-right font-code-num text-code-num font-semibold text-on-surface">R$ 59,90</td>
+</tr>
+<!-- Item 2 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md pl-space-md flex items-center gap-space-md">
+<img alt="Calça jeans skinny escura" class="w-12 h-14 rounded-lg object-cover bg-surface-container flex-shrink-0" data-alt="High quality editorial product photography of a modern tailored dark wash skinny denim jean pants lying folded on clean neutral surface with delicate natural sunlight shadows, high fashion catalog aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMgfs7dBzk8EdRIntVBrZj_rpnUKXsq-z95o26rH_SV6Nod8SQDhtl3PmD8WdNTfLIcOEogYdNDph_sY8_ygZb9aaznhYe5onnO6SX0G-eeyD-8VrIsiXAWMxqTCRpWrk4XeWRVH7kWu_ed1-1ixQxhe6Pj3QYCpg-JrZsi-craKhnAB_VJSddeVU3lG6Hw_cqwFdthN605x6er536IWtqWm45yP1bmZZ5TLPfgTiF"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Calça jeans skinny power stretch</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Denim Premium</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm font-code-num text-code-num text-on-surface-variant">CJ-8820</td>
+<td class="py-space-md px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-xs text-label-xs bg-surface-container px-2 py-0.5 rounded text-on-surface">
+<span class="w-2 h-2 rounded-full bg-blue-900"></span> Jeans Escuro / 38
+                  </span>
+</td>
+<td class="py-space-md px-space-sm text-right font-code-num text-code-num">R$ 139,90</td>
+<td class="py-space-md px-space-sm text-center font-code-num text-code-num">1</td>
+<td class="py-space-md pr-space-md text-right font-code-num text-code-num font-semibold text-on-surface">R$ 139,90</td>
+</tr>
+<!-- Item 3 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md pl-space-md flex items-center gap-space-md">
+<img alt="Cropped canelado off-white" class="w-12 h-14 rounded-lg object-cover bg-surface-container flex-shrink-0" data-alt="Top down studio fashion shot of an off-white ribbed knit cropped top, warm morning diffused studio lighting, textured fabric detail, aesthetic boutique lookbook clean atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOifVRO1cujm43JraKM5eks1Fu8bQGzcOVEzvGvHLgqURJqyzcjl-WLM5Eomy0U-Zs4yWHhBgTABprc_8zvINLQQ_oKUqHrfVxQ_siBNEe4UH8A6F6NXa_RC74Yc0k9w6zYPApjAjJHVPiRnXAOxEIsLDQIEATo0vuztwya-t4HeG0rDwmQOE9wjgVSlCHc48yMfKs9THnPCtiffQ_XvLApptgQ-HW1k8QTSL9OQAI"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Cropped canelado gola média</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Linha Malharia Leve</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm font-code-num text-code-num text-on-surface-variant">CR-7740</td>
+<td class="py-space-md px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-xs text-label-xs bg-surface-container px-2 py-0.5 rounded text-on-surface">
+<span class="w-2 h-2 rounded-full bg-stone-200"></span> Off-white / Único
+                  </span>
+</td>
+<td class="py-space-md px-space-sm text-right font-code-num text-code-num">R$ 45,00</td>
+<td class="py-space-md px-space-sm text-center font-code-num text-code-num">2</td>
+<td class="py-space-md pr-space-md text-right font-code-num text-code-num font-semibold text-on-surface">R$ 90,00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Subtotals & Commercial Breakdown -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-xs mt-space-xs">
+<div class="flex justify-between items-center text-on-surface-variant font-body-sm text-body-sm">
+<span>Subtotal bruto dos itens</span>
+<span class="font-code-num text-code-num font-medium text-on-surface">R$ 289,80</span>
+</div>
+<div class="flex justify-between items-center text-tertiary-container font-body-sm text-body-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">loyalty</span>
+              Desconto comercial de cortesia (Fidelidade)
+            </span>
+<span class="font-code-num text-code-num font-medium">- R$ 10,00</span>
+</div>
+<div class="pt-space-xs mt-space-xs flex justify-between items-baseline">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Total Líquido da Venda</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Valor formal faturado nesta operação</span>
+</div>
+<span class="font-display text-display text-primary font-bold tracking-tight">R$ 279,80</span>
+</div>
+</div>
+</section>
+<!-- Card: Pagamentos Registrados -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[20px] text-tertiary-container">account_balance_wallet</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Pagamentos Registrados</h2>
+</div>
+<span class="font-label-xs text-label-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-medium">1 liquidado / 1 pendente</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Split Payment 1: Pix -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">qr_code_2</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-label-md text-label-md text-on-surface font-semibold">1º Pagamento — Pix Direto</span>
+<span class="h-[20px] px-2 rounded bg-tertiary-container/15 text-tertiary-container font-label-xs text-label-xs flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[12px]">check_circle</span>
+                    Pix recebido e conferido
+                  </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                  Autenticação bancária: <span class="font-code-num text-code-num text-on-surface">#983210</span> • 29/10/2024 às 14:22
+                </span>
+</div>
+</div>
+<div class="text-right sm:pl-space-md">
+<span class="font-code-num text-code-num font-bold text-on-surface text-[16px]">R$ 100,00</span>
+<span class="block font-label-xs text-label-xs text-tertiary font-medium">Disponível no caixa</span>
+</div>
+</div>
+<!-- Split Payment 2: Fiado / Crediário -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-secondary-container text-on-secondary-fixed flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">history_edu</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-label-md text-label-md text-on-surface font-semibold">2º Pagamento — Fiado (Crediário Próprio)</span>
+<span class="h-[20px] px-2 rounded bg-amber-100 text-amber-800 font-label-xs text-label-xs flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[12px]">pending</span>
+                    Saldo em aberto
+                  </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                  Vencimento combinado: <span class="font-label-sm text-label-sm font-semibold text-on-surface">10/11/2024</span> • Vinculado à conta corrente da cliente
+                </span>
+</div>
+</div>
+<div class="text-right sm:pl-space-md">
+<span class="font-code-num text-code-num font-bold text-amber-800 text-[16px]">R$ 179,80</span>
+<span class="block font-label-xs text-label-xs text-on-surface-variant">A vencer em 12 dias</span>
+</div>
+</div>
+</div>
+<!-- Payment Balance Summary Bar -->
+<div class="p-space-md bg-surface-container rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-lg">
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase font-medium">Total Pago</span>
+<span class="font-code-num text-code-num font-bold text-tertiary-container text-[16px]">R$ 100,00</span>
+</div>
+<div class="w-px h-8 bg-outline-variant/40"></div>
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase font-medium">Restante no Fiado</span>
+<span class="font-code-num text-code-num font-bold text-error text-[16px]">R$ 179,80</span>
+</div>
+</div>
+<button class="h-9 px-space-lg bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm rounded-xl flex items-center justify-center gap-space-xs shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">price_check</span>
+<span>Receber fiado desta venda</span>
+</button>
+</div>
+</section>
+<!-- Card: Linha do Tempo / Histórico de Eventos -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[20px] text-primary">timeline</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Linha do Tempo da Operação</h2>
+</div>
+<span class="font-label-xs text-label-xs text-on-surface-variant">4 registros auditados</span>
+</div>
+<!-- Vertical Timeline Flow -->
+<div class="relative pl-6 flex flex-col gap-space-lg">
+<!-- Timeline Vertical Bar -->
+<div class="absolute left-2.5 top-3 bottom-3 w-0.5 bg-surface-container-high"></div>
+<!-- Event 1 -->
+<div class="relative flex items-start gap-space-md">
+<span class="absolute -left-6 top-1 w-5 h-5 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-[10px]">
+<span class="material-symbols-outlined text-[12px]">add_shopping_cart</span>
+</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Venda criada e confirmada no PDV</span>
+<span class="font-code-num text-code-num text-on-surface-variant">29/10 às 14:20</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Carrinho montado com 3 itens por usuária autenticada (Proprietária solo).</span>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="relative flex items-start gap-space-md">
+<span class="absolute -left-6 top-1 w-5 h-5 rounded-full bg-tertiary-container text-on-tertiary flex items-center justify-center text-[10px]">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Pix de R$ 100,00 confirmado e conciliado</span>
+<span class="font-code-num text-code-num text-on-surface-variant">29/10 às 14:22</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Identificador bancário de entrada automática via chave CNPJ vinculada.</span>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="relative flex items-start gap-space-md">
+<span class="absolute -left-6 top-1 w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px]">
+<span class="material-symbols-outlined text-[12px]">bookmark</span>
+</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Saldo de R$ 179,80 registrado na conta de Fiado</span>
+<span class="font-code-num text-code-num text-on-surface-variant">29/10 às 14:22</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Lançamento de débito na ficha da cliente Maria Souza com prazo acordado até 10/11/2024.</span>
+</div>
+</div>
+<!-- Event 4 -->
+<div class="relative flex items-start gap-space-md">
+<span class="absolute -left-6 top-1 w-5 h-5 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-[10px]">
+<span class="material-symbols-outlined text-[12px]">label</span>
+</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Etiqueta de envio gerada</span>
+<span class="font-code-num text-code-num text-on-surface-variant">29/10 às 14:25</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Modo expresso selecionado. Pacote pronto na bancada de embalagem aguardando coleta.</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN: Customer, Shipping & Tax Context (4 cols ~ 34%) -->
+<div class="lg:col-span-4 flex flex-col gap-space-lg">
+<!-- Card: Cliente Vinculada -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[20px] text-primary">person</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Cliente Vinculada</h2>
+</div>
+<span class="font-label-xs text-label-xs bg-surface-container text-on-surface font-medium px-2 py-0.5 rounded">Fiel • VIP</span>
+</div>
+<div class="flex items-center gap-space-md p-space-md bg-surface-container-low rounded-xl">
+<div class="w-12 h-12 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-headline-sm text-headline-sm font-bold flex-shrink-0">
+            MS
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Maria Souza</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_month</span> Cliente desde Mar/2023
+            </span>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm font-body-sm text-body-sm">
+<div class="flex items-center justify-between p-space-sm rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-tertiary-container">chat</span>
+              WhatsApp
+            </span>
+<a class="font-code-num text-code-num text-primary hover:underline font-semibold flex items-center gap-1" href="https://wa.me/5511987654321" target="_blank">
+              (11) 98765-4321
+              <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</div>
+<!-- Total Fiado / Debt Warning Callout -->
+<div class="p-space-md rounded-xl bg-error-container/40 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs text-on-surface-variant font-medium">Saldo devedor total acumulado</span>
+<span class="font-label-xs text-label-xs bg-error-container text-on-error-container px-1.5 py-0.5 rounded">2 pendências</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-error-container font-bold">R$ 179,80</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Inclui esta venda e nenhum atraso anterior.</span>
+</div>
+</div>
+<a class="h-9 px-space-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-xl flex items-center justify-center gap-space-xs transition-colors mt-space-xs" href="#">
+<span>Ver ficha completa da cliente</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</section>
+<!-- Card: Logística & Envio -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[20px] text-primary">local_shipping</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Logística &amp; Envio</h2>
+</div>
+<span class="h-[22px] px-2 rounded-md bg-amber-100 text-amber-800 font-label-xs text-label-xs flex items-center gap-1">
+            Aguardando envio
+          </span>
+</div>
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-xs font-body-sm text-body-sm">
+<div class="flex justify-between items-center">
+<span class="font-label-xs text-label-xs uppercase tracking-wide text-on-surface-variant">Modalidade</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container">moped</span>
+              Sedex / Motoboy Expresso
+            </span>
+</div>
+<div class="pt-space-xs mt-space-xs flex flex-col gap-1">
+<span class="font-label-xs text-label-xs uppercase tracking-wide text-on-surface-variant">Destino de Entrega</span>
+<p class="text-on-surface font-medium leading-relaxed">
+              Rua das Flores, 120 — Apto 31<br/>
+              Bela Vista, São Paulo — SP<br/>
+<span class="font-code-num text-code-num text-on-surface-variant">CEP: 01234-000</span>
+</p>
+</div>
+<div class="pt-space-xs mt-space-xs flex justify-between items-center">
+<div class="flex flex-col">
+<span class="font-label-xs text-label-xs uppercase tracking-wide text-on-surface-variant">Código de Rastreio</span>
+<span class="font-code-num text-code-num text-on-surface font-bold">BR982341029SP</span>
+</div>
+<button class="font-label-xs text-label-xs text-primary bg-surface-container px-2 py-1 rounded hover:bg-surface-container-high transition-colors" onclick="navigator.clipboard?.writeText('BR982341029SP'); this.innerText='Copiado';" type="button">
+              Copiar
+            </button>
+</div>
+</div>
+<button class="h-9 px-space-md bg-primary hover:bg-primary-container text-on-primary font-label-sm text-label-sm rounded-xl flex items-center justify-center gap-space-xs shadow-sm transition-colors" onclick="this.innerHTML='&lt;span class=\'material-symbols-outlined text-[18px]\'&gt;done_all&lt;/span&gt;&lt;span&gt;Enviado com sucesso&lt;/span&gt;'; this.className='h-9 px-space-md bg-tertiary-container text-on-tertiary font-label-sm text-label-sm rounded-xl flex items-center justify-center gap-space-xs shadow-sm';" type="button">
+<span class="material-symbols-outlined text-[18px]">outgoing_mail</span>
+<span>Marcar como enviado</span>
+</button>
+</section>
+<!-- Card: Situação Fiscal (MEI) -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-space-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">receipt_long</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Situação Fiscal (MEI)</h2>
+</div>
+<span class="font-label-xs text-label-xs bg-surface-container px-2 py-0.5 rounded text-on-surface-variant font-medium">Simplificado</span>
+</div>
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-sm">
+<div class="flex items-start gap-space-xs text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-tertiary-container flex-shrink-0 mt-0.5">task_alt</span>
+<p class="font-body-sm text-body-sm leading-snug">
+<strong class="font-semibold">Dispensa provável:</strong> Venda para pessoa física (consumidora final) realizada diretamente por Microempreendedor Individual.
+            </p>
+</div>
+<div class="p-space-sm bg-surface-container rounded-lg font-label-xs text-label-xs text-on-surface-variant leading-relaxed">
+            Caso a cliente requisite expressamente Nota Fiscal eletrônica avulsa, gere o documento no Portal Nacional MEI e registre o número abaixo para conciliação contábil.
+          </div>
+</div>
+<button class="h-9 px-space-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-xl flex items-center justify-center gap-space-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle_outline</span>
+<span>Registrar nota fiscal emitida</span>
+</button>
+</section>
+</div>
+</div>
+</div></main></div></body></html>

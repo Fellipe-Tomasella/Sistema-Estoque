@@ -7,3 +7,6 @@ dist/
 coverage/
 backups/
 .DS_Store
+
+# Arquivos originais dos modelos (já extraídos em design/stitch)
+stich modelos/

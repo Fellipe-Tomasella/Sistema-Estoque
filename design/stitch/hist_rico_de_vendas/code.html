@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-error-container":"#93000a","surface-container":"#eeedf7","on-tertiary-fixed":"#002114","tertiary-container":"#006e4c","outline-variant":"#c7c4d8","surface-dim":"#dad9e3","inverse-on-surface":"#f1effa","inverse-primary":"#c3c0ff","on-surface-variant":"#464555","tertiary-fixed-dim":"#68dba9","tertiary-fixed":"#85f8c4","on-error":"#ffffff","outline":"#777587","on-secondary-fixed":"#131b2e","surface-tint":"#4d44e3","secondary-fixed-dim":"#bec6e0","surface-container-lowest":"#ffffff","on-primary-fixed-variant":"#3323cc","surface-bright":"#fbf8ff","surface-container-high":"#e8e7f1","on-secondary-container":"#5c647a","on-tertiary-container":"#7df1bd","on-tertiary-fixed-variant":"#005137","error":"#ba1a1a","surface-container-low":"#f4f2fd","on-secondary-fixed-variant":"#3f465c","primary-container":"#4f46e5","on-background":"#1a1b22","on-primary-fixed":"#0f0069","secondary-fixed":"#dae2fd","surface":"#fbf8ff","primary-fixed-dim":"#c3c0ff","on-secondary":"#ffffff","on-surface":"#1a1b22","on-primary":"#ffffff","surface-variant":"#e3e1ec","error-container":"#ffdad6","tertiary":"#005338","inverse-surface":"#2f3038","on-primary-container":"#dad7ff","primary":"#3525cd","primary-fixed":"#e2dfff","secondary":"#565e74","on-tertiary":"#ffffff","secondary-container":"#dae2fd","background":"#fbf8ff","surface-container-highest":"#e3e1ec"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"space-xl":"1.5rem","gutter":"1rem","space-sm":"0.5rem","margin-lg":"2.5rem","gutter-lg":"2rem","space-xs":"0.25rem","space-lg":"1rem","space-md":"0.75rem","margin":"1rem","gutter-md":"1.5rem","margin-md":"1.5rem"},fontFamily:{"label-md":["Geist"],"body-sm":["Geist"],"headline-lg":["Geist"],"body-md":["Geist"],"headline-md":["Geist"],"display":["Geist"],"code-num":["Geist"],"body-lg":["Geist"],"headline-sm":["Geist"],"label-sm":["Geist"],"label-xs":["Geist"]},fontSize:{"label-md":["14px",{lineHeight:"20px",letterSpacing:"0",fontWeight:"500"}],"body-sm":["13px",{lineHeight:"18px",letterSpacing:"0",fontWeight:"400"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.02em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0",fontWeight:"400"}],"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.015em",fontWeight:"600"}],"display":["32px",{lineHeight:"40px",letterSpacing:"-0.025em",fontWeight:"600"}],"code-num":["13px",{lineHeight:"18px",letterSpacing:"0",fontWeight:"500"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"400"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"600"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.01em",fontWeight:"500"}],"label-xs":["11px",{lineHeight:"14px",letterSpacing:"0.02em",fontWeight:"600"}]}}}};</script></head><body class="bg-background font-body-md text-body-md text-on-surface"><aside class="fixed left-0 top-0 bottom-0 w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm"><img alt="Logo Loja Exemplo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL10c8ED2T8P3LSNp2BP5_3zdAxd1VxAaMQM0ieaMHdrDL2bXONDRCmFaDj1-FbOgL9ZZV3pp-thLDfqTnzzBIoc9Zv5NNFKz0TXMAk890C9XAhmYp-NvRPTohUhOzwZPUxbJx09RgD8Y4KFyXq85wdSmRdgQBBhRSNTC04fHaUbrRGhBQBpDAjX9j89h9ob05d06mf98_yop-hka4C8aARmSWSAO5vgDG2-1MTPpK"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">Loja Exemplo</span><span class="font-label-xs text-label-xs text-on-surface-variant">Painel de Gestão</span></div></div><nav class="flex flex-col gap-space-xs px-space-md py-space-md" data-active-classes="bg-secondary-container text-on-secondary-fixed font-label-md"><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inicio" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">home</span><span>Início</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="produtos-e-estoque" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Produtos e estoque</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="vendas" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Vendas</span></div></a><a aria-current="page" class="flex items-center justify-between px-space-md py-space-sm rounded-xl transition-colors bg-secondary-container text-on-secondary-fixed font-label-md" data-path="clientes-e-fiado" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">group</span><span>Clientes e fiado</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="pendencias" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">notification_important</span><span>Pendências</span></div><span class="font-label-xs text-label-xs bg-error-container text-on-error-container px-space-xs py-0.5 rounded-full">4</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="relatorios" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span>Relatórios</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="configuracoes" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">settings</span><span>Configurações</span></div></a></nav></div><div class="p-space-md m-space-md bg-surface-container-low rounded-xl flex flex-col gap-space-sm"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary-container"></span><span class="font-label-xs text-label-xs text-on-surface-variant">Conectado à nuvem</span></div><a class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary hover:text-on-surface transition-colors" data-path="suporte" href="#"><span class="material-symbols-outlined text-[16px]">help</span><span>Suporte e ajuda</span></a></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-gutter-lg gap-space-lg"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-[20px] text-on-surface-variant pointer-events-none">search</span><input class="w-full h-9 pl-10 pr-16 bg-surface-container-low text-on-surface placeholder:text-on-surface-variant rounded-xl font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Buscar produto, cliente ou venda #... (Ctrl+K)" type="text"/><kbd class="absolute right-space-md font-code-num text-code-num bg-surface-container px-space-xs py-0.5 rounded text-on-surface-variant">⌘K</kbd></div></div><div class="flex items-center gap-space-lg"><button class="h-9 px-space-lg bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md rounded-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex items-center gap-space-sm transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span>Nova venda</span></button><div class="flex items-center gap-space-md"><button class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button class="w-9 h-9 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="relative"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary-container ring-2 ring-surface-container-lowest"></span></div><div class="hidden lg:flex flex-col text-left"><span class="font-label-sm text-label-sm text-on-surface font-semibold leading-tight">Loja Exemplo</span><span class="font-label-xs text-label-xs text-tertiary font-medium">Online</span></div></div></div></div></header><div class="hidden fixed top-16 left-64 right-0 bg-error-container text-on-error-container px-gutter-lg py-space-xs font-label-sm text-label-sm flex items-center gap-space-sm z-30 shadow-[0_1px_8px_rgba(0,0,0,0.04)]" id="offline-banner"><span class="material-symbols-outlined text-[16px]">wifi_off</span><span>Você está offline. As alterações serão sincronizadas assim que a conexão retornar.</span></div><main class="w-full pt-16 flex-1 px-margin-lg py-space-xl bg-background"><div class="flex flex-col w-full gap-space-lg pb-12">
+<script>
+    (function highlightActiveMenu() {
+      const activePath = "vendas";
+      document.querySelectorAll('aside nav a').forEach(link => {
+        if (link.getAttribute('data-path') === activePath) {
+          link.className = "flex items-center justify-between px-space-md py-space-sm rounded-xl bg-secondary-container text-on-secondary-fixed font-label-md transition-colors shadow-sm";
+        }
+      });
+    })();
+  </script>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-space-xs font-label-xs text-secondary mb-1">
+<span>Vendas</span>
+<span class="material-symbols-outlined text-[13px] text-outline">chevron_right</span>
+<span class="text-on-surface font-semibold">Histórico</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Histórico de Vendas</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Controle consolidado de pedidos, formas de pagamento, status de envio e notas fiscais.</p>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="h-9 px-space-md rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-space-xs shadow-sm transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">tune</span>
+<span>Colunas</span>
+</button>
+<button class="h-9 px-space-lg rounded-xl bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md flex items-center gap-space-xs shadow-sm transition-all duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Nova venda</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between border-b border-surface-container-high overflow-x-auto scrollbar-none pb-0.5">
+<div class="flex items-center gap-space-xs">
+<button class="flex items-center gap-space-xs px-space-md py-space-sm text-on-primary-fixed-variant font-label-md text-label-md border-b-2 border-primary-container font-semibold -mb-[2px]" type="button">
+<span>Todas as vendas</span>
+<span class="px-space-xs py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed font-label-xs text-label-xs font-bold">142</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors" type="button">
+<span>Rascunhos</span>
+<span class="px-space-xs py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs">2</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors" type="button">
+<span>Aguardando envio</span>
+<span class="px-space-xs py-0.5 rounded-full bg-amber-100 text-amber-900 font-label-xs text-label-xs font-semibold">4</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors" type="button">
+<span>Fiado em aberto</span>
+<span class="px-space-xs py-0.5 rounded-full bg-error-container text-on-error-container font-label-xs text-label-xs font-semibold">14</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs text-label-xs font-label-xs text-secondary pl-space-md">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container animate-pulse"></span>
+<span class="whitespace-nowrap">Atualizado há 3 min</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm font-medium">Vendas no período</span>
+<span class="p-1.5 rounded-lg bg-surface-container-low text-primary-container material-symbols-outlined text-[18px]">shopping_bag</span>
+</div>
+<div class="flex items-baseline justify-between mt-space-md">
+<span class="font-display text-display text-on-surface tracking-tight">28</span>
+<span class="font-label-xs text-label-xs text-tertiary-container bg-tertiary-fixed/30 px-space-xs py-0.5 rounded-md flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">trending_up</span> +12%
+        </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Média de 4,0 pedidos / dia</span>
+</div>
+<div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm font-medium">Faturamento líquido</span>
+<span class="p-1.5 rounded-lg bg-surface-container-low text-tertiary-container material-symbols-outlined text-[18px]">payments</span>
+</div>
+<div class="flex items-baseline justify-between mt-space-md">
+<div class="flex items-baseline gap-1">
+<span class="font-label-sm text-label-sm text-secondary">R$</span>
+<span class="font-display text-display text-on-surface tracking-tight font-code-num">4.390,00</span>
+</div>
+<span class="font-label-xs text-label-xs text-tertiary-container bg-tertiary-fixed/30 px-space-xs py-0.5 rounded-md flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">arrow_upward</span> +8,4%
+        </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Ticket médio: R$ 156,78</span>
+</div>
+<div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm font-medium">A receber (Fiado)</span>
+<span class="p-1.5 rounded-lg bg-error-container/40 text-error material-symbols-outlined text-[18px]">account_balance_wallet</span>
+</div>
+<div class="flex items-baseline justify-between mt-space-md">
+<div class="flex items-baseline gap-1">
+<span class="font-label-sm text-label-sm text-secondary">R$</span>
+<span class="font-display text-display text-error tracking-tight font-code-num">680,00</span>
+</div>
+<span class="font-label-xs text-label-xs text-on-error-container bg-error-container px-space-xs py-0.5 rounded-md">
+          3 clientes
+        </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">1 com vencimento amanhã</span>
+</div>
+<div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm font-medium">Envios pendentes</span>
+<span class="p-1.5 rounded-lg bg-amber-50 text-amber-700 material-symbols-outlined text-[18px]">local_shipping</span>
+</div>
+<div class="flex items-baseline justify-between mt-space-md">
+<div class="flex items-baseline gap-1.5">
+<span class="font-display text-display text-on-surface tracking-tight">4</span>
+<span class="font-label-sm text-label-sm text-secondary">pacotes</span>
+</div>
+<span class="font-label-xs text-label-xs text-amber-800 bg-amber-100 px-space-xs py-0.5 rounded-md">
+          Urgente hoje
+        </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Coleta Sedex às 16h30</span>
+</div>
+</div>
+<div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="relative flex-1 min-w-[280px]">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[18px] text-outline pointer-events-none">search</span>
+<input class="w-full h-9 pl-9 pr-20 bg-surface-container-low text-on-surface placeholder:text-outline font-body-sm text-body-sm rounded-xl focus:outline-none focus:bg-surface-container-lowest shadow-inner" placeholder="Buscar por #000123, nome da cliente ou telefone..." type="text" value=""/>
+<kbd class="absolute right-3 top-2 font-code-num text-code-num text-secondary bg-surface-container px-1 py-0.5 rounded text-[11px]">⌘F</kbd>
+</div>
+<div class="flex flex-wrap items-center gap-1.5 bg-surface-container-low p-1 rounded-xl">
+<button class="px-space-md py-1 rounded-lg text-secondary hover:text-on-surface font-label-sm text-label-sm transition-colors" type="button">Hoje</button>
+<button class="px-space-md py-1 rounded-lg text-secondary hover:text-on-surface font-label-sm text-label-sm transition-colors" type="button">Ontem</button>
+<button class="px-space-md py-1 rounded-lg bg-surface-container-lowest text-on-surface font-label-sm text-label-sm font-semibold shadow-sm transition-colors" type="button">Esta semana</button>
+<button class="px-space-md py-1 rounded-lg text-secondary hover:text-on-surface font-label-sm text-label-sm transition-colors" type="button">Este mês</button>
+<button class="px-space-sm py-1 rounded-lg text-secondary hover:text-on-surface font-label-sm text-label-sm flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px]">date_range</span>
+<span>Personalizado</span>
+</button>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="relative">
+<select aria-label="Filtrar por Situação da Venda" class="appearance-none h-9 pl-3 pr-8 bg-surface-container-low text-on-surface font-label-sm text-label-sm rounded-xl focus:outline-none cursor-pointer">
+<option>Situação: Todas</option>
+<option>Confirmadas</option>
+<option>Canceladas</option>
+<option>Rascunhos</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[16px] text-secondary pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<select aria-label="Filtrar por Situação do Pagamento" class="appearance-none h-9 pl-3 pr-8 bg-surface-container-low text-on-surface font-label-sm text-label-sm rounded-xl focus:outline-none cursor-pointer">
+<option>Pagamento: Todos</option>
+<option>Pago</option>
+<option>Parcial</option>
+<option>Em aberto (Fiado)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[16px] text-secondary pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<select aria-label="Filtrar por Situação do Envio" class="appearance-none h-9 pl-3 pr-8 bg-surface-container-low text-on-surface font-label-sm text-label-sm rounded-xl focus:outline-none cursor-pointer">
+<option>Envio: Todos</option>
+<option>Sem envio</option>
+<option>Aguardando envio</option>
+<option>Enviado</option>
+<option>Entregue</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[16px] text-secondary pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<select aria-label="Filtrar por Forma de Pagamento" class="appearance-none h-9 pl-3 pr-8 bg-surface-container-low text-on-surface font-label-sm text-label-sm rounded-xl focus:outline-none cursor-pointer">
+<option>Forma: Todas</option>
+<option>Pix</option>
+<option>Cartão Crédito/Débito</option>
+<option>Fiado</option>
+<option>Dinheiro</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[16px] text-secondary pointer-events-none">expand_more</span>
+</div>
+<button class="h-9 px-space-sm text-secondary hover:text-error font-label-sm text-label-sm flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+<span>Limpar filtros</span>
+</button>
+</div>
+<div class="flex items-center gap-space-sm ml-auto">
+<span class="font-label-xs text-label-xs text-secondary hidden sm:inline">28 registros</span>
+<button class="h-9 px-space-md rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center gap-space-xs transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">download</span>
+<span>Exportar lista</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-secondary font-label-xs text-label-xs uppercase tracking-wider h-10 select-none">
+<th class="pl-space-lg pr-space-md font-medium w-12 text-center">
+<input aria-label="Selecionar todas as vendas" class="rounded w-4 h-4 text-primary focus:ring-0 cursor-pointer accent-primary-container" type="checkbox"/>
+</th>
+<th class="px-space-md font-medium">Venda &amp; Data</th>
+<th class="px-space-md font-medium">Cliente</th>
+<th class="px-space-md font-medium">Itens</th>
+<th class="px-space-md font-medium text-right">Total &amp; Pagamento</th>
+<th class="px-space-md font-medium text-center">Venda</th>
+<th class="px-space-md font-medium text-center">Pgto</th>
+<th class="px-space-md font-medium text-center">Envio</th>
+<th class="px-space-md font-medium text-center">Fiscal</th>
+<th class="pr-space-lg pl-space-md font-medium text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low font-body-sm text-body-sm text-on-surface">
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="pl-space-lg pr-space-md text-center">
+<input aria-label="Selecionar venda #000123" class="rounded w-4 h-4 text-primary focus:ring-0 cursor-pointer accent-primary-container" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col">
+<a class="font-code-num text-code-num font-semibold text-primary hover:underline flex items-center gap-1" href="#">
+                  #000123
+                  <span class="material-symbols-outlined text-[13px] opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+</a>
+<span class="font-label-xs text-label-xs text-secondary whitespace-nowrap">29/10/2024 às 14:20</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Maria Souza</span>
+<div class="flex items-center gap-1 text-secondary font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-[13px] text-tertiary-container">chat</span>
+<span>(11) 98765-4321</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 max-w-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">3 peças</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate" title="Blusa básica canelada (P), Calça jeans skinny (38), Cinto fivela dourada (U)">
+                  Blusa básica (P), Calça jeans (38)...
+                </span>
+</div>
+</td>
+<td class="px-space-md py-3.5 text-right whitespace-nowrap">
+<div class="flex flex-col items-end">
+<span class="font-label-md text-label-md font-bold text-on-surface font-code-num">R$ 279,80</span>
+<span class="font-label-xs text-label-xs text-secondary">Pix R$ 100 + Fiado R$ 179,80</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed">
+                Confirmada
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-amber-100 text-amber-800">
+                Parcial
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-amber-100 text-amber-800">
+                Aguardando envio
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<div class="inline-flex items-center justify-center p-1 rounded-md text-secondary hover:bg-surface-container cursor-help" title="Dispensa provável (MEI / Cliente final)">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</div>
+</td>
+<td class="pr-space-lg pl-space-md py-3.5 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="h-8 px-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs transition-colors" type="button">
+                  Ver detalhes
+                </button>
+<button aria-label="Mais opções para #000123" class="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="pl-space-lg pr-space-md text-center">
+<input aria-label="Selecionar venda #000122" class="rounded w-4 h-4 text-primary focus:ring-0 cursor-pointer accent-primary-container" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col">
+<a class="font-code-num text-code-num font-semibold text-primary hover:underline flex items-center gap-1" href="#">
+                  #000122
+                  <span class="material-symbols-outlined text-[13px] opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+</a>
+<span class="font-label-xs text-label-xs text-secondary whitespace-nowrap">29/10/2024 às 11:45</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Juliana Costa</span>
+<div class="flex items-center gap-1 text-secondary font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-[13px] text-tertiary-container">chat</span>
+<span>(11) 97123-9988</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 max-w-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">1 peça</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate" title="Vestido Midi Linho Cru (M)">
+                  Vestido Midi Linho Cru (M)
+                </span>
+</div>
+</td>
+<td class="px-space-md py-3.5 text-right whitespace-nowrap">
+<div class="flex flex-col items-end">
+<span class="font-label-md text-label-md font-bold text-on-surface font-code-num">R$ 189,90</span>
+<span class="font-label-xs text-label-xs text-secondary">Cartão Débito</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed">
+                Confirmada
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed">
+                Pago
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-secondary-container text-on-secondary-fixed">
+                Enviado
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<div class="inline-flex items-center justify-center p-1 rounded-md text-tertiary-container bg-tertiary-fixed/30 cursor-pointer" title="NFC-e emitida #4921 - Clique para baixar">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+</td>
+<td class="pr-space-lg pl-space-md py-3.5 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="h-8 px-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs transition-colors" type="button">
+                  Ver detalhes
+                </button>
+<button aria-label="Mais opções para #000122" class="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="pl-space-lg pr-space-md text-center">
+<input aria-label="Selecionar venda #000121" class="rounded w-4 h-4 text-primary focus:ring-0 cursor-pointer accent-primary-container" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col">
+<a class="font-code-num text-code-num font-semibold text-primary hover:underline flex items-center gap-1" href="#">
+                  #000121
+                  <span class="material-symbols-outlined text-[13px] opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+</a>
+<span class="font-label-xs text-label-xs text-secondary whitespace-nowrap">28/10/2024 às 17:05</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Ana Paula</span>
+<div class="flex items-center gap-1 text-secondary font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-[13px] text-tertiary-container">chat</span>
+<span>(11) 99455-2231</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 max-w-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">2 peças</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate" title="Regata Modal (Preta G), Conjunto de brincos argola">
+                  Regata Modal (Preta G), Brinco...
+                </span>
+</div>
+</td>
+<td class="px-space-md py-3.5 text-right whitespace-nowrap">
+<div class="flex flex-col items-end">
+<span class="font-label-md text-label-md font-bold text-error font-code-num">R$ 90,00</span>
+<span class="font-label-xs text-label-xs text-error font-medium">Fiado 100%</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed">
+                Confirmada
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-error-container text-on-error-container">
+                Em aberto
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-surface-container text-on-surface-variant">
+                Sem envio
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<div class="inline-flex items-center justify-center p-1 rounded-md text-secondary hover:bg-surface-container cursor-help" title="Dispensa fiscal aplicada">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</div>
+</td>
+<td class="pr-space-lg pl-space-md py-3.5 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="h-8 px-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs transition-colors" type="button">
+                  Ver detalhes
+                </button>
+<button aria-label="Mais opções para #000121" class="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="pl-space-lg pr-space-md text-center">
+<input aria-label="Selecionar venda #000120" class="rounded w-4 h-4 text-primary focus:ring-0 cursor-pointer accent-primary-container" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col">
+<a class="font-code-num text-code-num font-semibold text-primary hover:underline flex items-center gap-1" href="#">
+                  #000120
+                  <span class="material-symbols-outlined text-[13px] opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+</a>
+<span class="font-label-xs text-label-xs text-secondary whitespace-nowrap">28/10/2024 às 10:12</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Maria Souza</span>
+<div class="flex items-center gap-1 text-secondary font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-[13px] text-tertiary-container">chat</span>
+<span>(11) 98765-4321</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 max-w-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">1 peça</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate" title="Short Alfaiataria Bege (38)">
+                  Short Alfaiataria Bege (38)
+                </span>
+</div>
+</td>
+<td class="px-space-md py-3.5 text-right whitespace-nowrap">
+<div class="flex flex-col items-end">
+<span class="font-label-md text-label-md font-bold text-on-surface font-code-num">R$ 79,80</span>
+<span class="font-label-xs text-label-xs text-tertiary-container font-medium">Fiado quitado</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed">
+                Confirmada
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed">
+                Pago
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed">
+                Entregue
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<div class="inline-flex items-center justify-center p-1 rounded-md text-secondary hover:bg-surface-container cursor-help" title="Dispensa">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</div>
+</td>
+<td class="pr-space-lg pl-space-md py-3.5 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="h-8 px-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs transition-colors" type="button">
+                  Ver detalhes
+                </button>
+<button aria-label="Mais opções para #000120" class="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="bg-error-container/10 hover:bg-error-container/20 transition-colors group">
+<td class="pl-space-lg pr-space-md text-center">
+<input aria-label="Selecionar venda #000119" class="rounded w-4 h-4 text-primary focus:ring-0 cursor-pointer accent-primary-container" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col">
+<a class="font-code-num text-code-num font-semibold text-secondary line-through hover:text-on-surface flex items-center gap-1" href="#">
+                  #000119
+                </a>
+<span class="font-label-xs text-label-xs text-secondary whitespace-nowrap">27/10/2024 às 19:30</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Patrícia Mendes</span>
+<div class="flex items-center gap-1 text-secondary font-label-xs text-label-xs">
+<span class="material-symbols-outlined text-[13px] text-tertiary-container">chat</span>
+<span>(11) 98844-1100</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 max-w-xs">
+<div class="flex flex-col opacity-60">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">2 peças</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate" title="Kimono Estampado Seda, Cinto Fivela">
+                  Kimono Seda, Cinto Couro
+                </span>
+</div>
+</td>
+<td class="px-space-md py-3.5 text-right whitespace-nowrap">
+<div class="flex flex-col items-end">
+<span class="font-label-md text-label-md font-bold text-secondary line-through font-code-num">R$ 229,00</span>
+<span class="font-label-xs text-label-xs text-error font-medium">Estornado via Pix</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-error-container text-on-error-container">
+                Cancelada
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-surface-container text-secondary">
+                Estornado
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-xs font-label-xs font-semibold bg-surface-container text-secondary">
+                Cancelado
+              </span>
+</td>
+<td class="px-space-md py-3.5 text-center">
+<div class="inline-flex items-center justify-center p-1 rounded-md text-outline cursor-not-allowed" title="Nota cancelada/estornada">
+<span class="material-symbols-outlined text-[18px]">block</span>
+</div>
+</td>
+<td class="pr-space-lg pl-space-md py-3.5 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="h-8 px-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs transition-colors" type="button">
+                  Ver detalhes
+                </button>
+<button aria-label="Mais opções para #000119" class="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-space-lg bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-space-md border-t border-surface-container-high">
+<div class="flex items-center gap-space-sm text-secondary font-label-sm text-label-sm">
+<span>Mostrando <strong class="text-on-surface">1 a 5</strong> de <strong class="text-on-surface">28</strong> vendas</span>
+<span class="hidden md:inline text-outline">•</span>
+<label class="hidden md:flex items-center gap-1">
+<span>Linhas por página:</span>
+<select aria-label="Quantidade de linhas por página" class="bg-surface-container-lowest text-on-surface rounded-md px-1 py-0.5 font-label-sm text-label-sm focus:outline-none">
+<option>5</option>
+<option selected="">10</option>
+<option>25</option>
+<option>50</option>
+</select>
+</label>
+</div>
+<div class="flex items-center gap-1">
+<button aria-label="Página anterior" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline cursor-not-allowed bg-surface-container-lowest/50" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center font-label-sm text-label-sm bg-primary-container text-on-primary font-semibold shadow-sm" type="button">
+          1
+        </button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center font-label-sm text-label-sm text-on-surface hover:bg-surface-container-highest transition-colors" type="button">
+          2
+        </button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center font-label-sm text-label-sm text-on-surface hover:bg-surface-container-highest transition-colors" type="button">
+          3
+        </button>
+<span class="px-1 text-secondary">...</span>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center font-label-sm text-label-sm text-on-surface hover:bg-surface-container-highest transition-colors" type="button">
+          6
+        </button>
+<button aria-label="Próxima página" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface hover:bg-surface-container-highest transition-colors bg-surface-container-lowest shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg mt-space-xs">
+<div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container-low">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[20px]">pie_chart</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Meios de Pagamento</h2>
+</div>
+<span class="font-label-xs text-label-xs text-secondary">Esta semana</span>
+</div>
+<div class="py-space-md flex flex-col gap-space-sm">
+<div>
+<div class="flex justify-between font-label-xs text-label-xs mb-1">
+<span class="text-on-surface font-medium">Pix Direto (58%)</span>
+<span class="font-code-num text-secondary">R$ 2.546,20</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 58%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-xs text-label-xs mb-1">
+<span class="text-on-surface font-medium">Cartão de Crédito/Débito (27%)</span>
+<span class="font-code-num text-secondary">R$ 1.163,80</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 27%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-xs text-label-xs mb-1">
+<span class="text-on-surface font-medium">Caderno Fiado (15%)</span>
+<span class="font-code-num text-error">R$ 680,00</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-secondary pt-space-xs">
+        85% das liquidações caem imediatamente na conta PJ.
+      </p>
+</div>
+<div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container-low">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary-container text-[20px]">local_shipping</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Próximos Envios Correios</h2>
+</div>
+<span class="font-label-xs text-label-xs text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full font-semibold">4 aguardando</span>
+</div>
+<div class="py-space-sm flex flex-col divide-y divide-surface-container-low">
+<div class="py-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">#000123 • Maria Souza</span>
+<span class="font-label-xs text-label-xs text-secondary">Etiqueta gerada (Sedex)</span>
+</div>
+</div>
+<button class="text-primary hover:underline font-label-xs text-label-xs font-semibold" type="button">Imprimir PLP</button>
+</div>
+<div class="py-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">#000118 • Fernanda Lima</span>
+<span class="font-label-xs text-label-xs text-secondary">Aguardando embalagem</span>
+</div>
+</div>
+<button class="text-primary hover:underline font-label-xs text-label-xs font-semibold" type="button">Gerar etiqueta</button>
+</div>
+</div>
+<div class="pt-2 flex justify-between items-center text-label-xs font-label-xs text-secondary">
+<span>Horário limite de postagem: 16:30</span>
+<a class="text-primary hover:underline" href="#">Ver painel de envios →</a>
+</div>
+</div>
+<div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container-low">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">lightbulb</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Dica Operacional da Loja</h2>
+</div>
+<span class="font-label-xs text-label-xs text-secondary">MEI Moda</span>
+</div>
+<div class="py-space-md flex flex-col gap-2">
+<div class="flex items-start gap-space-sm p-3 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0 mt-0.5">verified_user</span>
+<p class="font-body-sm text-body-sm text-on-surface">
+            Vendas sem nota fiscal para pessoa física estão dentro da dispensa MEI, contanto que registradas no seu Relatório Mensal das Receitas Brutas.
+          </p>
+</div>
+<p class="font-label-xs text-label-xs text-secondary">
+          Seu acumulado anual está em <strong>R$ 34.200,00</strong> de R$ 81.000,00 permitidos.
+        </p>
+</div>
+<button class="w-full h-8 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center justify-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">article</span>
+<span>Gerar Relatório Mensal MEI</span>
+</button>
+</div>
+</div>
+</div></main></div></body></html>

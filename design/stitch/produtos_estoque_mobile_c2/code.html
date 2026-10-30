@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-highest": "#e3e1ec", "background": "#fbf8ff", "on-secondary-container": "#5c647a", "on-primary-container": "#dad7ff", "on-primary": "#ffffff", "tertiary-fixed": "#85f8c4", "error": "#ba1a1a", "on-secondary": "#ffffff", "primary": "#3525cd", "on-primary-fixed-variant": "#3323cc", "surface-tint": "#4d44e3", "surface-container-high": "#e8e7f1", "surface-container-lowest": "#ffffff", "on-background": "#1a1b22", "secondary-fixed-dim": "#bec6e0", "on-error-container": "#93000a", "tertiary": "#005338", "on-secondary-fixed-variant": "#3f465c", "surface-container-low": "#f4f2fd", "primary-fixed": "#e2dfff", "tertiary-fixed-dim": "#68dba9", "tertiary-container": "#006e4c", "outline": "#777587", "on-error": "#ffffff", "outline-variant": "#c7c4d8", "on-primary-fixed": "#0f0069", "surface": "#fbf8ff", "error-container": "#ffdad6", "on-tertiary": "#ffffff", "secondary-fixed": "#dae2fd", "inverse-on-surface": "#f1effa", "surface-container": "#eeedf7", "on-secondary-fixed": "#131b2e", "secondary-container": "#dae2fd", "primary-container": "#4f46e5", "inverse-primary": "#c3c0ff", "on-tertiary-fixed": "#002114", "on-surface": "#1a1b22", "surface-bright": "#fbf8ff", "secondary": "#565e74", "inverse-surface": "#2f3038", "surface-variant": "#e3e1ec", "on-tertiary-fixed-variant": "#005137", "primary-fixed-dim": "#c3c0ff", "on-tertiary-container": "#7df1bd", "on-surface-variant": "#464555", "surface-dim": "#dad9e3" }, borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" }, spacing: { "space-xs": "0.25rem", "gutter": "1rem", "space-lg": "1rem", "margin-lg": "2.5rem", "gutter-lg": "2rem", "margin-md": "1.5rem", "gutter-md": "1.5rem", "margin": "1rem", "space-xl": "1.5rem", "space-sm": "0.5rem", "space-md": "0.75rem" }, fontFamily: { "label-xs": ["Geist"], "label-md": ["Geist"], "body-lg": ["Geist"], "display": ["Geist"], "body-md": ["Geist"], "headline-sm": ["Geist"], "headline-md": ["Geist"], "code-num": ["Geist"], "body-sm": ["Geist"], "label-sm": ["Geist"], "headline-lg": ["Geist"] }, fontSize: { "label-xs": ["11px", { lineHeight: "14px", letterSpacing: "0.02em", fontWeight: "600" }], "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0", fontWeight: "500" }], "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "-0.005em", fontWeight: "400" }], "display": ["32px", { lineHeight: "40px", letterSpacing: "-0.025em", fontWeight: "600" }], "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0", fontWeight: "400" }], "headline-sm": ["16px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "28px", letterSpacing: "-0.015em", fontWeight: "600" }], "code-num": ["13px", { lineHeight: "18px", letterSpacing: "0", fontWeight: "500" }], "body-sm": ["13px", { lineHeight: "18px", letterSpacing: "0", fontWeight: "400" }], "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "500" }], "headline-lg": ["24px", { lineHeight: "32px", letterSpacing: "-0.02em", fontWeight: "600" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Loja Exemplo</span><span class="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-surface-container-high text-tertiary font-label-xs text-label-xs"><span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>Online</span></div><span class="font-label-xs text-label-xs text-on-surface-variant">Pdv Vender</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notificações" class="w-11 h-11 relative flex items-center justify-center rounded-xl text-on-surface hover:bg-surface-container"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2 right-2 min-w-[16px] h-4 px-1 rounded-full bg-error text-on-error font-label-xs text-[10px] flex items-center justify-center leading-none">4</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<div class="px-margin pt-space-md pb-space-lg flex flex-col gap-space-md">
+<!-- Top Action Bar & Stats Summary -->
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">Produtos &amp; Estoque</h1>
+<div class="flex items-center gap-space-xs mt-1 flex-wrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs">
+            142 peças ativas
+          </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-xs text-label-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+            2 esgotadas
+          </span>
+</div>
+</div>
+<button class="inline-flex items-center justify-center gap-1.5 h-10 px-space-md rounded-xl bg-primary text-on-primary font-label-md text-label-md shadow-sm active:scale-95 transition-transform shrink-0" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Novo</span>
+</button>
+</div>
+<!-- Quick Search & Barcode Scanner Input -->
+<div class="flex items-center gap-space-xs">
+<div class="relative flex-1 flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">search</span>
+<input class="w-full h-11 pl-10 pr-4 rounded-xl bg-surface-container-lowest text-on-surface placeholder:text-outline font-body-md text-body-md shadow-sm outline-none focus:bg-surface-container-low transition-colors" placeholder="Buscar por nome, ref, cor..." type="text"/>
+</div>
+<button aria-label="Escanear Código de Barras" class="w-11 h-11 flex items-center justify-center rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-container-highest active:scale-95 transition-all shrink-0 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[22px]">barcode_scanner</span>
+</button>
+</div>
+<!-- Filter Chips (Horizontal Scrolling) -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 -mx-margin px-margin scrollbar-none">
+<button class="filter-chip active shrink-0 px-3.5 h-8 rounded-full bg-primary text-on-primary font-label-xs text-label-xs font-medium shadow-sm transition-colors" type="button">
+        Todos (142)
+      </button>
+<button class="filter-chip shrink-0 px-3.5 h-8 rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs transition-colors hover:bg-surface-container-highest" type="button">
+        Em Baixa (4)
+      </button>
+<button class="filter-chip shrink-0 px-3.5 h-8 rounded-full bg-error-container text-on-error-container font-label-xs text-label-xs transition-colors" type="button">
+        Esgotados (2)
+      </button>
+<button class="filter-chip shrink-0 px-3.5 h-8 rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs transition-colors hover:bg-surface-container-highest" type="button">
+        Vestidos (35)
+      </button>
+<button class="filter-chip shrink-0 px-3.5 h-8 rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs transition-colors hover:bg-surface-container-highest" type="button">
+        Blusas (48)
+      </button>
+<button class="filter-chip shrink-0 px-3.5 h-8 rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs transition-colors hover:bg-surface-container-highest" type="button">
+        Jeans (28)
+      </button>
+</div>
+<!-- Audit / Rack Check Quick Action Card -->
+<div class="w-full bg-secondary-container text-on-secondary-fixed p-space-md rounded-xl flex items-center justify-between gap-space-sm shadow-sm relative overflow-hidden">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-surface-container-lowest text-primary flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[22px]">checklist_rtl</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-secondary-fixed leading-tight">Contagem de Cabide</span>
+<span class="font-body-sm text-body-sm text-on-secondary-container">Auditoria cega de arara em 1 toque</span>
+</div>
+</div>
+<button class="h-9 px-space-md rounded-lg bg-surface-container-lowest text-primary font-label-sm text-label-sm font-semibold shrink-0 shadow-sm active:scale-95 transition-transform flex items-center gap-1" type="button">
+<span>Iniciar</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<!-- Product List -->
+<div class="flex flex-col gap-space-md">
+<!-- Product 1: Partial Stockout Alert -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex items-start gap-space-md">
+<img class="w-16 h-20 rounded-lg object-cover bg-surface-container shrink-0 shadow-sm" data-alt="Editorial close up photograph of a minimalist ribbed modal V-neck blouse in muted sage cream hanging inside an airy designer boutique, natural soft side lighting, sharp texture detail, premium fashion catalogue aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1v-ME90Xtr8yg5YTQeTdOy9O2tm19i8wkYRk-LtX7i4s4JoZymvdDJ1kU5MEbyd8U502XjVVFyuRaB2x4MkVsvE6Pk3iAeB6aPCh3N8G7iHzIwEIffJ31ocgWsXDPhXiAD32jTq57LpBMdfrFjF1FmJi58d8mcRfxDq8NiGlS6706uKUKiLx0TOsQjGB35GZ7SVjfQt7RTp9JO59_gCMS10BRnOH_Jwm_JF8pwf3m"/>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-code-num text-code-num text-on-surface-variant font-semibold">REF: BL-0491</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-xs text-label-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                Ruptura Parcial
+              </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate mt-0.5">Blusa Básica Modal Gola V</h2>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-headline-md text-headline-md text-primary font-semibold">R$ 59,90</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Total: 20 un</span>
+</div>
+</div>
+</div>
+<!-- Size Matrix with Action Button on Empty Variant -->
+<div class="grid grid-cols-3 gap-space-xs bg-surface-container-low p-space-xs rounded-lg">
+<!-- Size P (Empty) -->
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col items-center justify-between min-h-[68px] shadow-sm">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-xs text-label-xs text-on-surface-variant font-bold">TAM P</span>
+<span class="font-code-num text-code-num text-error font-semibold">0 un</span>
+</div>
+<button class="w-full mt-1.5 h-6 rounded bg-error-container text-on-error-container font-label-xs text-[10px] font-semibold flex items-center justify-center gap-0.5 active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[13px]">add_circle</span>
+<span>Repor</span>
+</button>
+</div>
+<!-- Size M -->
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col justify-between min-h-[68px] shadow-sm">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-xs text-label-xs text-on-surface-variant font-bold">TAM M</span>
+<span class="font-code-num text-code-num text-on-surface font-semibold">15 un</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-high overflow-hidden mt-auto">
+<div class="bg-tertiary h-full rounded-full w-4/5"></div>
+</div>
+<span class="font-label-xs text-[10px] text-tertiary font-medium mt-1">Normal</span>
+</div>
+<!-- Size G -->
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col justify-between min-h-[68px] shadow-sm">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-xs text-label-xs text-on-surface-variant font-bold">TAM G</span>
+<span class="font-code-num text-code-num text-on-surface font-semibold">5 un</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-high overflow-hidden mt-auto">
+<div class="bg-primary h-full rounded-full w-2/5"></div>
+</div>
+<span class="font-label-xs text-[10px] text-on-surface-variant font-medium mt-1">Regular</span>
+</div>
+</div>
+<!-- Quick Operational Bottom Bar -->
+<div class="flex items-center justify-end gap-space-xs pt-1">
+<button class="h-9 px-3 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 active:bg-surface-container-highest transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Ajustar Saldo</span>
+</button>
+<button class="h-9 px-3 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 active:bg-surface-container-highest transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">print</span>
+<span>Etiqueta</span>
+</button>
+</div>
+</div>
+<!-- Product 2: Healthy Stock -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex items-start gap-space-md">
+<img class="w-16 h-20 rounded-lg object-cover bg-surface-container shrink-0 shadow-sm" data-alt="Studio catalog shot of a sophisticated floral midi wrap dress with delicate patterns on luxury cotton silk fabric displayed on a tailor mannequin, warm editorial lighting, clean minimalist composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc2lGL2rH5O2QHf8CtA82ltV87tQ5ys8I7QSkGc7BfJXDA1KKasuRSRSXdFvW2EXBJlnvfYRPdHktomMq82QQ1XDr3dxTSqM_sIlj4wW5WmY87gWUiaLHw5O03FMTVHF-36LAS7fVDn4XkOfykYkzTr-SXcHnG5SjOfANDKhmwPKeUpp6-NoPWvQX6FoEZw6XhBLrcIkDl5it0dEw8M9XLLK4xkCBH-AzqIy2mtdtb"/>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-code-num text-code-num text-on-surface-variant font-semibold">REF: VM-1032</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-xs text-label-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Estoque Saudável
+              </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate mt-0.5">Vestido Midi Floral Transpassado</h2>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-headline-md text-headline-md text-primary font-semibold">R$ 189,90</span>
+<span class="font-label-xs text-label-xs text-tertiary font-medium">14 unidades totais</span>
+</div>
+</div>
+</div>
+<!-- Size Matrix -->
+<div class="grid grid-cols-3 gap-space-xs bg-surface-container-low p-space-xs rounded-lg">
+<!-- Size P -->
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col justify-between min-h-[64px] shadow-sm">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-xs text-label-xs text-on-surface-variant font-bold">TAM P</span>
+<span class="font-code-num text-code-num text-on-surface font-semibold">4 un</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-high overflow-hidden mt-auto">
+<div class="bg-tertiary h-full rounded-full w-1/2"></div>
+</div>
+<span class="font-label-xs text-[10px] text-tertiary font-medium mt-1">Adequado</span>
+</div>
+<!-- Size M -->
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col justify-between min-h-[64px] shadow-sm">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-xs text-label-xs text-on-surface-variant font-bold">TAM M</span>
+<span class="font-code-num text-code-num text-on-surface font-semibold">8 un</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-high overflow-hidden mt-auto">
+<div class="bg-tertiary h-full rounded-full w-4/5"></div>
+</div>
+<span class="font-label-xs text-[10px] text-tertiary font-medium mt-1">Excelente</span>
+</div>
+<!-- Size G -->
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col justify-between min-h-[64px] shadow-sm">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-xs text-label-xs text-on-surface-variant font-bold">TAM G</span>
+<span class="font-code-num text-code-num text-on-surface font-semibold">2 un</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-high overflow-hidden mt-auto">
+<div class="bg-primary h-full rounded-full w-1/4"></div>
+</div>
+<span class="font-label-xs text-[10px] text-on-surface-variant font-medium mt-1">Mínimo</span>
+</div>
+</div>
+<!-- Quick Operational Bottom Bar -->
+<div class="flex items-center justify-end gap-space-xs pt-1">
+<button class="h-9 px-3 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 active:bg-surface-container-highest transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Ajustar Saldo</span>
+</button>
+<button class="h-9 px-3 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 active:bg-surface-container-highest transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">print</span>
+<span>Etiqueta</span>
+</button>
+</div>
+</div>
+<!-- Product 3: Specific Size Depleted -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex items-start gap-space-md">
+<img class="w-16 h-20 rounded-lg object-cover bg-surface-container shrink-0 shadow-sm" data-alt="High quality product photography of premium dark blue wash power stretch skinny jeans folded neatly against warm neutral limestone background, sharp denim twill weave, atelier boutique lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATPolyecSBe7d__OJ789BeqGH7qOUs-DtkdXzQ0DYD8NhIbh_WxtS-Q8iS25F3KlAxehF0z_RKUFFj1bM4LSEcIJkRMVl-TuJTDjzHcgFkjBo0mNWGQNsyL9NcaREqhDqFWG-UgOy48bCIZ2BqjRx3zEs4j0f6qAviuwmdGaDgZ_BOdBMLFtLDaxfh4edAHE80jZksrQ1UL5-Da4CDPEp1xqkVU50Am5yTO0naBK2Z"/>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-code-num text-code-num text-on-surface-variant font-semibold">REF: CJ-8820</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-xs text-label-xs font-semibold">
+                Tam 42 Esgotado
+              </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate mt-0.5">Calça Jeans Skinny Power Stretch</h2>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-headline-md text-headline-md text-primary font-semibold">R$ 139,90</span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Total: 17 un</span>
+</div>
+</div>
+</div>
+<!-- 4-Column Numeric Size Matrix -->
+<div class="grid grid-cols-4 gap-space-xs bg-surface-container-low p-space-xs rounded-lg">
+<!-- Size 36 -->
+<div class="bg-surface-container-lowest p-1.5 rounded flex flex-col items-center justify-center min-h-[58px] shadow-sm text-center">
+<span class="font-label-xs text-[10px] text-on-surface-variant font-bold">36</span>
+<span class="font-code-num text-code-num text-on-surface font-semibold mt-0.5">3 un</span>
+<span class="font-label-xs text-[9px] text-on-surface-variant">Baixo</span>
+</div>
+<!-- Size 38 -->
+<div class="bg-surface-container-lowest p-1.5 rounded flex flex-col items-center justify-center min-h-[58px] shadow-sm text-center">
+<span class="font-label-xs text-[10px] text-on-surface-variant font-bold">38</span>
+<span class="font-code-num text-code-num text-on-surface font-semibold mt-0.5">8 un</span>
+<span class="font-label-xs text-[9px] text-tertiary">Ideal</span>
+</div>
+<!-- Size 40 -->
+<div class="bg-surface-container-lowest p-1.5 rounded flex flex-col items-center justify-center min-h-[58px] shadow-sm text-center">
+<span class="font-label-xs text-[10px] text-on-surface-variant font-bold">40</span>
+<span class="font-code-num text-code-num text-on-surface font-semibold mt-0.5">6 un</span>
+<span class="font-label-xs text-[9px] text-tertiary">Ideal</span>
+</div>
+<!-- Size 42 (Depleted) -->
+<div class="bg-error-container p-1.5 rounded flex flex-col items-center justify-center min-h-[58px] shadow-sm text-center">
+<span class="font-label-xs text-[10px] text-on-error-container font-bold">42</span>
+<span class="font-code-num text-code-num text-error font-bold mt-0.5">0 un</span>
+<span class="font-label-xs text-[9px] text-error font-semibold">Repor</span>
+</div>
+</div>
+<!-- Quick Operational Bottom Bar -->
+<div class="flex items-center justify-end gap-space-xs pt-1">
+<button class="h-9 px-3 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 active:bg-surface-container-highest transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Ajustar Saldo</span>
+</button>
+<button class="h-9 px-3 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 active:bg-surface-container-highest transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">print</span>
+<span>Etiqueta</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Inventory Footer Tip / Delight Note -->
+<div class="flex items-center justify-center gap-space-xs py-space-md text-on-surface-variant opacity-80">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-body-sm text-body-sm">Catálogo sincronizado com a maquininha do balcão</span>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    // Interactive Chip Filter Toggle
+    const chips = document.querySelectorAll('.filter-chip');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => {
+          c.classList.remove('bg-primary', 'text-on-primary', 'active');
+          if (!c.classList.contains('bg-error-container')) {
+            c.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+          }
+        });
+        chip.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+        chip.classList.add('bg-primary', 'text-on-primary', 'active');
+      });
+    });
+
+    // Touch Feedback Haptic Animation for Quick Action Buttons
+    const actionButtons = document.querySelectorAll('button');
+    actionButtons.forEach(btn => {
+      btn.addEventListener('touchstart', () => {
+        btn.classList.add('opacity-90');
+      });
+      btn.addEventListener('touchend', () => {
+        btn.classList.remove('opacity-90');
+      });
+    });
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-2 py-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="inicio" href="#"><span class="material-symbols-outlined text-[22px]">storefront</span><span class="font-label-xs text-label-xs mt-0.5">Início</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-2 py-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="pdv-vender" href="#"><div class="w-10 h-10 -mt-3.5 rounded-full bg-primary flex items-center justify-center shadow-[0_4px_10px_rgba(53,37,205,0.35)] text-on-primary"><span class="material-symbols-outlined text-[22px]">point_of_sale</span></div><span class="font-label-xs text-label-xs mt-0.5">PDV</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-2 py-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="produtos" href="#"><span class="material-symbols-outlined text-[22px]">inventory_2</span><span class="font-label-xs text-label-xs mt-0.5">Produtos</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-2 py-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="clientes" href="#"><span class="material-symbols-outlined text-[22px]">group</span><span class="font-label-xs text-label-xs mt-0.5">Clientes</span></a></div></nav></body></html>
