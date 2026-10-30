@@ -97,11 +97,11 @@ Docs: 04 RN-FIA, 05 Fiado, 06 §3.6.
 
 ## Etapa 7 — Cancelamento
 Docs: 04 RN-CAN, RN-DEV-07/08, 05 Cancelamento/Devoluções (receber peça, refunds), 06 §3.5.
-- [ ] `cancel-preview` e `cancel` com as duas situações (peças com a loja / com a cliente).
-- [ ] `returns` tipo `cancellation` + receber peça (apta/avariada).
-- [ ] `refunds`: pendente → devolvido (forma/data) / anulado.
-- [ ] Alerta fiscal `cancel_pending`.
-- [ ] Tela de Pendências (retornos, devoluções de valor).
+- [x] `cancel-preview` e `cancel` com as duas situações (peças com a loja / com a cliente).
+- [x] `returns` tipo `cancellation` + receber peça (apta/avariada).
+- [x] `refunds`: pendente → devolvido (forma/data) / anulado.
+- [ ] Alerta fiscal `cancel_pending` — entra na Etapa 10, junto com `fiscal_documents` (sem nota registrada não há o que marcar).
+- [x] Pendências na API (`GET /returns`, `GET /refunds?status=pending`). (front) Tela de Pendências.
 
 **Aceite:** A3, A4; exemplo R$ 150 / pago R$ 50 → dívida R$ 100 cancelada e R$ 50 a devolver; cancelar 2× não duplica nada.
 

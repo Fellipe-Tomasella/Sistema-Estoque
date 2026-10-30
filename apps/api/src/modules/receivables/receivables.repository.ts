@@ -1,6 +1,6 @@
 import { and, asc, eq, inArray, sql } from 'drizzle-orm'
 import type { DbOrTx } from '../../db/client'
-import { payments, type Receivable, receivableAllocations, receivables } from '../../db/schema'
+import { payments, type Receivable, receivableAdjustments, receivableAllocations, receivables } from '../../db/schema'
 
 export class ReceivablesRepository {
   constructor(private readonly db: DbOrTx) {}
@@ -77,5 +77,18 @@ export class ReceivablesRepository {
       .innerJoin(payments, eq(payments.id, receivableAllocations.paymentId))
       .where(inArray(receivableAllocations.receivableId, receivableIds))
       .orderBy(asc(payments.receivedAt))
+  }
+
+  async insertAdjustment(values: typeof receivableAdjustments.$inferInsert, tx: DbOrTx) {
+    await tx.insert(receivableAdjustments).values(values)
+  }
+
+  adjustmentsFor(receivableIds: string[], tx: DbOrTx = this.db) {
+    if (receivableIds.length === 0) return Promise.resolve([])
+    return tx
+      .select()
+      .from(receivableAdjustments)
+      .where(inArray(receivableAdjustments.receivableId, receivableIds))
+      .orderBy(asc(receivableAdjustments.createdAt))
   }
 }

@@ -6,6 +6,7 @@ import { AuditRepository } from './modules/audit/audit.repository'
 import { AuditService } from './modules/audit/audit.service'
 import { AuthRepository } from './modules/auth/auth.repository'
 import { AuthService } from './modules/auth/auth.service'
+import { CancellationsService } from './modules/cancellations/cancellations.service'
 import { CustomersRepository } from './modules/customers/customers.repository'
 import { CustomersService } from './modules/customers/customers.service'
 import { HealthRepository } from './modules/health/health.repository'
@@ -21,6 +22,10 @@ import { ReceivableReceiptsService } from './modules/receivables/receivable-rece
 import { ReceivablesRepository } from './modules/receivables/receivables.repository'
 import { ReceivablesService } from './modules/receivables/receivables.service'
 import { ReceiptsService } from './modules/receipts/receipts.service'
+import { RefundsRepository } from './modules/returns/refunds.repository'
+import { RefundsService } from './modules/returns/refunds.service'
+import { ReturnsRepository } from './modules/returns/returns.repository'
+import { ReturnsService } from './modules/returns/returns.service'
 import { SaleConfirmationService } from './modules/sales/sale-confirmation.service'
 import { SaleDraftsService } from './modules/sales/sale-drafts.service'
 import { SalesRepository } from './modules/sales/sales.repository'
@@ -46,6 +51,8 @@ export function createContainer() {
     payments: new PaymentsRepository(db),
     products: new ProductsRepository(db),
     receivables: new ReceivablesRepository(db),
+    refunds: new RefundsRepository(db),
+    returns: new ReturnsRepository(db),
     sales: new SalesRepository(db),
     settings: new SettingsRepository(db),
     stock: new StockRepository(db),
@@ -57,7 +64,14 @@ export function createContainer() {
   const stock = new StockService(repositories.stock)
   const products = new ProductsService(repositories.products, stock, settings, audit)
   const customers = new CustomersService(repositories.customers, settings, audit)
-  const sales = new SalesService(repositories.sales, repositories.payments, repositories.receivables, audit)
+  const sales = new SalesService(
+    repositories.sales,
+    repositories.payments,
+    repositories.receivables,
+    repositories.returns,
+    repositories.refunds,
+    audit,
+  )
   const receivables = new ReceivablesService(
     repositories.receivables,
     repositories.payments,
@@ -89,6 +103,19 @@ export function createContainer() {
     health: new HealthService(repositories.health, pkg.version),
     imports: new ImportsService(repositories.imports, products, audit),
     integrity: new IntegrityService(repositories.integrity),
+    cancellations: new CancellationsService(
+      repositories.sales,
+      sales,
+      repositories.returns,
+      repositories.refunds,
+      repositories.receivables,
+      receivables,
+      stock,
+      settings,
+      audit,
+    ),
+    returns: new ReturnsService(repositories.returns, stock, settings, audit),
+    refunds: new RefundsService(repositories.refunds, settings, audit),
     receipts: new ReceiptsService(sales, settings, receivableReceipts),
     saleConfirmation: new SaleConfirmationService(
       repositories.sales,

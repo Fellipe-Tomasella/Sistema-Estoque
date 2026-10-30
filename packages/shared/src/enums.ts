@@ -77,6 +77,21 @@ export const RECEIVABLE_ORIGINS = ['sale', 'previous_balance'] as const
 export const RECEIVABLE_STATUSES = ['open', 'settled', 'cancelled'] as const
 export type ReceivableStatus = (typeof RECEIVABLE_STATUSES)[number]
 
+export const RECEIVABLE_ADJUSTMENT_REASONS = ['sale_cancelled', 'items_returned'] as const
+
+// Devoluções, trocas e devoluções de valor
+
+export const RETURN_TYPES = ['cancellation', 'partial_return', 'exchange'] as const
+export type ReturnType = (typeof RETURN_TYPES)[number]
+export const RETURN_STATUSES = ['awaiting_items', 'completed'] as const
+export const RETURN_ITEM_STATUSES = ['awaiting', 'received'] as const
+export const ITEM_CONDITIONS = ['sellable', 'damaged'] as const
+export type ItemCondition = (typeof ITEM_CONDITIONS)[number]
+
+export const REFUND_SOURCES = ['cancellation', 'return'] as const
+export const REFUND_STATUSES = ['pending', 'done', 'cancelled'] as const
+export type RefundStatus = (typeof REFUND_STATUSES)[number]
+
 /** RN-FIA-03: “em atraso” só com data combinada vencida e saldo em aberto. Datas no formato AAAA-MM-DD. */
 export function isOverdue(balanceCents: number, dueDate: string | null, today: string): boolean {
   return balanceCents > 0 && dueDate !== null && dueDate < today

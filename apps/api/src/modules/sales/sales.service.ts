@@ -1,28 +1,18 @@
-import { formatBRL, type ShippingStatus } from '@estoque/shared'
+import type { ShippingStatus } from '@estoque/shared'
 import { db, type DbOrTx } from '../../db/client'
-import type { Payment, Sale, SaleItem } from '../../db/schema'
+import type { Sale, SaleItem } from '../../db/schema'
 import { BusinessRuleError, NotFoundError, ValidationError } from '../../shared/errors'
 import type { AuditService } from '../audit/audit.service'
 import type { PaymentsRepository } from '../payments/payments.repository'
 import type { ReceivablesRepository } from '../receivables/receivables.repository'
+import type { RefundsRepository } from '../returns/refunds.repository'
+import type { ReturnsRepository } from '../returns/returns.repository'
 import { type CartLine, calculateCart } from './sale-calculator'
-import { confirmedView, draftView, formatSaleNumber, type TimelineEvent } from './sale-view'
+import { buildTimeline, SHIPPING_NAMES } from './sale-timeline'
+import { confirmedView, draftView, formatSaleNumber } from './sale-view'
 import type { SalesRepository } from './sales.repository'
 import type { ChangePaymentMethodInput, ListSalesFilters, UpdateShippingInput } from './sales.schemas'
 import { normalizeShipping } from './shipping'
-
-const METHOD_NAMES: Record<string, string> = {
-  cash: 'Dinheiro',
-  pix: 'Pix',
-  card: 'Cartão',
-  exchange_credit: 'Crédito de troca',
-}
-const SHIPPING_NAMES: Record<ShippingStatus, string> = {
-  none: 'Sem envio',
-  pending: 'Aguardando envio',
-  shipped: 'Enviado',
-  delivered: 'Entregue',
-}
 
 /** RN-ENV-02: aguardando → enviado → entregue, podendo voltar um passo. */
 const SHIPPING_TRANSITIONS: Record<ShippingStatus, ShippingStatus[]> = {
@@ -38,6 +28,8 @@ export class SalesService {
     private readonly repo: SalesRepository,
     private readonly payments: PaymentsRepository,
     private readonly receivables: ReceivablesRepository,
+    private readonly returns: ReturnsRepository,
+    private readonly refunds: RefundsRepository,
     private readonly audit: AuditService,
   ) {}
 
@@ -80,12 +72,15 @@ export class SalesService {
     const items = await this.repo.items(id, tx)
     if (sale.status === 'draft') return draftView(sale, this.calculate(sale, await this.cartLines(items, tx)))
 
-    const [payments, receivable, history] = await Promise.all([
+    const [payments, receivable, returns, refunds, history] = await Promise.all([
       this.payments.bySale(id, tx),
       this.receivables.bySale(id, tx),
+      this.returns.bySale(id, tx),
+      this.refunds.bySale(id, tx),
       this.audit.history('sale', id, tx),
     ])
-    return confirmedView(sale, items, payments, receivable, this.timeline(sale, payments, history))
+    const timeline = buildTimeline(sale, payments, returns, refunds, history)
+    return confirmedView(sale, items, payments, receivable, returns, refunds, timeline)
   }
 
   async list(filters: ListSalesFilters) {
@@ -196,49 +191,6 @@ export class SalesService {
     if (sale.status === 'draft') throw new BusinessRuleError('Esta venda ainda é um rascunho.')
     if (sale.status === 'cancelled') throw new BusinessRuleError('Esta venda foi cancelada.')
     return sale
-  }
-
-  /** Linha do tempo da venda (RN-DEV-09). As etapas seguintes acrescentam devoluções, cancelamento e NF. */
-  private timeline(
-    sale: Sale,
-    payments: Payment[],
-    history: { action: string; createdAt: Date; after: unknown; reason: string | null }[],
-  ): TimelineEvent[] {
-    const events: TimelineEvent[] = []
-    if (sale.confirmedAt) {
-      events.push({
-        at: sale.confirmedAt,
-        type: 'confirmed',
-        description: `Venda ${formatSaleNumber(sale.number)} confirmada`,
-      })
-    }
-    for (const payment of payments) {
-      const label = payment.kind === 'receivable_receipt' ? 'Recebimento de fiado' : 'Pagamento'
-      const voided = payment.status === 'voided' ? ' (estornado)' : ''
-      events.push({
-        at: payment.receivedAt,
-        type: payment.kind,
-        description: `${label}: ${METHOD_NAMES[payment.method]} ${formatBRL(payment.amountCents)}${voided}`,
-      })
-    }
-    for (const entry of history) {
-      if (entry.action === 'shipping') {
-        const status = (entry.after as { status: ShippingStatus }).status
-        events.push({ at: entry.createdAt, type: 'shipping', description: `Envio: ${SHIPPING_NAMES[status]}` })
-      }
-      if (entry.action === 'payment_method_change') {
-        const method = (entry.after as { method: string }).method
-        events.push({
-          at: entry.createdAt,
-          type: 'payment_method_change',
-          description: `Forma de pagamento trocada para ${METHOD_NAMES[method]}: ${entry.reason}`,
-        })
-      }
-    }
-    if (sale.cancelledAt) {
-      events.push({ at: sale.cancelledAt, type: 'cancelled', description: `Venda cancelada: ${sale.cancelReason}` })
-    }
-    return events.sort((a, b) => a.at.getTime() - b.at.getTime())
   }
 }
 

@@ -14,6 +14,8 @@ export class IntegrityService {
     const checks: [string, () => Promise<unknown[]>][] = [
       ['1. Saldo das variações = soma dos movimentos', () => this.repo.stockMismatches()],
       ['2. Valor pago das dívidas = soma dos recebimentos válidos', () => this.repo.receivablePaidMismatches()],
+      ['2. Valor ajustado das dívidas = soma dos ajustes', () => this.repo.receivableAdjustedMismatches()],
+      ['4. Peças devolvidas do item = soma das devoluções', () => this.repo.returnedQtyMismatches()],
       ['6. Situação de pagamento da venda coerente com o fiado', () => this.repo.salePaymentStatusMismatches()],
     ]
     return Promise.all(

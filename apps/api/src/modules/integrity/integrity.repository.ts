@@ -15,6 +15,26 @@ export class IntegrityRepository {
       having v.stock_qty <> coalesce(sum(m.quantity_delta), 0)`)
   }
 
+  /** Invariante 2 (ajustes): `receivables.adjusted_cents` = soma dos ajustes (cancelamento, devolução). */
+  receivableAdjustedMismatches() {
+    return this.db.execute<{ receivable_id: string; adjusted_cents: number; adjustments_cents: number }>(sql`
+      select r.id as receivable_id, r.adjusted_cents, coalesce(sum(a.amount_cents), 0)::int as adjustments_cents
+      from receivables r
+      left join receivable_adjustments a on a.receivable_id = r.id
+      group by r.id
+      having r.adjusted_cents <> coalesce(sum(a.amount_cents), 0)`)
+  }
+
+  /** Invariante 4: `sale_items.returned_qty` = soma das peças nas devoluções do item. */
+  returnedQtyMismatches() {
+    return this.db.execute<{ sale_item_id: string; returned_qty: number; return_items_qty: number }>(sql`
+      select si.id as sale_item_id, si.returned_qty, coalesce(sum(ri.quantity), 0)::int as return_items_qty
+      from sale_items si
+      left join return_items ri on ri.sale_item_id = si.id
+      group by si.id
+      having si.returned_qty <> coalesce(sum(ri.quantity), 0)`)
+  }
+
   /** Invariante 2: `receivables.paid_cents` = soma dos abatimentos de pagamentos válidos. */
   receivablePaidMismatches() {
     return this.db.execute<{ receivable_id: string; paid_cents: number; allocated_cents: number }>(sql`

@@ -20,6 +20,25 @@ export function percentOf(cents: number, basisPoints: number): number {
   return Math.floor((cents * basisPoints + 5000) / 10000)
 }
 
+/** a / b arredondado meio para cima (a ≥ 0, b > 0). */
+const roundDiv = (a: number, b: number) => Math.floor((2 * a + b) / (2 * b))
+
+/**
+ * RN-DEV-02: valor de `returning` peças de uma linha com total T (já com desconto) e Q peças vendidas,
+ * quando `alreadyReturned` já voltaram. Devolver aos poucos soma exatamente o total da linha.
+ */
+export function proportionalValue(
+  lineTotalCents: number,
+  quantity: number,
+  alreadyReturned: number,
+  returning: number,
+) {
+  return (
+    roundDiv(lineTotalCents * (alreadyReturned + returning), quantity) -
+    roundDiv(lineTotalCents * alreadyReturned, quantity)
+  )
+}
+
 /**
  * Rateia o desconto entre as linhas proporcionalmente ao subtotal de cada uma.
  * Os centavos que sobram do arredondamento para baixo vão, um a um, para as linhas com maior resto

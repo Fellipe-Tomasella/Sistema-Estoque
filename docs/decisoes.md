@@ -31,6 +31,8 @@ Formato: data · decisão · motivo · quem decidiu. Mais recentes no fim. **Nã
 | 024 | 30/10/2026 | Enums opcionais em query/body usam `OneOf` (união de literais), não `t.UnionEnum`. | O Elysia preenche `UnionEnum` ausente com o primeiro valor — um filtro não pedido seria aplicado. | Claude |
 | 025 | 30/10/2026 | Fiado no rascunho é uma escolha (`fiado: true`), não uma linha de pagamento: o que os pagamentos não cobrem vira a dívida. O id de cada pagamento do rascunho é gerado pelo front e vira o `id` em `payments`. | Bate com a tela (“o restante vira fiado se a dona escolher Fiado”) e mantém a confirmação idempotente. | Claude |
 | 026 | 30/10/2026 | Na confirmação, preço e situação (ativo) das variações são lidos de novo com as variações travadas; se algo saiu de venda ou falta saldo, nada é gravado. | RN-PRO-06 (rascunho acompanha o cadastro) e RN-VEN-07. | Claude |
+| 027 | 30/10/2026 | Todo cancelamento cria um registro `returns` tipo `cancellation` com as peças ainda não devolvidas — recebidas na hora (com a loja, movimento `sale_cancel_return`) ou aguardando (com a cliente). `sale_items.returned_qty` soma essas peças. | Um só caminho para retorno físico (RN-DEV-07), mantém o invariante 4 e impede cancelar duas vezes as mesmas peças. | Claude |
+| 028 | 30/10/2026 | Dívida zerada por cancelamento fica `cancelled`; por devolução de peças, `settled`. A situação de pagamento de venda cancelada não muda. | O histórico mostra se a dívida foi paga ou cancelada; a venda cancelada guarda como estava. | Claude |
 
 ## Versões instaladas (Etapa 0)
 

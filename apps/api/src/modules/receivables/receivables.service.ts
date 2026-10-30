@@ -25,11 +25,14 @@ export class ReceivablesService {
     const customer = await this.customers.get(customerId)
     const today = await this.settings.businessDate()
     const debts = await this.repo.byCustomer(customerId)
-    const allocations = Map.groupBy(await this.repo.allocationsFor(debts.map((d) => d.id)), (a) => a.receivableId)
+    const ids = debts.map((d) => d.id)
+    const allocations = Map.groupBy(await this.repo.allocationsFor(ids), (a) => a.receivableId)
+    const adjustments = Map.groupBy(await this.repo.adjustmentsFor(ids), (a) => a.receivableId)
     const items = debts.map((debt) => ({
       ...debt,
       overdue: debt.status === 'open' && isOverdue(debt.balanceCents, debt.dueDate, today),
       receipts: allocations.get(debt.id) ?? [],
+      adjustments: adjustments.get(debt.id) ?? [],
     }))
     const open = items.filter((d) => d.status === 'open')
     return {
@@ -70,6 +73,34 @@ export class ReceivablesService {
         ...(receivable.status === 'cancelled'
           ? {}
           : { status: balance === 0 ? 'settled' : 'open', settledAt: balance === 0 ? new Date() : null }),
+      },
+      tx,
+    )
+    await this.syncSalePaymentStatus(tx, updated)
+    return updated
+  }
+
+  /**
+   * Abate a dívida já travada sem pagamento: cancelamento ou devolução de peças (RN-CAN-05, RN-DEV-04).
+   * Zerada por cancelamento, a dívida fica `cancelled`; por devolução, `settled`.
+   */
+  async applyAdjustment(
+    tx: DbOrTx,
+    receivable: Receivable,
+    amountCents: number,
+    reason: 'sale_cancelled' | 'items_returned',
+    ref: { refType: string; refId: string },
+  ) {
+    await this.repo.insertAdjustment({ receivableId: receivable.id, amountCents, reason, ...ref }, tx)
+    const adjustedCents = receivable.adjustedCents + amountCents
+    const balance = receivable.originalCents - receivable.paidCents - adjustedCents
+    const closedStatus = reason === 'sale_cancelled' ? 'cancelled' : 'settled'
+    const updated = await this.repo.update(
+      receivable.id,
+      {
+        adjustedCents,
+        status: balance === 0 ? closedStatus : 'open',
+        settledAt: balance === 0 ? new Date() : null,
       },
       tx,
     )

@@ -1,5 +1,6 @@
 // Formato único da venda para a API: o mesmo para rascunho (calculado ao vivo) e venda confirmada (valores gravados).
-import type { Payment, Receivable, Sale, SaleItem } from '../../db/schema'
+import type { Payment, Receivable, Refund, Sale, SaleItem } from '../../db/schema'
+import type { ReturnWithItems } from '../returns/returns.repository'
 import type { CartResult } from './sale-calculator'
 
 export const formatSaleNumber = (number: number | null) => (number ? `#${String(number).padStart(6, '0')}` : null)
@@ -66,6 +67,8 @@ export function draftView(sale: Sale, cart: CartResult) {
     fiado: { enabled: sale.draftFiado, cents: cart.fiadoCents, dueDate: sale.draftFiadoDueDate },
     receivable: null,
     paymentStatus: null,
+    returns: [] as ReturnWithItems[],
+    refunds: [] as Refund[],
     warnings: cart.warnings,
     blockers: cart.blockers,
     canConfirm: cart.blockers.length === 0,
@@ -78,6 +81,8 @@ export function confirmedView(
   items: SaleItem[],
   payments: Payment[],
   receivable: Receivable | undefined,
+  returns: ReturnWithItems[],
+  refunds: Refund[],
   timeline: TimelineEvent[],
 ) {
   const validPayments = payments.filter((p) => p.status === 'valid' && p.kind !== 'receivable_receipt')
@@ -116,6 +121,8 @@ export function confirmedView(
         }
       : null,
     paymentStatus: sale.paymentStatus,
+    returns,
+    refunds,
     warnings: [] as string[],
     blockers: [] as string[],
     canConfirm: false,

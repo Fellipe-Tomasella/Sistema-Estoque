@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { allocateDiscount, formatBRL, parseBRL, percentOf } from './money'
+import { allocateDiscount, formatBRL, parseBRL, percentOf, proportionalValue } from './money'
 
 describe('parseBRL', () => {
   test.each([
@@ -30,6 +30,27 @@ describe('percentOf', () => {
     expect(percentOf(1000, 1050)).toBe(105)
     expect(percentOf(5, 1000)).toBe(1) // 0,5 centavo → 1
     expect(percentOf(4, 1000)).toBe(0)
+  })
+})
+
+describe('proportionalValue (RN-DEV-02)', () => {
+  test('devolver 1 de 3 e depois as outras 2 soma exatamente o total da linha', () => {
+    const total = 10000 // R$ 100,00 por 3 peças, com desconto
+    const first = proportionalValue(total, 3, 0, 1)
+    const rest = proportionalValue(total, 3, 1, 2)
+    expect(first).toBe(3333)
+    expect(rest).toBe(6667)
+    expect(first + rest).toBe(total)
+  })
+
+  test('uma a uma também fecha o total', () => {
+    const total = 9997
+    const parts = [0, 1, 2, 3, 4, 5, 6].map((d) => proportionalValue(total, 7, d, 1))
+    expect(parts.reduce((a, b) => a + b, 0)).toBe(total)
+  })
+
+  test('linha inteira', () => {
+    expect(proportionalValue(4667, 1, 0, 1)).toBe(4667)
   })
 })
 
