@@ -8,6 +8,14 @@ import { buildTemplate } from './import-template'
 import type { ImportsRepository } from './imports.repository'
 import { readSpreadsheet } from './spreadsheet-reader'
 
+interface ImportResult {
+  productsCreated: number
+  productsUpdated: number
+  variantsCreated: number
+  units: number
+  skippedRows: number
+}
+
 interface StoredPreview {
   rows: ImportRow[]
 }
@@ -55,7 +63,7 @@ export class ImportsService {
   async commit(batchId: string, skipErrorRows: boolean, userId: string) {
     return db.transaction(async (tx) => {
       const batch = await this.requireBatch(batchId, tx)
-      if (batch.status === 'committed') return { ...(batch.result as object), alreadyProcessed: true }
+      if (batch.status === 'committed') return { ...(batch.result as ImportResult), alreadyProcessed: true }
       if (batch.status === 'discarded')
         throw new BusinessRuleError('Esta importação foi descartada. Envie o arquivo de novo.')
 
@@ -93,7 +101,7 @@ export class ImportsService {
       }
 
       const summary = summarize(groups, errorRows.length, rows.length)
-      const result = {
+      const result: ImportResult = {
         productsCreated: summary.productsToCreate,
         productsUpdated: summary.productsToUpdate,
         variantsCreated: summary.variants,

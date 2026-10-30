@@ -47,7 +47,7 @@ Docs: 03 §3.3, 04 RN-PRO, RN-EST-02, 05 Produtos, 06 §3.2.
 - [x] CRUD de produto com variações, quantidade inicial e mínimo (“gerar combinações” é da tela; a API recebe a lista).
 - [x] Busca sem acento + filtros; `/variants/search`; sugestões de cor/tamanho/categoria.
 - [x] Inativar/reativar; excluir só sem histórico; corrigir rótulo com auditoria.
-- [ ] (front) Telas: lista, formulário, detalhe com grade cor × tamanho.
+- [x] (front) Telas: lista, formulário, detalhe com grade cor × tamanho.
 
 **Aceite:** RN-PRO-01…11 testadas; criar “Blusa básica” com Preta/P, Preta/M, Branca/M e saldos → aparecem certos na grade.
 
@@ -59,6 +59,8 @@ Docs: 04 RN-EST, RN-IMP, 05 Estoque, 06 §3.3.
 - [x] Visão geral do estoque com “sem estoque” e “repor” (`/products?stock=out|low` + `/stock/alerts`); mínimo em massa.
 - [x] Importação: modelo, prévia, erros por linha, efetivar idempotente.
 - [x] `scripts/check-integrity.ts` (invariante 1) — `bun run --filter @estoque/api check-integrity`.
+
+- [x] (front) Telas: entradas (lista + nova), acerto com prévia do saldo, movimentos por variação e geral, importação com prévia.
 
 **Aceite:** cenário A7; saldo nunca negativo; importar planilha de exemplo (fixture com erros) mostra erros e efetiva o resto; integridade ok.
 

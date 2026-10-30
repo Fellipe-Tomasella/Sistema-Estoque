@@ -8,6 +8,7 @@ export const variantsRoutes = new Elysia({ prefix: '/variants' })
   .get('/search', ({ query, services }) => services.products.searchVariants(query.q, query.limit), {
     query: SearchVariantsQuery,
   })
+  .get('/:id', ({ params, services }) => services.products.getVariant(params.id), { params: IdParams })
   .patch('/:id', ({ params, body, services, user }) => services.products.updateVariant(params.id, body, user.id), {
     params: IdParams,
     body: UpdateVariantBody,

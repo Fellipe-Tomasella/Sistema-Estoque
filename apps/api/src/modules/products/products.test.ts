@@ -297,6 +297,12 @@ describe('RN-PRO-10 busca e filtros', () => {
   })
 })
 
+test('variação por id traz o nome do produto', async () => {
+  const product = await createProduct(userId, { name: 'Saia', variants: [['Rosa', 'P', 2]] })
+  const res = await request('GET', `/variants/${product.variants[0]!.id}`, { cookie })
+  expect(res.body).toMatchObject({ productName: 'Saia', label: 'Rosa / P', stockQty: 2 })
+})
+
 test('rotas de produto exigem login', async () => {
   expect((await request('GET', '/products')).status).toBe(401)
 })

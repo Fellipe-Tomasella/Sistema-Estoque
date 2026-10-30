@@ -41,7 +41,7 @@ export const keys = {
 /** Depois de mexer em estoque, tudo que mostra saldo precisa atualizar. */
 export function invalidateStock() {
   return Promise.all(
-    [['products'], keys.stock, keys.dashboard, ['search']].map((queryKey) =>
+    [['products'], ['variant'], keys.stock, keys.dashboard, ['search']].map((queryKey) =>
       queryClient.invalidateQueries({ queryKey }),
     ),
   )

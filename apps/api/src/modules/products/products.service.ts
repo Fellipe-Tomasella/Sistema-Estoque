@@ -57,6 +57,13 @@ export class ProductsService {
     return this.repo.suggestions()
   }
 
+  /** Uma variação com o nome do produto (telas de entrada e acerto abertas a partir de uma variação). */
+  async getVariant(id: string) {
+    const variant = await this.requireVariant(id)
+    const product = await this.requireProduct(variant.productId)
+    return { ...toVariantDto(variant, product), productName: product.name }
+  }
+
   async searchVariants(q: string, limit = 20) {
     const rows = await this.repo.searchVariants(q, limit)
     return rows.map(({ variant, product }) => ({ ...toVariantDto(variant, product), productName: product.name }))
