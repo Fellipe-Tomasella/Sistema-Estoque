@@ -41,7 +41,8 @@ Foco: **notebook (desktop)**. Celular: consulta e operações simples, instaláv
 cp .env.example .env             # primeira vez
 bun install                      # instala tudo (workspaces)
 bun run dev                      # sobe a api (3000); web (5173) entra quando o front for feito
-bun run db:up                    # Postgres local via docker-compose.dev.yml (db:down para parar)
+bun run db:up                    # Postgres via docker-compose.dev.yml (db:down para parar)
+                                 # ou Postgres instalado: role/senha estoque, bancos estoque e estoque_test
 bun run db:generate              # gera migration a partir do schema Drizzle
 bun run db:migrate               # aplica migrations
 bun run db:seed                  # dados de exemplo (só dev)

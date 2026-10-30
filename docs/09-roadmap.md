@@ -20,7 +20,7 @@ Docs: 02, 08 §2.
 - [x] `docker-compose.dev.yml` + `docker/dev-init.sql` (banco de teste + extensões).
 - [x] API: Elysia com `/api/health`, `config/env.ts` validando variáveis, `error-handler`, `db/client.ts`, drizzle-kit configurado, primeira migration (extensões).
 - [x] `container.ts` (instâncias de repositories/services) e padrão de módulo de exemplo (`modules/health`).
-- [ ] Setup de testes (`test/setup.ts`; `factories.ts` nasce na Etapa 2 com as primeiras entidades) rodando contra `estoque_test`.
+- [x] Setup de testes (`test/setup.ts`; `factories.ts` nasce na Etapa 2 com as primeiras entidades) rodando contra `estoque_test`.
 - [ ] (front) Web: Vite + Vue + TS + Router + Pinia + vue-query + Tailwind v4 + shadcn-vue inicializado; `lib/api.ts` com Eden Treaty consumindo `/api/health`.
 - [ ] (front) Proxy do Vite `/api → localhost:3000` (mesma origem em dev).
 - [x] `packages/shared`: `money.ts` (com testes de `parseBRL`, `formatBRL`, `allocateDiscount`), `sizes.ts`, `enums.ts`.
