@@ -98,7 +98,7 @@ function refLink(m: { refType: string | null; refId: string | null }) {
           <TableHead v-if="!variantId">Peça</TableHead>
           <TableHead>Tipo</TableHead>
           <TableHead class="text-right">Qtd.</TableHead>
-          <TableHead class="text-right">Saldo depois</TableHead>
+          <TableHead class="hidden text-right sm:table-cell">Saldo depois</TableHead>
           <TableHead class="hidden md:table-cell">Detalhe</TableHead>
         </TableRow>
       </TableHeader>
@@ -106,7 +106,7 @@ function refLink(m: { refType: string | null; refId: string | null }) {
         <TableRow v-for="m in data.items" :key="m.id">
           <TableCell>
             <p class="font-medium">{{ formatDate(m.businessDate) }}</p>
-            <p class="text-xs text-muted-foreground">{{ formatDateTime(m.createdAt) }}</p>
+            <p class="hidden text-xs text-muted-foreground sm:block">{{ formatDateTime(m.createdAt) }}</p>
           </TableCell>
           <TableCell v-if="!variantId">
             <RouterLink :to="`/estoque/movimentos?variacao=${m.variantId}`" class="hover:underline">
@@ -125,7 +125,7 @@ function refLink(m: { refType: string | null; refId: string | null }) {
           >
             {{ m.quantityDelta > 0 ? `+${m.quantityDelta}` : m.quantityDelta }}
           </TableCell>
-          <TableCell class="text-right tabular">{{ m.balanceAfter }}</TableCell>
+          <TableCell class="hidden text-right tabular sm:table-cell">{{ m.balanceAfter }}</TableCell>
           <TableCell class="hidden text-sm text-muted-foreground md:table-cell">
             <span v-if="m.note">{{ m.note }}</span>
             <template v-if="refLink(m)">

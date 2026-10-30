@@ -208,7 +208,7 @@ const quickActions = [
       <TableHeader>
         <TableRow class="bg-muted/50">
           <TableHead>Produto</TableHead>
-          <TableHead>Cor / tamanho</TableHead>
+          <TableHead class="hidden sm:table-cell">Cor / tamanho</TableHead>
           <TableHead class="text-right">Saldo</TableHead>
           <TableHead class="hidden text-right sm:table-cell">Mínimo</TableHead>
           <TableHead class="text-center">Situação</TableHead>
@@ -219,8 +219,9 @@ const quickActions = [
         <TableRow v-for="row in restockRows" :key="row.variantId">
           <TableCell class="font-medium">
             <RouterLink :to="`/produtos/${row.productId}`" class="hover:underline">{{ row.productName }}</RouterLink>
+            <p class="text-xs font-normal text-muted-foreground sm:hidden">{{ row.color }} / {{ row.size }}</p>
           </TableCell>
-          <TableCell>{{ row.color }} / {{ row.size }}</TableCell>
+          <TableCell class="hidden sm:table-cell">{{ row.color }} / {{ row.size }}</TableCell>
           <TableCell :class="cn('text-right font-semibold tabular', row.stockQty === 0 && 'text-red-700')">
             {{ row.stockQty }} un
           </TableCell>

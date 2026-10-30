@@ -47,16 +47,16 @@ const { data, isPending } = useRankingReport(query, ready)
     <Table v-else>
       <TableHeader>
         <TableRow class="bg-muted/50">
-          <TableHead class="w-10">#</TableHead>
+          <TableHead class="hidden w-10 sm:table-cell">#</TableHead>
           <TableHead>Produto</TableHead>
           <TableHead class="text-right">Vendidas</TableHead>
-          <TableHead class="text-right">Devolvidas</TableHead>
+          <TableHead class="hidden text-right sm:table-cell">Devolvidas</TableHead>
           <TableHead class="text-right">Líquido</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         <TableRow v-for="(r, i) in data.items" :key="`${r.productId}-${r.variantId}`">
-          <TableCell class="text-muted-foreground tabular">{{ i + 1 }}</TableCell>
+          <TableCell class="hidden text-muted-foreground tabular sm:table-cell">{{ i + 1 }}</TableCell>
           <TableCell>
             <RouterLink :to="`/produtos/${r.productId}`" class="font-medium hover:underline">{{
               r.productName
@@ -64,7 +64,9 @@ const { data, isPending } = useRankingReport(query, ready)
             <p v-if="r.variantLabel" class="text-xs text-muted-foreground">{{ r.variantLabel }}</p>
           </TableCell>
           <TableCell class="text-right tabular">{{ r.soldQty }}</TableCell>
-          <TableCell class="text-right text-muted-foreground tabular">{{ r.returnedQty }}</TableCell>
+          <TableCell class="hidden text-right text-muted-foreground tabular sm:table-cell">{{
+            r.returnedQty
+          }}</TableCell>
           <TableCell class="text-right font-semibold tabular">{{ r.netQty }}</TableCell>
         </TableRow>
       </TableBody>

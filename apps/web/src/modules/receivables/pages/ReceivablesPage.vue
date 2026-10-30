@@ -75,9 +75,9 @@ function choose(customerId: string) {
   </div>
 
   <div class="mt-6 grid gap-4 lg:grid-cols-[1fr_380px]">
-    <div>
+    <div class="min-w-0">
       <div class="mb-3 flex gap-2">
-        <div class="relative flex-1">
+        <div class="relative min-w-0 flex-1">
           <Search class="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input v-model="search" placeholder="Buscar cliente por nome ou telefone" class="pl-9" />
         </div>
