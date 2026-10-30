@@ -1,9 +1,11 @@
 import { Elysia } from 'elysia'
 import { authRoutes } from './modules/auth/auth.routes'
 import { healthRoutes } from './modules/health/health.routes'
+import { importsRoutes } from './modules/imports/imports.routes'
 import { productsRoutes } from './modules/products/products.routes'
 import { variantsRoutes } from './modules/products/variants.routes'
 import { settingsRoutes } from './modules/settings/settings.routes'
+import { stockRoutes } from './modules/stock/stock.routes'
 import { errorHandler } from './shared/error-handler'
 import { originCheck } from './shared/origin-check.plugin'
 
@@ -16,6 +18,8 @@ export function createApp() {
     .use(settingsRoutes)
     .use(productsRoutes)
     .use(variantsRoutes)
+    .use(stockRoutes)
+    .use(importsRoutes)
 }
 
 /** Tipo consumido pelo Eden Treaty no front. */

@@ -2,9 +2,11 @@ import { type AdjustmentReason, ErrorCode, type StockMovementType, type StockRef
 import type { DbOrTx } from '../../db/client'
 import type { StockMovement } from '../../db/schema'
 import { BusinessRuleError, NotFoundError } from '../../shared/errors'
-import type { StockRepository } from './stock.repository'
+import type { MovementFilters, StockRepository } from './stock.repository'
 
 export interface MovementInput {
+  /** Opcional: a Idempotency-Key, quando o próprio movimento é o registro criado (acerto). */
+  id?: string
   variantId: string
   type: StockMovementType
   /** Positivo = entra, negativo = sai. Nunca 0. */
@@ -56,6 +58,7 @@ export class StockService {
       }
       balances.set(movement.variantId, balanceAfter)
       return {
+        ...(movement.id ? { id: movement.id } : {}),
         variantId: movement.variantId,
         type: movement.type,
         quantityDelta: movement.delta,
@@ -74,7 +77,44 @@ export class StockService {
     return this.repo.insertMovements(rows, tx)
   }
 
+  /**
+   * RN-EST-05: acerto por contagem define o saldo (delta = contado − atual), calculado com a variação travada.
+   * Devolve `null` quando o saldo já está correto (nada é gravado).
+   */
+  async countTo(
+    tx: DbOrTx,
+    input: { id?: string; variantId: string; countedQty: number; note?: string | null },
+    context: MovementContext,
+  ): Promise<StockMovement | null> {
+    const [variant] = await this.repo.lockVariants([input.variantId], tx)
+    if (!variant) throw new NotFoundError('Variação não encontrada.')
+    const delta = input.countedQty - variant.stockQty
+    if (delta === 0) return null
+    const [movement] = await this.apply(
+      tx,
+      [{ ...input, type: 'adjustment', delta, adjustmentReason: 'count', refType: 'manual' }],
+      context,
+    )
+    return movement!
+  }
+
   hasMovements(variantIds: string[], tx?: DbOrTx) {
     return this.repo.hasMovements(variantIds, tx)
+  }
+
+  findMovement(id: string, tx?: DbOrTx) {
+    return this.repo.findMovement(id, tx)
+  }
+
+  listMovements(filters: MovementFilters) {
+    return this.repo.listMovements(filters)
+  }
+
+  /** RN-EST-08: variações ativas “sem estoque” e “repor”, para o Início e a tela de estoque. */
+  async alerts() {
+    const rows = await this.repo.alertVariants()
+    const out = rows.filter((r) => r.stockQty === 0)
+    const low = rows.filter((r) => r.stockQty > 0)
+    return { outCount: out.length, lowCount: low.length, out, low }
   }
 }

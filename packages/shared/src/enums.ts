@@ -34,6 +34,9 @@ export type AdjustmentReason = (typeof ADJUSTMENT_REASONS)[number]
 export const STOCK_REF_TYPES = ['stock_entry', 'sale', 'return_item', 'import', 'manual'] as const
 export type StockRefType = (typeof STOCK_REF_TYPES)[number]
 
+export const IMPORT_STATUSES = ['previewed', 'committed', 'discarded'] as const
+export type ImportStatus = (typeof IMPORT_STATUSES)[number]
+
 export const STOCK_STATUSES = ['out', 'low', 'ok'] as const
 export type StockStatus = (typeof STOCK_STATUSES)[number]
 

@@ -16,6 +16,13 @@ import type {
   UpdateVariantInput,
 } from './products.schemas'
 
+/** De onde veio o saldo inicial: cadastro manual ou um lote de importação. */
+export interface StockOrigin {
+  refType: 'manual' | 'import'
+  refId: string | null
+}
+const MANUAL: StockOrigin = { refType: 'manual', refId: null }
+
 const cleanText = (value: string) => value.trim().replace(/\s+/g, ' ')
 const optionalText = (value: string | null | undefined) => (value?.trim() ? cleanText(value) : null)
 /** Chave de unicidade da variação (RN-PRO-02): sem diferenciar maiúsculas, ignorando espaços nas pontas. */
@@ -57,25 +64,28 @@ export class ProductsService {
 
   /** RN-PRO-01: produto precisa de nome, preço base e ao menos uma variação. Saldo inicial gera movimento `initial`. */
   async create(input: CreateProductInput, userId: string) {
-    this.assertUniqueVariants(input.variants)
     return this.withUniqueGuard(() =>
-      db.transaction(async (tx) => {
-        const product = await this.repo.insertProduct(
-          {
-            name: cleanText(input.name),
-            basePriceCents: input.basePriceCents,
-            reference: optionalText(input.reference),
-            category: optionalText(input.category),
-            description: input.description?.trim() || null,
-            costCents: input.costCents ?? null,
-          },
-          tx,
-        )
-        await this.insertVariants(product, input.variants, userId, tx)
-        await this.audit.record({ entity: 'product', entityId: product.id, action: 'create', userId }, tx)
-        return this.get(product.id, tx)
-      }),
+      db.transaction(async (tx) => this.get(await this.createWithin(tx, input, userId), tx)),
     )
+  }
+
+  /** Cria dentro de uma transação já aberta (usado também pela importação). Devolve o id do produto. */
+  async createWithin(tx: DbOrTx, input: CreateProductInput, userId: string, origin: StockOrigin = MANUAL) {
+    this.assertUniqueVariants(input.variants)
+    const product = await this.repo.insertProduct(
+      {
+        name: cleanText(input.name),
+        basePriceCents: input.basePriceCents,
+        reference: optionalText(input.reference),
+        category: optionalText(input.category),
+        description: input.description?.trim() || null,
+        costCents: input.costCents ?? null,
+      },
+      tx,
+    )
+    await this.insertVariants(product, input.variants, userId, tx, origin)
+    await this.audit.record({ entity: 'product', entityId: product.id, action: 'create', userId }, tx)
+    return product.id
   }
 
   async update(id: string, input: UpdateProductInput, userId: string) {
@@ -111,12 +121,22 @@ export class ProductsService {
   async addVariants(productId: string, variants: NewVariantInput[], userId: string) {
     return this.withUniqueGuard(() =>
       db.transaction(async (tx) => {
-        const product = await this.requireProduct(productId, tx, true)
-        this.assertUniqueVariants(variants, await this.repo.findVariants(productId, tx))
-        await this.insertVariants(product, variants, userId, tx)
+        await this.addVariantsWithin(tx, productId, variants, userId)
         return this.get(productId, tx)
       }),
     )
+  }
+
+  async addVariantsWithin(
+    tx: DbOrTx,
+    productId: string,
+    variants: NewVariantInput[],
+    userId: string,
+    origin: StockOrigin = MANUAL,
+  ) {
+    const product = await this.requireProduct(productId, tx, true)
+    this.assertUniqueVariants(variants, await this.repo.findVariants(productId, tx))
+    await this.insertVariants(product, variants, userId, tx, origin)
   }
 
   async updateVariant(id: string, input: UpdateVariantInput, userId: string) {
@@ -215,7 +235,13 @@ export class ProductsService {
     })
   }
 
-  private async insertVariants(product: Product, inputs: NewVariantInput[], userId: string, tx: DbOrTx) {
+  private async insertVariants(
+    product: Product,
+    inputs: NewVariantInput[],
+    userId: string,
+    tx: DbOrTx,
+    origin: StockOrigin,
+  ) {
     const created = await this.repo.insertVariants(
       inputs.map((input) => {
         const size = normalizeSize(input.size)
@@ -235,7 +261,7 @@ export class ProductsService {
     // RN-EST-02: saldo inicial vira movimento `initial` (variações vêm na mesma ordem do insert).
     const movements: MovementInput[] = created.flatMap((variant, i) => {
       const qty = inputs[i]!.initialQty ?? 0
-      return qty > 0 ? [{ variantId: variant.id, type: 'initial', delta: qty, refType: 'manual' }] : []
+      return qty > 0 ? [{ variantId: variant.id, type: 'initial', delta: qty, ...origin }] : []
     })
     if (movements.length > 0) {
       const businessDate = await this.settings.businessDate(new Date(), tx)

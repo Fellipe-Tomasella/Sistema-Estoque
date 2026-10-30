@@ -41,3 +41,6 @@ Formato: data · decisão · motivo · quem decidiu. Mais recentes no fim. **Nã
 | Tailwind CSS | (front adiado) |
 | shadcn-vue | (front adiado) |
 | vite-plugin-pwa | (front adiado) |
+| 022 | 30/10/2026 | Sem rota `/stock/overview`: `/products` (com `stock=out\|low`) já traz produto + variações + saldo + situação, e a grade é montada na tela. | Evita duas consultas com o mesmo conteúdo. | Claude |
+| 023 | 30/10/2026 | Importação: o `custo` de cada linha vai para a variação; referência e categoria do produto vêm da primeira linha que as tiver. Na efetivação o plano é refeito sobre o catálogo atual; se surgiu variação igual depois da prévia, a importação pede nova prévia (409). | Planilha tem uma linha por variação; refazer o plano impede contar estoque duas vezes. | Claude |
+| 024 | 30/10/2026 | Enums opcionais em query/body usam `OneOf` (união de literais), não `t.UnionEnum`. | O Elysia preenche `UnionEnum` ausente com o primeiro valor — um filtro não pedido seria aplicado. | Claude |

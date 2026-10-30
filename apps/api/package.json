@@ -14,18 +14,22 @@
     "db:migrate": "bun --env-file=../../.env src/db/migrate.ts",
     "db:seed": "bun --env-file=../../.env src/db/seed.ts",
     "user:create": "bun --env-file=../../.env src/scripts/create-user.ts",
-    "user:reset-password": "bun --env-file=../../.env src/scripts/reset-password.ts"
+    "user:reset-password": "bun --env-file=../../.env src/scripts/reset-password.ts",
+    "check-integrity": "bun --env-file=../../.env src/scripts/check-integrity.ts"
   },
   "dependencies": {
     "@estoque/shared": "workspace:*",
     "@sinclair/typebox": "^0.34",
     "drizzle-orm": "^0.45.4",
     "elysia": "^1.4.30",
+    "exceljs": "^4.4.0",
     "nodemailer": "^10.3.1",
+    "papaparse": "^5.7.0",
     "postgres": "^3"
   },
   "devDependencies": {
     "@types/nodemailer": "^8.0.2",
+    "@types/papaparse": "^5.5.2",
     "drizzle-kit": "^0.31.11"
   }
 }

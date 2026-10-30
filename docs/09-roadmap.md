@@ -53,12 +53,12 @@ Docs: 03 §3.3, 04 RN-PRO, RN-EST-02, 05 Produtos, 06 §3.2.
 
 ## Etapa 3 — Estoque: entradas, acertos, histórico, alertas, importação
 Docs: 04 RN-EST, RN-IMP, 05 Estoque, 06 §3.3.
-- [ ] Entradas (`stock_entries`, itens, movimentos `purchase_entry`) com idempotência.
-- [ ] Acertos (contagem / perda / avaria / erro / outro).
-- [ ] Histórico por variação e geral.
-- [ ] Visão geral do estoque com “sem estoque” e “repor”; mínimo em massa.
-- [ ] Importação: modelo, prévia, erros por linha, efetivar idempotente.
-- [ ] `scripts/check-integrity.ts` (invariante 1).
+- [x] Entradas (`stock_entries`, itens, movimentos `purchase_entry`) com idempotência.
+- [x] Acertos (contagem / perda / avaria / erro / outro).
+- [x] Histórico por variação e geral.
+- [x] Visão geral do estoque com “sem estoque” e “repor” (`/products?stock=out|low` + `/stock/alerts`); mínimo em massa.
+- [x] Importação: modelo, prévia, erros por linha, efetivar idempotente.
+- [x] `scripts/check-integrity.ts` (invariante 1) — `bun run --filter @estoque/api check-integrity`.
 
 **Aceite:** cenário A7; saldo nunca negativo; importar planilha de exemplo (fixture com erros) mostra erros e efetiva o resto; integridade ok.
 

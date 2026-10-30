@@ -44,7 +44,7 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 ## Estoque (`modules/stock`)
 | Método | Rota | Descrição |
 | --- | --- | --- |
-| GET | `/stock/overview` | grade produto × cor × tamanho; filtros `out`/`low` |
+| GET | `/products?stock=out\|low` | visão geral do estoque: a grade produto × cor × tamanho é montada na tela a partir das variações (decisão 022) |
 | GET | `/stock/alerts` | contagens e lista de “sem estoque” e “repor” |
 | GET | `/variants/:id/movements` | histórico (RN-EST-10) |
 | GET | `/stock/movements` | histórico geral com filtros (período, tipo) |
