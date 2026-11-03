@@ -1,7 +1,7 @@
 # 11 — Loja virtual (v2) — PLANEJAMENTO
 
 > Pedido do dev em 03/11/2026 (decisão 038). A v1 dizia “não é loja virtual” (docs/01); isto abre a v2.
-> Ainda **não implementado**. Rever as perguntas da §8 antes de começar.
+> Ainda **não implementado**. Respostas do dev e pendências na §8.
 
 ## 1. Ideia
 
@@ -75,14 +75,24 @@ Pedido do dev: as fotos servem **para o catálogo interno e para o site**, não 
   `web_leads`, `product_view_counts` (por dia).
 - Pagamento on-line **fora** desta etapa; deixar o pedido com campo de forma pretendida para o gateway no futuro.
 
-## 8. Perguntas antes de começar
+## 8. Respostas do dev (03/11/2026) e o que ainda falta
 
-1. **Nome da marca** para o endereço (`marca.hyperdynamis.com`)? Já existe domínio próprio?
-2. **Fotos:** a dona tem fotos dos produtos? Quantas por produto?
-3. **Entrega no site:** só retirada e “combinar no WhatsApp”, ou frete fixo por região?
-4. Mostrar **preço** sempre, ou “consulte” em alguns produtos?
-5. O pedido do site pode virar **fiado**, ou fiado só para clientes já conhecidas?
-6. Notificação de pedido novo: só no sistema, também por e-mail, ou WhatsApp para a dona (via link)?
+| Assunto | Decisão |
+| --- | --- |
+| Domínio | Sem domínio próprio: usar subdomínio `*.hyperdynamis.com` (nome a definir). |
+| Fotos | Até **5 fotos por produto** (quantidade varia por produto). |
+| Entrega / pedido | Sem frete no site. A cliente deixa o **interesse** (carrinho + poucos dados: nome, WhatsApp, e-mail, cidade e observação) ou chama no WhatsApp; o sistema avisa a vendedora. Formulário curto. |
+| Preço | A dona escolhe, por produto, o **preço exibido no site** (ver pergunta em aberto abaixo). |
+| Fiado | Não aparece no site. A mensagem final diz só que “a vendedora vai entrar em contato”. Forma de pagamento se combina depois. |
+| Aviso de pedido | **E-mail para a vendedora + aviso no sistema.** WhatsApp automático não (sem API oficial); só o link `wa.me` para a cliente. |
+
+Em aberto:
+1. **Nome do subdomínio** (ex.: `nomedamarca.hyperdynamis.com`).
+2. **Preço de exibição:** o preço do site pode ser **diferente** do preço do PDV (ex.: promoção só no site), ou a
+   escolha é só **mostrar o preço** ou **“consulte”**?
+3. **E-mail de envio (SMTP):** hoje a stack está sem SMTP, então nenhum e-mail sai (nem o de “esqueci a senha”).
+   Precisa de uma conta para enviar (ex.: `nao-responda@hyperdynamis.com` no e-mail da Hostinger: host, porta,
+   usuário, senha) e o **e-mail da vendedora** que recebe os avisos.
 
 ## 9. Etapas sugeridas
 
