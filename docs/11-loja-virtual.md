@@ -1,7 +1,7 @@
 # 11 — Loja virtual (v2) — PLANEJAMENTO
 
 > Pedido do dev em 03/11/2026 (decisão 038). A v1 dizia “não é loja virtual” (docs/01); isto abre a v2.
-> Ainda **não implementado**. Respostas do dev e pendências na §8.
+> Ainda **não implementado**. Respostas do dev na §8.
 
 ## 1. Ideia
 
@@ -12,14 +12,15 @@ edita: quais páginas existem, o que aparece em cada uma e quais produtos entram
 
 ## 2. Endereço (URL)
 
-O sistema é de **uma loja só** (uma dona por instalação), então o site também é um só. Não precisa de subdomínio
-curinga nem de um site por pessoa.
+O sistema é de **uma loja só** (uma dona por instalação), então o site também é um só.
 
-- **Recomendado:** um subdomínio com o nome da marca, ex.: `nomedamarca.hyperdynamis.com`. Configuração: um CNAME na
-  Cloudflare (igual ao `estoque`) e mais uma regra `Host(...)` no Traefik apontando para o **mesmo serviço**.
-  A API vê o `Host` da requisição: no `estoque.` mostra o painel; no da marca, mostra a loja.
-- **Depois:** domínio próprio da marca (`nomedamarca.com.br`) do mesmo jeito: só mais um `Host` no Traefik.
-- Configurações → Loja virtual guarda o endereço público (usado em links, compartilhamento e e-mails).
+- **Decidido (decisão 039):** o site fica no **mesmo endereço do sistema, num caminho com o nome da loja**:
+  `estoque.hyperdynamis.com/<nome-da-loja>` (ex.: `estoque.hyperdynamis.com/bella-modas`). Sem DNS nem Traefik novos.
+- A dona escolhe o nome do caminho em Configurações → Loja virtual (letras minúsculas, números e hífen). O sistema
+  recusa nomes que já são telas do painel (`vender`, `vendas`, `produtos`, `api`, `assets`…).
+- A API gera as páginas da loja no servidor para `/<nome-da-loja>` e `/<nome-da-loja>/...` antes do painel (SPA),
+  que continua com o resto.
+- **Depois:** subdomínio ou domínio próprio da marca, se a cliente quiser — só mais um `Host` no Traefik.
 
 ## 2.1 Fotos dos produtos (painel e site)
 
@@ -75,30 +76,24 @@ Pedido do dev: as fotos servem **para o catálogo interno e para o site**, não 
   `web_leads`, `product_view_counts` (por dia).
 - Pagamento on-line **fora** desta etapa; deixar o pedido com campo de forma pretendida para o gateway no futuro.
 
-## 8. Respostas do dev (03/11/2026) e o que ainda falta
+## 8. Respostas do dev (03/11/2026)
 
 | Assunto | Decisão |
 | --- | --- |
-| Domínio | Sem domínio próprio: usar subdomínio `*.hyperdynamis.com` (nome a definir). |
+| Endereço | `estoque.hyperdynamis.com/<nome-da-loja>` (ver §2). Domínio próprio fica para depois. |
 | Fotos | Até **5 fotos por produto** (quantidade varia por produto). |
 | Entrega / pedido | Sem frete no site. A cliente deixa o **interesse** (carrinho + poucos dados: nome, WhatsApp, e-mail, cidade e observação) ou chama no WhatsApp; o sistema avisa a vendedora. Formulário curto. |
-| Preço | A dona escolhe, por produto, o **preço exibido no site** (ver pergunta em aberto abaixo). |
+| Preço | Por produto, a dona define o **preço do site**, que pode ser **diferente** do preço do PDV (ex.: promoção só no site). Vazio = usa o preço do PDV. Ela também pode esconder o preço (“consulte”). O preço do site não muda a venda: ao “virar venda”, o PDV usa o preço do site como preço do item. |
 | Fiado | Não aparece no site. A mensagem final diz só que “a vendedora vai entrar em contato”. Forma de pagamento se combina depois. |
 | Aviso de pedido | **E-mail para a vendedora + aviso no sistema.** WhatsApp automático não (sem API oficial); só o link `wa.me` para a cliente. |
-
-Em aberto:
-1. **Nome do subdomínio** (ex.: `nomedamarca.hyperdynamis.com`).
-2. **Preço de exibição:** o preço do site pode ser **diferente** do preço do PDV (ex.: promoção só no site), ou a
-   escolha é só **mostrar o preço** ou **“consulte”**?
-3. **E-mail de envio (SMTP):** hoje a stack está sem SMTP, então nenhum e-mail sai (nem o de “esqueci a senha”).
-   Precisa de uma conta para enviar (ex.: `nao-responda@hyperdynamis.com` no e-mail da Hostinger: host, porta,
-   usuário, senha) e o **e-mail da vendedora** que recebe os avisos.
+| E-mail de envio | Gmail `hyperdynamis@gmail.com` com **senha de app** (SMTP `smtp.gmail.com:587`, STARTTLS). A senha fica só no `.env` e na stack local (fora do git). Limite ~500 e-mails/dia; no começo pode cair em Spam/Promoções. Para caixa de entrada garantida, trocar depois por domínio com SPF/DKIM (Resend/Brevo). |
+| Quem recebe | E-mail de avisos configurável em Configurações → Loja virtual; por enquanto o do dev (`fellipetomasella@gmail.com`), depois o da vendedora. |
 
 ## 9. Etapas sugeridas
 
 1. Fotos dos produtos e dados públicos do produto (painel).
 2. Configurações do site e páginas com blocos (editor + pré-visualização + publicar).
-3. Site público (início, catálogo, produto, páginas) renderizado no servidor + Host da marca.
+3. Site público (início, catálogo, produto, páginas) renderizado no servidor em `/<nome-da-loja>`.
 4. Carrinho, finalizar pedido e Pedidos do site no painel (“virar venda” no PDV).
 5. Interessados e produtos mais vistos.
-6. Domínio da marca em produção (CNAME + Traefik) e testes E2E do pedido.
+6. Testes E2E do pedido e publicação em produção.

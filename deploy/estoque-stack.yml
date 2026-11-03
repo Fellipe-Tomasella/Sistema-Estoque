@@ -24,7 +24,8 @@ services:
       # atrás do Cloudflare (nuvem laranja): IP real de quem acessa, para o limite de tentativas do login.
       # Sem Cloudflare, apague a linha (o Traefik já manda o X-Real-IP).
       - CLIENT_IP_HEADER=cf-connecting-ip
-      # e-mail de “esqueci a senha” (opcional; sem SMTP, a senha se redefine pelo console)
+      # e-mail: “esqueci a senha” e avisos da loja virtual (opcional; sem SMTP, a senha se redefine pelo console)
+      # Gmail: SMTP_HOST=smtp.gmail.com, porta 587, SMTP_USER = o Gmail, SMTP_PASS = senha de app (sem espaços)
       - SMTP_HOST=
       - SMTP_PORT=587
       - SMTP_USER=
