@@ -92,6 +92,13 @@
       "when": 1793713322404,
       "tag": "0012_storefront_settings",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1793714114736,
+      "tag": "0013_web_orders",
+      "breakpoints": true
     }
   ]
 }

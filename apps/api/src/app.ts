@@ -15,6 +15,7 @@ import { salesRoutes } from './modules/sales/sales.routes'
 import { settingsRoutes } from './modules/settings/settings.routes'
 import { stockRoutes } from './modules/stock/stock.routes'
 import { storefrontRoutes } from './modules/storefront/storefront.routes'
+import { publicOrdersRoutes, webOrdersRoutes } from './modules/web-orders/web-orders.routes'
 import { errorHandler } from './shared/error-handler'
 import { originCheck } from './shared/origin-check.plugin'
 
@@ -38,6 +39,8 @@ export function createApp() {
     .use(fiscalRoutes)
     .use(exportsRoutes)
     .use(storefrontRoutes)
+    .use(publicOrdersRoutes)
+    .use(webOrdersRoutes)
 }
 
 /** Tipo consumido pelo Eden Treaty no front. */

@@ -51,6 +51,8 @@ import { StockRepository } from './modules/stock/stock.repository'
 import { StockService } from './modules/stock/stock.service'
 import { StorefrontRepository } from './modules/storefront/storefront.repository'
 import { StorefrontService } from './modules/storefront/storefront.service'
+import { WebOrdersRepository } from './modules/web-orders/web-orders.repository'
+import { WebOrdersService } from './modules/web-orders/web-orders.service'
 import { createMailer } from './shared/mailer'
 import { MediaStorage } from './shared/media-storage'
 
@@ -79,12 +81,13 @@ export function createContainer() {
     stock: new StockRepository(db),
     stockEntries: new StockEntriesRepository(db),
     storefront: new StorefrontRepository(db),
+    webOrders: new WebOrdersRepository(db),
   }
 
   const audit = new AuditService(repositories.audit)
   const settings = new SettingsService(repositories.settings, audit)
   const stock = new StockService(repositories.stock)
-  const products = new ProductsService(repositories.products, stock, settings, audit, media)
+  const products = new ProductsService(repositories.products, stock, settings, audit, media, repositories.webOrders)
   const customers = new CustomersService(repositories.customers, settings, audit)
   const sales = new SalesService(
     repositories.sales,
@@ -123,6 +126,8 @@ export function createContainer() {
     customers,
     audit,
   )
+
+  const saleDrafts = new SaleDraftsService(repositories.sales, sales, customers)
 
   return {
     mailer,
@@ -173,10 +178,20 @@ export function createContainer() {
     ),
     receipts: new ReceiptsService(sales, settings, receivableReceipts),
     saleConfirmation,
-    saleDrafts: new SaleDraftsService(repositories.sales, sales, customers),
+    saleDrafts,
     stockAdjustments: new StockAdjustmentsService(stock, settings, audit),
     stockEntries: new StockEntriesService(repositories.stockEntries, stock, settings),
     storefront: new StorefrontService(repositories.storefront, settings, audit),
+    webOrders: new WebOrdersService(
+      repositories.webOrders,
+      repositories.storefront,
+      customers,
+      saleDrafts,
+      settings,
+      mailer,
+      audit,
+      env.appOrigin,
+    ),
   }
 }
 

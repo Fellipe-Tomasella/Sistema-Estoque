@@ -3,6 +3,7 @@ import { db, type DbOrTx } from '../../db/client'
 import type { Product, Variant } from '../../db/schema'
 import { BusinessRuleError, ConflictError, NotFoundError } from '../../shared/errors'
 import type { MediaStorage } from '../../shared/media-storage'
+import type { WebOrdersRepository } from '../web-orders/web-orders.repository'
 import { isUniqueViolation } from '../../shared/sql'
 import type { AuditService } from '../audit/audit.service'
 import type { SettingsService } from '../settings/settings.service'
@@ -37,6 +38,7 @@ export class ProductsService {
     private readonly settings: SettingsService,
     private readonly audit: AuditService,
     private readonly media: MediaStorage,
+    private readonly webOrders: Pick<WebOrdersRepository, 'hasItemsFor'>,
   ) {}
 
   async list(filters: ListProductsFilters) {
@@ -315,7 +317,10 @@ export class ProductsService {
 
   /** Histórico = movimento de estoque ou item em qualquer venda (inclusive rascunho). */
   private async assertNoHistory(variantIds: string[], tx: DbOrTx, message: string) {
-    const hasHistory = (await this.stock.hasMovements(variantIds, tx)) || (await this.repo.hasSaleItems(variantIds, tx))
+    const hasHistory =
+      (await this.stock.hasMovements(variantIds, tx)) ||
+      (await this.repo.hasSaleItems(variantIds, tx)) ||
+      (await this.webOrders.hasItemsFor(variantIds, tx))
     if (hasHistory) throw new BusinessRuleError(message)
   }
 

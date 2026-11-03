@@ -42,6 +42,9 @@ describe('clientes', () => {
     await create({ name: 'Bia', phone: '(65) 98888-0002' })
     const res = await request('GET', '/customers?q=99999', { cookie })
     expect(res.body.items.map((c: { name: string }) => c.name)).toEqual(['Ana'])
+    // número inteiro, sem a pontuação do cadastro
+    const full = await request('GET', '/customers?q=65999990001', { cookie })
+    expect(full.body.items.map((c: { name: string }) => c.name)).toEqual(['Ana'])
   })
 
   test('busca por nome sem acento', async () => {

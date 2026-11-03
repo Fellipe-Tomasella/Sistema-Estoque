@@ -62,7 +62,7 @@ export class CustomersRepository {
         ? or(
             sql`${searchable(customers.name)} like ${searchable(containsPattern(q))}`,
             digits.length >= 3
-              ? sql`regexp_replace(coalesce(${customers.phone}, ''), '\D', '', 'g') like ${containsPattern(digits)}`
+              ? sql`regexp_replace(coalesce(${customers.phone}, ''), '[^0-9]', '', 'g') like ${containsPattern(digits)}`
               : undefined,
             digits.length >= 3 ? sql`${customers.document} like ${containsPattern(digits)}` : undefined,
           )

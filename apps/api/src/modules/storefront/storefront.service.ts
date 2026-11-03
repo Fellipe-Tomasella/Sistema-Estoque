@@ -1,4 +1,4 @@
-import { onlyDigits, storeSlugProblem } from '@estoque/shared'
+import { normalizeWhatsapp, storeSlugProblem } from '@estoque/shared'
 import { db } from '../../db/client'
 import type { StorefrontSettings } from '../../db/schema'
 import { ValidationError } from '../../shared/errors'
@@ -103,13 +103,12 @@ export class StorefrontService {
       changes.slug = slug
     }
     if ('whatsapp' in input) {
-      const digits = onlyDigits(input.whatsapp ?? '')
-      // sem DDI, assume Brasil (55)
-      const full = digits.length === 10 || digits.length === 11 ? `55${digits}` : digits
-      if (full && (full.length < 12 || full.length > 13)) {
+      const typed = text(input.whatsapp)
+      const whatsapp = typed && normalizeWhatsapp(typed)
+      if (typed && !whatsapp) {
         throw new ValidationError('WhatsApp inválido. Use DDD + número (ex.: 11 99999-8888).', { field: 'whatsapp' })
       }
-      changes.whatsapp = full || null
+      changes.whatsapp = whatsapp || null
     }
     if ('instagram' in input) changes.instagram = text(input.instagram)?.replace(/^@/, '') ?? null
     if ('notifyEmail' in input) {
