@@ -12,6 +12,7 @@ export const NewVariantBody = t.Object({
   priceCents: t.Optional(t.Nullable(Cents)),
   costCents: t.Optional(t.Nullable(Cents)),
   sku: OptionalText(60),
+  barcode: OptionalText(20),
   initialQty: t.Optional(Quantity),
   minStock: t.Optional(t.Nullable(Quantity)),
 })
@@ -51,6 +52,7 @@ export const UpdateVariantBody = t.Object({
   priceCents: t.Optional(t.Nullable(Cents)),
   costCents: t.Optional(t.Nullable(Cents)),
   sku: OptionalText(60),
+  barcode: OptionalText(20),
   minStock: t.Optional(t.Nullable(Quantity)),
   active: t.Optional(t.Boolean()),
 })

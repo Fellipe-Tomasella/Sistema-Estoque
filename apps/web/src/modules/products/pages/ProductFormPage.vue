@@ -45,6 +45,8 @@ const form = useForm({
       description: z.string().optional(),
     }),
   ),
+  // “Cadastrar produto” a partir de um item da NF-e já vem com o nome da nota
+  initialValues: { name: typeof route.query.nome === 'string' ? route.query.nome : undefined },
 })
 
 // Edição: preenche o formulário com o produto carregado.
@@ -143,7 +145,9 @@ const onSubmit = form.handleSubmit(async (values) => {
           <FormField v-slot="{ componentField }" name="reference">
             <FormItem>
               <FormLabel>Referência</FormLabel>
-              <FormControl><Input placeholder="Ex.: BL-01" v-bind="componentField" /></FormControl>
+              <FormControl
+                ><Input placeholder="Vazio = código automático (P00001…)" v-bind="componentField"
+              /></FormControl>
             </FormItem>
           </FormField>
           <FormField v-slot="{ componentField }" name="category">
@@ -192,9 +196,9 @@ const onSubmit = form.handleSubmit(async (values) => {
     </Card>
 
     <div
-      class="fixed inset-x-0 bottom-14 z-30 border-t bg-card/95 px-4 py-3 backdrop-blur md:bottom-0 md:left-60 md:px-6 lg:px-10"
+      class="fixed inset-x-0 bottom-14 z-30 border-t bg-card/95 px-4 py-3 backdrop-blur md:bottom-0 md:px-6 lg:left-60 xl:px-8 2xl:px-10"
     >
-      <div class="mx-auto flex max-w-7xl items-center gap-3">
+      <div class="flex items-center gap-3">
         <p class="flex-1 text-sm">
           <span class="font-semibold">{{ chosen.length }} {{ chosen.length === 1 ? 'variação' : 'variações' }}</span>
           <span class="text-muted-foreground">

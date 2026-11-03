@@ -99,6 +99,13 @@
       "when": 1793714114736,
       "tag": "0013_web_orders",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1793731110599,
+      "tag": "0014_nfe_entries_codes",
+      "breakpoints": true
     }
   ]
 }

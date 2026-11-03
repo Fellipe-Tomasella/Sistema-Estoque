@@ -1,7 +1,7 @@
-import { normalizeSize, sizeSort } from '@estoque/shared'
+import { normalizeBarcode, normalizeSize, productCode, sizeSort, variantSku } from '@estoque/shared'
 import { db, type DbOrTx } from '../../db/client'
 import type { Product, Variant } from '../../db/schema'
-import { BusinessRuleError, ConflictError, NotFoundError } from '../../shared/errors'
+import { BusinessRuleError, ConflictError, NotFoundError, ValidationError } from '../../shared/errors'
 import type { MediaStorage } from '../../shared/media-storage'
 import type { WebOrdersRepository } from '../web-orders/web-orders.repository'
 import { isUniqueViolation } from '../../shared/sql'
@@ -98,7 +98,8 @@ export class ProductsService {
       {
         name: cleanText(input.name),
         basePriceCents: input.basePriceCents,
-        reference: optionalText(input.reference),
+        // RN-PRO-15: sem referência, recebe o próximo código padrão (P00001…)
+        reference: optionalText(input.reference) ?? productCode(await this.repo.nextProductCode(tx)),
         category: optionalText(input.category),
         description: input.description?.trim() || null,
         costCents: input.costCents ?? null,
@@ -186,6 +187,7 @@ export class ProductsService {
         if ('priceCents' in input) changes.priceCents = input.priceCents ?? null
         if ('costCents' in input) changes.costCents = input.costCents ?? null
         if ('sku' in input) changes.sku = optionalText(input.sku)
+        if ('barcode' in input) changes.barcode = this.barcodeOf(input.barcode)
         if ('minStock' in input) changes.minStock = input.minStock ?? null
         if (input.active !== undefined) changes.active = input.active
 
@@ -285,7 +287,9 @@ export class ProductsService {
           sizeSort: sizeSort(size),
           priceCents: input.priceCents ?? null,
           costCents: input.costCents ?? null,
-          sku: optionalText(input.sku),
+          // RN-PRO-15: SKU padrão a partir da referência, cor e tamanho
+          sku: optionalText(input.sku) ?? (product.reference ? variantSku(product.reference, input.color, size) : null),
+          barcode: this.barcodeOf(input.barcode),
           minStock: input.minStock ?? null,
         }
       }),
@@ -324,11 +328,22 @@ export class ProductsService {
     if (hasHistory) throw new BusinessRuleError(message)
   }
 
+  /** Código de barras digitado: só dígitos (8 a 14); texto preenchido e inválido é erro. */
+  private barcodeOf(text: string | null | undefined) {
+    if (!text?.trim()) return null
+    const barcode = normalizeBarcode(text)
+    if (!barcode) throw new ValidationError('Código de barras inválido: use de 8 a 14 números.', { field: 'barcode' })
+    return barcode
+  }
+
   /** Corrida entre dois aparelhos criando a mesma variação: o índice único do banco decide. */
   private async withUniqueGuard<T>(operation: () => Promise<T>): Promise<T> {
     try {
       return await operation()
     } catch (error) {
+      if (isUniqueViolation(error, 'variants_barcode_uq')) {
+        throw new ConflictError('Este código de barras já está em outra variação.')
+      }
       if (isUniqueViolation(error)) throw new ConflictError('Já existe uma variação com esta cor e tamanho.')
       throw error
     }

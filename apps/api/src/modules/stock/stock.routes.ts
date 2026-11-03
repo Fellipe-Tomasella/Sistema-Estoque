@@ -1,4 +1,4 @@
-import { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 import { authPlugin } from '../../shared/auth.plugin'
 import { requireIdempotencyKey } from '../../shared/idempotency'
 import { CreateAdjustmentBody, CreateEntryBody, IdParams, ListEntriesQuery, ListMovementsQuery } from './stock.schemas'
@@ -29,6 +29,10 @@ export const stockRoutes = new Elysia()
     },
     { body: CreateEntryBody },
   )
+  // RN-EST-11: prévia da entrada a partir do XML da NF-e (não grava)
+  .post('/stock/entries/nfe-preview', ({ body, services }) => services.stockEntries.previewNfe(body.file), {
+    body: t.Object({ file: t.File({ maxSize: '5m' }) }),
+  })
   .get('/stock/entries', ({ query, services }) => services.stockEntries.list({ ...query, ...page(query) }), {
     query: ListEntriesQuery,
   })

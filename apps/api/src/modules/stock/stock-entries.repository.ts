@@ -1,6 +1,6 @@
-import { and, count, desc, eq, gte, lte, sql, sum } from 'drizzle-orm'
+import { and, count, desc, eq, gte, inArray, lte, sql, sum } from 'drizzle-orm'
 import type { DbOrTx } from '../../db/client'
-import { products, stockEntries, stockEntryItems, variants } from '../../db/schema'
+import { products, stockEntries, stockEntryItems, supplierItemLinks, variants } from '../../db/schema'
 
 export interface EntryFilters {
   from?: string
@@ -19,6 +19,61 @@ export class StockEntriesRepository {
   ) {
     await tx.insert(stockEntries).values(entry)
     await tx.insert(stockEntryItems).values(items.map((item) => ({ ...item, entryId: entry.id })))
+  }
+
+  async findByAccessKey(accessKey: string) {
+    const [entry] = await this.db.select().from(stockEntries).where(eq(stockEntries.nfeAccessKey, accessKey))
+    return entry
+  }
+
+  /** Variações ativas candidatas a um item da nota: por vínculo do fornecedor, código de barras ou SKU. */
+  async nfeCandidates(supplierDocument: string, codes: string[], barcodes: string[]) {
+    const columns = {
+      variantId: variants.id,
+      productName: products.name,
+      color: variants.color,
+      size: variants.size,
+      barcode: variants.barcode,
+      sku: variants.sku,
+    }
+    const base = () => this.db.select(columns).from(variants).innerJoin(products, eq(products.id, variants.productId))
+    const [links, byBarcode, bySku] = await Promise.all([
+      codes.length && supplierDocument
+        ? this.db
+            .select({ ...columns, supplierCode: supplierItemLinks.supplierCode })
+            .from(supplierItemLinks)
+            .innerJoin(variants, eq(variants.id, supplierItemLinks.variantId))
+            .innerJoin(products, eq(products.id, variants.productId))
+            .where(
+              and(
+                eq(supplierItemLinks.supplierDocument, supplierDocument),
+                inArray(supplierItemLinks.supplierCode, codes),
+              ),
+            )
+        : [],
+      barcodes.length ? base().where(inArray(variants.barcode, barcodes)) : [],
+      codes.length
+        ? base().where(
+            inArray(
+              sql`lower(${variants.sku})`,
+              codes.map((c) => c.toLowerCase()),
+            ),
+          )
+        : [],
+    ])
+    return { links, byBarcode, bySku }
+  }
+
+  /** Lembra (ou corrige) o vínculo código do fornecedor → variação. */
+  async saveLinks(supplierDocument: string, links: { supplierCode: string; variantId: string }[], tx: DbOrTx) {
+    if (!links.length) return
+    await tx
+      .insert(supplierItemLinks)
+      .values(links.map((l) => ({ supplierDocument, ...l })))
+      .onConflictDoUpdate({
+        target: [supplierItemLinks.supplierDocument, supplierItemLinks.supplierCode],
+        set: { variantId: sql`excluded.variant_id` },
+      })
   }
 
   async find(id: string, tx: DbOrTx = this.db) {

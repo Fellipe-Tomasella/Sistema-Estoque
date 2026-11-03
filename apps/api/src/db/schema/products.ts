@@ -44,6 +44,8 @@ export const variants = pgTable(
     priceCents: integer(),
     costCents: integer(),
     sku: text(),
+    /** Código de barras (EAN/GTIN) da etiqueta ou da nota do fornecedor: o leitor do PDV acha por ele. */
+    barcode: text(),
     /** Saldo atual: cache do ledger `stock_movements`, só alterado pelo StockService. */
     stockQty: integer().notNull().default(0),
     /** null = sem alerta de reposição (RN-EST-08). */
@@ -58,6 +60,7 @@ export const variants = pgTable(
       sql`lower(${table.color})`,
       sql`lower(${table.size})`,
     ),
+    uniqueIndex('variants_barcode_uq').on(table.barcode),
     check('variants_stock_qty_check', sql`${table.stockQty} >= 0`),
     check('variants_price_check', sql`${table.priceCents} >= 0`),
     check('variants_cost_check', sql`${table.costCents} >= 0`),

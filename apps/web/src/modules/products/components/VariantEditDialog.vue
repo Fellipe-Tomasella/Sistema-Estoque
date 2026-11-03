@@ -38,6 +38,7 @@ const form = useForm({
       priceCents: z.number().nullable(),
       costCents: z.number().nullable(),
       sku: z.string().optional(),
+      barcode: z.string().optional(),
       minStock: optionalInt,
       active: z.boolean(),
     }),
@@ -55,6 +56,7 @@ watch(
         priceCents: v.priceCents,
         costCents: v.costCents,
         sku: v.sku ?? '',
+        barcode: v.barcode ?? '',
         minStock: v.minStock,
         active: v.active,
       },
@@ -63,7 +65,10 @@ watch(
 )
 
 const onSubmit = form.handleSubmit(async (values) => {
-  await updateVariant.mutateAsync({ id: props.variant!.id, body: { ...values, sku: values.sku || null } })
+  await updateVariant.mutateAsync({
+    id: props.variant!.id,
+    body: { ...values, sku: values.sku || null, barcode: values.barcode || null },
+  })
   toast.success(`Variação ${values.color} / ${values.size} salva.`)
   open.value = false
 })
@@ -122,6 +127,14 @@ const onSubmit = form.handleSubmit(async (values) => {
           <FormItem>
             <FormLabel>SKU</FormLabel>
             <FormControl><Input v-bind="componentField" /></FormControl>
+          </FormItem>
+        </FormField>
+        <FormField v-slot="{ componentField }" name="barcode">
+          <FormItem>
+            <FormLabel>Código de barras</FormLabel>
+            <FormControl
+              ><Input inputmode="numeric" placeholder="EAN da etiqueta" v-bind="componentField"
+            /></FormControl>
           </FormItem>
         </FormField>
         <FormField v-slot="{ value, handleChange }" name="active">

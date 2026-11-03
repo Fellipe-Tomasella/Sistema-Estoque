@@ -16,6 +16,7 @@ import { pieces } from '@/lib/format'
 import { useDashboard } from '@/modules/dashboard/composables/useDashboard'
 import VariantPicker from '@/modules/products/components/VariantPicker.vue'
 import type { VariantSearchResult } from '@/modules/products/types'
+import NfeImport, { type NfeApplied } from '../components/NfeImport.vue'
 import { useStockMutations, useVariant } from '../composables/useStock'
 
 interface Line {
@@ -35,6 +36,20 @@ const today = computed(() => dashboard.value?.today ?? new Date().toISOString().
 const form = reactive({ entryDate: '', supplierName: '', reference: '', notes: '' })
 watch(today, (value) => (form.entryDate ||= value), { immediate: true })
 const lines = ref<Line[]>([])
+const nfe = ref<NfeApplied['nfe'] | null>(null)
+
+/** Itens da NF-e conferidos: somam nas linhas e preenchem fornecedor, nota e data (RN-EST-11). */
+function applyNfe(data: NfeApplied) {
+  for (const line of data.lines) {
+    const existing = lines.value.find((l) => l.variant.id === line.variant.id)
+    if (existing) existing.quantity += line.quantity
+    else lines.value.push({ ...line })
+  }
+  form.supplierName = data.supplierName
+  form.reference = data.reference
+  if (data.entryDate && data.entryDate <= today.value) form.entryDate = data.entryDate
+  nfe.value = data.nfe
+}
 
 function add(variant: VariantSearchResult) {
   const existing = lines.value.find((line) => line.variant.id === variant.id)
@@ -58,6 +73,7 @@ async function save() {
       supplierName: form.supplierName || null,
       reference: form.reference || null,
       notes: form.notes || null,
+      nfe: nfe.value ?? undefined,
       items: lines.value.map((line) => ({
         variantId: line.variant.id,
         quantity: line.quantity,
@@ -76,64 +92,70 @@ async function save() {
     <span class="mx-2 text-zinc-300">/</span>
     <span class="font-medium text-foreground">Nova entrada</span>
   </nav>
-  <PageHeader title="Nova entrada de estoque" description="Registre as peças recebidas do fornecedor." />
+  <PageHeader
+    title="Nova entrada de estoque"
+    description="Registre as peças recebidas do fornecedor, à mão ou pelo XML da nota fiscal."
+  />
 
   <div class="grid gap-4 pb-24 lg:grid-cols-[1fr_320px]">
-    <Card class="gap-4 p-5 shadow-sm">
-      <p class="font-semibold">Peças recebidas</p>
-      <VariantPicker autofocus @select="add" />
+    <div class="min-w-0 space-y-4">
+      <NfeImport @apply="applyNfe" />
+      <Card class="gap-4 p-5 shadow-sm">
+        <p class="font-semibold">Peças recebidas</p>
+        <VariantPicker autofocus @select="add" />
 
-      <EmptyState
-        v-if="!lines.length"
-        :icon="PackageCheck"
-        title="Nenhuma peça ainda"
-        description="Busque pelo nome, cor e tamanho e escolha a variação."
-      />
-      <div v-else class="overflow-x-auto rounded-lg border">
-        <table class="w-full min-w-[520px] text-sm">
-          <thead class="bg-muted/50 text-xs tracking-wider text-muted-foreground uppercase">
-            <tr>
-              <th class="p-3 text-left font-medium">Peça</th>
-              <th class="p-3 text-right font-medium">Saldo</th>
-              <th class="p-3 text-right font-medium">Quantidade</th>
-              <th class="p-3 text-left font-medium">Custo un. (opcional)</th>
-              <th class="w-10" />
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(line, i) in lines" :key="line.variant.id" class="border-t">
-              <td class="p-3">
-                <p class="font-medium">{{ line.variant.productName }}</p>
-                <p class="text-xs text-muted-foreground">{{ line.variant.label }}</p>
-              </td>
-              <td class="p-3 text-right text-muted-foreground tabular">
-                {{ line.variant.stockQty }} → {{ line.variant.stockQty + line.quantity }}
-              </td>
-              <td class="p-3">
-                <Input
-                  type="number"
-                  min="1"
-                  class="ml-auto h-8 w-20 text-right"
-                  :model-value="line.quantity"
-                  @update:model-value="line.quantity = Math.max(1, Math.floor(Number($event) || 1))"
-                />
-              </td>
-              <td class="p-3"><MoneyInput v-model="line.unitCostCents" class="h-8 w-32" /></td>
-              <td class="p-3">
-                <button
-                  type="button"
-                  class="text-muted-foreground hover:text-red-700"
-                  :aria-label="`Remover ${line.variant.productName} ${line.variant.label}`"
-                  @click="lines.splice(i, 1)"
-                >
-                  <Trash2 class="size-4" />
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </Card>
+        <EmptyState
+          v-if="!lines.length"
+          :icon="PackageCheck"
+          title="Nenhuma peça ainda"
+          description="Busque pelo nome, cor e tamanho e escolha a variação."
+        />
+        <div v-else class="overflow-x-auto rounded-lg border">
+          <table class="w-full min-w-[520px] text-sm">
+            <thead class="bg-muted/50 text-xs tracking-wider text-muted-foreground uppercase">
+              <tr>
+                <th class="p-3 text-left font-medium">Peça</th>
+                <th class="p-3 text-right font-medium">Saldo</th>
+                <th class="p-3 text-right font-medium">Quantidade</th>
+                <th class="p-3 text-left font-medium">Custo un. (opcional)</th>
+                <th class="w-10" />
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(line, i) in lines" :key="line.variant.id" class="border-t">
+                <td class="p-3">
+                  <p class="font-medium">{{ line.variant.productName }}</p>
+                  <p class="text-xs text-muted-foreground">{{ line.variant.label }}</p>
+                </td>
+                <td class="p-3 text-right text-muted-foreground tabular">
+                  {{ line.variant.stockQty }} → {{ line.variant.stockQty + line.quantity }}
+                </td>
+                <td class="p-3">
+                  <Input
+                    type="number"
+                    min="1"
+                    class="ml-auto h-8 w-20 text-right"
+                    :model-value="line.quantity"
+                    @update:model-value="line.quantity = Math.max(1, Math.floor(Number($event) || 1))"
+                  />
+                </td>
+                <td class="p-3"><MoneyInput v-model="line.unitCostCents" class="h-8 w-32" /></td>
+                <td class="p-3">
+                  <button
+                    type="button"
+                    class="text-muted-foreground hover:text-red-700"
+                    :aria-label="`Remover ${line.variant.productName} ${line.variant.label}`"
+                    @click="lines.splice(i, 1)"
+                  >
+                    <Trash2 class="size-4" />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </Card>
+    </div>
 
     <Card class="h-fit gap-4 p-5 shadow-sm">
       <p class="font-semibold">Dados da entrada</p>
@@ -157,9 +179,9 @@ async function save() {
   </div>
 
   <div
-    class="fixed inset-x-0 bottom-14 z-30 border-t bg-card/95 px-4 py-3 backdrop-blur md:bottom-0 md:left-60 md:px-6 lg:px-10"
+    class="fixed inset-x-0 bottom-14 z-30 border-t bg-card/95 px-4 py-3 backdrop-blur md:bottom-0 md:px-6 lg:left-60 xl:px-8 2xl:px-10"
   >
-    <div class="mx-auto flex max-w-7xl items-center gap-3">
+    <div class="flex items-center gap-3">
       <p class="flex-1 text-sm">
         <span class="font-semibold">+{{ pieces(total) }}</span>
         <span class="text-muted-foreground">

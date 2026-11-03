@@ -98,7 +98,7 @@ describe('cadastro de produto', () => {
       variants: [{ color: 'Verde', size: 'U' }],
     })
     expect(res.status).toBe(201)
-    expect(res.body).toMatchObject({ name: 'Vestido longo', reference: null, category: 'Vestidos' })
+    expect(res.body).toMatchObject({ name: 'Vestido longo', reference: 'P00001', category: 'Vestidos' })
   })
 
   test('preço negativo é recusado', async () => {

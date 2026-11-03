@@ -61,9 +61,27 @@ export const stockEntries = pgTable('stock_entries', {
   supplierName: text(),
   reference: text(),
   notes: text(),
+  /** Chave de acesso (44 dígitos) quando veio do XML da NF-e: a mesma nota não entra duas vezes (RN-EST-11). */
+  nfeAccessKey: text().unique(),
   createdBy: uuid().references(() => users.id),
   createdAt: createdAt(),
 })
+
+/** Código do item na nota do fornecedor → variação nossa, lembrado para as próximas notas (RN-EST-11). */
+export const supplierItemLinks = pgTable(
+  'supplier_item_links',
+  {
+    id: id(),
+    /** CNPJ (ou CPF) do emitente, só dígitos. */
+    supplierDocument: text().notNull(),
+    supplierCode: text().notNull(),
+    variantId: uuid()
+      .notNull()
+      .references(() => variants.id),
+    createdAt: createdAt(),
+  },
+  (table) => [uniqueIndex('supplier_item_links_uq').on(table.supplierDocument, table.supplierCode)],
+)
 
 export const stockEntryItems = pgTable(
   'stock_entry_items',

@@ -23,6 +23,7 @@ Origem: **[C]** confirmado · **[P]** proposto · **[D]** decidido em 30/10/2026
 | RN-PRO-12 | Produto tem **até 5 fotos** (opcionais). O servidor aceita JPG, PNG ou WebP, corrige a orientação da câmera e guarda só miniatura (400 px) e tamanho grande (1600 px) em WebP, sem metadados. | P |
 | RN-PRO-13 | A primeira foto é a **capa** (lista de produtos, PDV, site). A dona reordena as fotos; excluir uma refaz a ordem. Foto não é registro financeiro: excluir apaga o arquivo. | P |
 | RN-PRO-14 | Uma foto pode ser de uma **cor** do produto: a busca e o catálogo do PDV mostram a foto da cor da variação e, sem ela, a capa. Cada foto pode ficar fora do site (“só interna”). | P |
+| RN-PRO-15 | **Código padrão**: produto sem referência recebe a próxima da sequência `P00001`, `P00002`…; variação sem SKU recebe `REFERÊNCIA-COR-TAMANHO` (ex.: `P00012-PRE-M`, `P00012-AZUC-GG`). Referência/SKU digitados são mantidos. Código de barras (EAN, 8 a 14 dígitos) é opcional e único; a busca do PDV acha a peça por ele ou pelo SKU exato. | Dev |
 
 ## RN-EST — Estoque
 
@@ -39,6 +40,7 @@ Origem: **[C]** confirmado · **[P]** proposto · **[D]** decidido em 30/10/2026
 | RN-EST-09 | Definir o mínimo para todas as variações de um produto de uma vez (e editar individualmente). | P |
 | RN-EST-10 | Histórico por variação: data, tipo, quantidade (+/−), saldo depois, motivo, referência clicável (entrada, venda #, devolução, importação). | C |
 | RN-EST-11 | Consulta de estoque em grade **produto × cor × tamanho**, com destaque para “sem estoque” e “repor”. | C |
+| RN-EST-11 | **Entrada pela NF-e**: a dona envia o XML da nota do fornecedor; o sistema lê fornecedor, número, chave e itens (código, EAN, quantidade, custo) e sugere a variação de cada item por vínculo lembrado do mesmo fornecedor, código de barras ou SKU. O que não casar, ela escolhe (ou ignora). Vira uma entrada comum (RN-EST-03), guarda os vínculos para as próximas notas e a mesma chave de acesso não entra duas vezes. Quantidade fracionada é arredondada com aviso. Não valida assinatura nem consulta a SEFAZ. | Dev |
 
 ## RN-IMP — Importação da planilha inicial [D]
 

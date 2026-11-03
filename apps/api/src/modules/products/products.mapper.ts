@@ -13,6 +13,7 @@ export function toVariantDto(variant: Variant, product: Pick<Product, 'basePrice
     effectivePriceCents: variant.priceCents ?? product.basePriceCents,
     costCents: variant.costCents,
     sku: variant.sku,
+    barcode: variant.barcode,
     stockQty: variant.stockQty,
     minStock: variant.minStock,
     stockStatus: stockStatus(variant.stockQty, variant.minStock),

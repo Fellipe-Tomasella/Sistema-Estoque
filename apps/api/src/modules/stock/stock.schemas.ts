@@ -21,6 +21,17 @@ export const CreateEntryBody = t.Object({
     }),
     { minItems: 1, maxItems: 500 },
   ),
+  /** Entrada que veio do XML da NF-e (RN-EST-11): chave da nota e vínculos a lembrar. */
+  nfe: t.Optional(
+    t.Object({
+      accessKey: t.Nullable(t.String({ pattern: '^[0-9]{44}$' })),
+      supplierDocument: t.String({ maxLength: 14 }),
+      links: t.Array(
+        t.Object({ supplierCode: t.String({ minLength: 1, maxLength: 60 }), variantId: t.String({ format: 'uuid' }) }),
+        { maxItems: 500 },
+      ),
+    }),
+  ),
 })
 export type CreateEntryInput = typeof CreateEntryBody.static
 

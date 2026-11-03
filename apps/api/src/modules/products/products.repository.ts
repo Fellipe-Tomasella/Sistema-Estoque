@@ -1,4 +1,4 @@
-import { and, asc, count, eq, exists, inArray, isNotNull, lte, type SQL, sql } from 'drizzle-orm'
+import { and, asc, count, eq, exists, inArray, isNotNull, lte, or, type SQL, sql } from 'drizzle-orm'
 import type { DbOrTx } from '../../db/client'
 import {
   type Product,
@@ -6,6 +6,7 @@ import {
   productImages,
   products,
   saleItems,
+  supplierItemLinks,
   type Variant,
   variants,
 } from '../../db/schema'
@@ -63,7 +64,21 @@ export class ProductsRepository {
     await tx.update(variants).set({ minStock }).where(eq(variants.productId, productId))
   }
 
+  /** Próximo número do código padrão do produto (RN-PRO-15). */
+  async nextProductCode(tx: DbOrTx = this.db) {
+    const [row] = await tx.execute<{ n: number }>(sql`select nextval('product_code_seq')::int as n`)
+    return row!.n
+  }
+
   async deleteProduct(id: string, tx: DbOrTx) {
+    await tx
+      .delete(supplierItemLinks)
+      .where(
+        inArray(
+          supplierItemLinks.variantId,
+          tx.select({ id: variants.id }).from(variants).where(eq(variants.productId, id)),
+        ),
+      )
     await tx.delete(productImages).where(eq(productImages.productId, id))
     await tx.delete(variants).where(eq(variants.productId, id))
     await tx.delete(products).where(eq(products.id, id))
@@ -103,6 +118,7 @@ export class ProductsRepository {
   }
 
   async deleteVariant(id: string, tx: DbOrTx) {
+    await tx.delete(supplierItemLinks).where(eq(supplierItemLinks.variantId, id))
     await tx.delete(variants).where(eq(variants.id, id))
   }
 
@@ -176,7 +192,11 @@ export class ProductsRepository {
         and(
           eq(products.active, true),
           eq(variants.active, true),
-          ...words.map((word) => sql`${haystack} like ${searchable(containsPattern(word))}`),
+          or(
+            and(...words.map((word) => sql`${haystack} like ${searchable(containsPattern(word))}`)),
+            eq(variants.barcode, q.trim()),
+            sql`lower(${variants.sku}) = lower(${q.trim()})`,
+          ),
         ),
       )
       .orderBy(asc(sql`lower(${products.name})`), ...variantOrder)
