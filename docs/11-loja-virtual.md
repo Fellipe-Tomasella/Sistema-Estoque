@@ -87,6 +87,8 @@ Pedido do dev: as fotos servem **para o catálogo interno e para o site**, não 
 | Fiado | Não aparece no site. A mensagem final diz só que “a vendedora vai entrar em contato”. Forma de pagamento se combina depois. |
 | Aviso de pedido | **E-mail para a vendedora + aviso no sistema.** WhatsApp automático não (sem API oficial); só o link `wa.me` para a cliente. |
 | E-mail de envio | Gmail `hyperdynamis@gmail.com` com **senha de app** (SMTP `smtp.gmail.com:587`, STARTTLS). A senha fica só no `.env` e na stack local (fora do git). Limite ~500 e-mails/dia; no começo pode cair em Spam/Promoções. Para caixa de entrada garantida, trocar depois por domínio com SPF/DKIM (Resend/Brevo). |
+| Nome da loja | **Jooliv Lingeries** → caminho `estoque.hyperdynamis.com/jooliv-lingeries`. |
+| Confirmação para a cliente | Se ela informar o e-mail, recebe “recebemos seu pedido” com o resumo (pode cair em Spam pelo Gmail). |
 | Quem recebe | E-mail de avisos configurável em Configurações → Loja virtual; por enquanto o do dev (`fellipetomasella@gmail.com`), depois o da vendedora. |
 
 ## 9. Etapas sugeridas

@@ -10,7 +10,10 @@ backups/
 
 # Arquivos originais dos modelos (já extraídos em design/stitch)
 stich modelos/
-e2e/.auth/
+apps/web/e2e/.auth/
 test-results/
 playwright-report/
 deploy/*.local.yml
+
+# fotos dos produtos em dev (MEDIA_DIR)
+apps/api/media/

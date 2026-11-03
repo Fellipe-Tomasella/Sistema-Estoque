@@ -170,6 +170,7 @@ Deploy: no Portainer, atualizar `APP_TAG` e “Update the stack” (ou webhook d
 ## 8. Backup e recuperação
 
 - `pg_dump -Fc` diário, 14 dias de retenção no volume `./backups` da VPS.
+- Fotos dos produtos: volume `estoque_media` (`MEDIA_DIR=/app/media` na imagem), copiado para `/backups/media` no mesmo horário (só os arquivos novos; cada foto tem nome único).
 - **Cópia fora da VPS** (obrigatório para valer como backup): `rclone` para um storage de objetos ou outro servidor — **[A] definir destino**.
 - Restauração testada pelo menos uma vez antes de entrar em produção:
   `pg_restore --clean --if-exists -d $DATABASE_URL backups/estoque-AAAA-MM-DD.dump`.

@@ -2,11 +2,12 @@ import { normalizeSize, sizeSort } from '@estoque/shared'
 import { db, type DbOrTx } from '../../db/client'
 import type { Product, Variant } from '../../db/schema'
 import { BusinessRuleError, ConflictError, NotFoundError } from '../../shared/errors'
+import type { MediaStorage } from '../../shared/media-storage'
 import { isUniqueViolation } from '../../shared/sql'
 import type { AuditService } from '../audit/audit.service'
 import type { SettingsService } from '../settings/settings.service'
 import type { MovementInput, StockService } from '../stock/stock.service'
-import { toProductDto, toVariantDto } from './products.mapper'
+import { coverUrl, toProductDto, toVariantDto } from './products.mapper'
 import type { ProductChanges, ProductsRepository, VariantChanges } from './products.repository'
 import type {
   CreateProductInput,
@@ -35,13 +36,15 @@ export class ProductsService {
     private readonly stock: StockService,
     private readonly settings: SettingsService,
     private readonly audit: AuditService,
+    private readonly media: MediaStorage,
   ) {}
 
   async list(filters: ListProductsFilters) {
     const result = await this.repo.list(filters)
     const byProduct = Map.groupBy(result.variants, (v) => v.productId)
+    const images = Map.groupBy(await this.repo.findImages(result.items.map((p) => p.id)), (i) => i.productId)
     return {
-      items: result.items.map((p) => toProductDto(p, byProduct.get(p.id) ?? [])),
+      items: result.items.map((p) => toProductDto(p, byProduct.get(p.id) ?? [], images.get(p.id))),
       page: result.page,
       pageSize: result.pageSize,
       total: result.total,
@@ -50,7 +53,8 @@ export class ProductsService {
 
   async get(id: string, tx?: DbOrTx) {
     const product = await this.requireProduct(id, tx)
-    return toProductDto(product, await this.repo.findVariants(id, tx))
+    const variants = await this.repo.findVariants(id, tx)
+    return toProductDto(product, variants, await this.repo.findImages([id], tx))
   }
 
   suggestions() {
@@ -61,12 +65,21 @@ export class ProductsService {
   async getVariant(id: string) {
     const variant = await this.requireVariant(id)
     const product = await this.requireProduct(variant.productId)
-    return { ...toVariantDto(variant, product), productName: product.name }
+    const images = await this.repo.findImages([product.id])
+    return { ...toVariantDto(variant, product), productName: product.name, coverUrl: coverUrl(images, variant.color) }
   }
 
   async searchVariants(q: string, limit = 20) {
     const rows = await this.repo.searchVariants(q, limit)
-    return rows.map(({ variant, product }) => ({ ...toVariantDto(variant, product), productName: product.name }))
+    const images = Map.groupBy(
+      await this.repo.findImages([...new Set(rows.map((r) => r.product.id))]),
+      (i) => i.productId,
+    )
+    return rows.map(({ variant, product }) => ({
+      ...toVariantDto(variant, product),
+      productName: product.name,
+      coverUrl: coverUrl(images.get(product.id) ?? [], variant.color),
+    }))
   }
 
   /** RN-PRO-01: produto precisa de nome, preço base e ao menos uma variação. Saldo inicial gera movimento `initial`. */
@@ -211,7 +224,7 @@ export class ProductsService {
 
   /** RN-PRO-08: excluir só cadastro errado, sem nenhum histórico; caso contrário, inativar. */
   async remove(productId: string, userId: string) {
-    await db.transaction(async (tx) => {
+    const images = await db.transaction(async (tx) => {
       const product = await this.requireProduct(productId, tx, true)
       const variants = await this.repo.findVariants(productId, tx)
       await this.assertNoHistory(
@@ -219,9 +232,13 @@ export class ProductsService {
         tx,
         'Este produto já tem movimentações. Ele não pode ser excluído, só inativado.',
       )
+      const images = await this.repo.findImages([productId], tx)
       await this.repo.deleteProduct(productId, tx)
       await this.audit.record({ entity: 'product', entityId: productId, action: 'delete', before: product, userId }, tx)
+      return images
     })
+    // arquivos só depois do commit: se a transação falhar, as fotos continuam
+    for (const image of images) await this.media.remove(image.id)
   }
 
   async removeVariant(id: string, userId: string) {

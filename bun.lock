@@ -30,6 +30,7 @@
         "papaparse": "^5.7.0",
         "pdfmake": "^0.3.13",
         "postgres": "^3",
+        "sharp": "^0.35.5",
       },
       "devDependencies": {
         "@types/nodemailer": "^8.0.2",

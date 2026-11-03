@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ProductThumb from '@/components/common/ProductThumb.vue'
 import { LoaderCircle, Search } from '@lucide/vue'
 import { useQuery } from '@tanstack/vue-query'
 import { onClickOutside, refDebounced } from '@vueuse/core'
@@ -90,6 +91,7 @@ function onKey(event: KeyboardEvent) {
         @mouseenter="highlighted = i"
         @mousedown.prevent="choose(variant)"
       >
+        <ProductThumb :src="variant.coverUrl" class="size-9" />
         <span class="min-w-0 flex-1">
           <span class="block truncate font-medium">{{ variant.productName }}</span>
           <span class="text-xs text-muted-foreground">{{ variant.label }}</span>

@@ -32,6 +32,10 @@ services:
       - SMTP_PASS=
       - SMTP_FROM=
 
+    # fotos dos produtos (miniatura e tamanho grande em WebP)
+    volumes:
+      - estoque_media:/app/media
+
     networks:
       - HDSwarmNet
       - estoque-interna
@@ -76,6 +80,7 @@ services:
         delay: 5s
 
   # Backup diário (pg_dump -Fc) às BACKUP_HOUR no fuso TZ, guardando KEEP_DAYS dias no volume estoque_backups.
+  # As fotos são copiadas para /backups/media (só as novas: cada foto tem nome único e nunca muda).
   # Backup na hora: console do container estoque_estoque-backup → `sh /tmp/backup-agora.sh`.
   estoque-backup:
     image: postgres:18-alpine
@@ -91,6 +96,7 @@ services:
 
     volumes:
       - estoque_backups:/backups
+      - estoque_media:/media:ro
 
     # Mesmo roteiro de docker/backup.sh, embutido aqui porque o Portainer não tem a pasta do repositório.
     # ($$ = $ para o compose)
@@ -103,6 +109,9 @@ services:
         cat > /tmp/backup-agora.sh <<'FIM'
         f="/backups/$${PGDATABASE}-$$(date +%Y-%m-%d_%H%M).dump"
         pg_dump -Fc -f "$$f.tmp" && mv "$$f.tmp" "$$f" && echo "$$(date '+%F %T') backup ok: $$f"
+        mkdir -p /backups/media
+        for m in /media/*.webp; do [ -e "$$m" ] && [ ! -e "/backups/media/$${m##*/}" ] && cp "$$m" /backups/media/; done
+        echo "$$(date '+%F %T') fotos ok: $$(ls /backups/media | wc -l) arquivos"
         find /backups -name "$${PGDATABASE}-*.dump" -mtime +"$${KEEP_DAYS}" -delete
         FIM
         until pg_isready -q; do sleep 2; done
@@ -129,6 +138,8 @@ volumes:
   estoque_db:
     driver: local
   estoque_backups:
+    driver: local
+  estoque_media:
     driver: local
 
 networks:

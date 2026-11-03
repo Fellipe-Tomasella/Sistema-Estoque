@@ -71,3 +71,18 @@ export const SearchVariantsQuery = t.Object({
 })
 
 export const IdParams = t.Object({ id: t.String({ format: 'uuid' }) })
+
+export const ImageParams = t.Object({ id: t.String({ format: 'uuid' }), imageId: t.String({ format: 'uuid' }) })
+
+export const UploadImageBody = t.Object({
+  file: t.File({ maxSize: '15m' }),
+  color: t.Optional(t.String({ maxLength: 40 })),
+})
+
+export const UpdateImageBody = t.Object({
+  color: t.Optional(t.Nullable(t.String({ maxLength: 40 }))),
+  showOnSite: t.Optional(t.Boolean()),
+})
+export type UpdateImageInput = typeof UpdateImageBody.static
+
+export const ReorderImagesBody = t.Object({ ids: t.Array(t.String({ format: 'uuid' }), { maxItems: 5 }) })

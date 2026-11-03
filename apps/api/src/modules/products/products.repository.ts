@@ -1,10 +1,19 @@
 import { and, asc, count, eq, exists, inArray, isNotNull, lte, type SQL, sql } from 'drizzle-orm'
 import type { DbOrTx } from '../../db/client'
-import { type Product, products, saleItems, type Variant, variants } from '../../db/schema'
+import {
+  type Product,
+  type ProductImage,
+  productImages,
+  products,
+  saleItems,
+  type Variant,
+  variants,
+} from '../../db/schema'
 import { containsPattern, equalsIgnoreCase, searchable } from '../../shared/sql'
 import type { ListProductsFilters } from './products.schemas'
 
 export type ProductChanges = Partial<Omit<Product, 'id' | 'createdAt' | 'updatedAt'>>
+export type ImageChanges = Partial<Pick<ProductImage, 'color' | 'showOnSite' | 'position'>>
 export type VariantChanges = Partial<Omit<Variant, 'id' | 'productId' | 'stockQty' | 'createdAt' | 'updatedAt'>>
 
 const variantOrder = [asc(sql`lower(${variants.color})`), asc(variants.sizeSort), asc(variants.size)]
@@ -55,6 +64,7 @@ export class ProductsRepository {
   }
 
   async deleteProduct(id: string, tx: DbOrTx) {
+    await tx.delete(productImages).where(eq(productImages.productId, id))
     await tx.delete(variants).where(eq(variants.productId, id))
     await tx.delete(products).where(eq(products.id, id))
   }
@@ -67,6 +77,29 @@ export class ProductsRepository {
       .where(inArray(saleItems.variantId, variantIds))
       .limit(1)
     return Boolean(row)
+  }
+
+  /** Fotos de vários produtos, na ordem (a primeira de cada produto é a capa). */
+  findImages(productIds: string[], tx: DbOrTx = this.db): Promise<ProductImage[]> {
+    if (productIds.length === 0) return Promise.resolve([])
+    return tx
+      .select()
+      .from(productImages)
+      .where(inArray(productImages.productId, productIds))
+      .orderBy(asc(productImages.productId), asc(productImages.position))
+  }
+
+  async insertImage(values: typeof productImages.$inferInsert, tx: DbOrTx) {
+    const [image] = await tx.insert(productImages).values(values).returning()
+    return image!
+  }
+
+  async updateImage(id: string, changes: ImageChanges, tx: DbOrTx) {
+    await tx.update(productImages).set(changes).where(eq(productImages.id, id))
+  }
+
+  async deleteImage(id: string, tx: DbOrTx) {
+    await tx.delete(productImages).where(eq(productImages.id, id))
   }
 
   async deleteVariant(id: string, tx: DbOrTx) {

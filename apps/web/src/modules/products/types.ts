@@ -17,3 +17,4 @@ export interface VariantDraft {
   initialQty: number
   minStock: number | null
 }
+export type ProductImage = Product['images'][number]

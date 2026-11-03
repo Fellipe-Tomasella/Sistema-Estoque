@@ -159,17 +159,18 @@ Docs: 08.
 
 **Aceite:** sistema no ar com HTTPS, backup diário gerado e restaurado em teste, E2E verde.
 
-## Etapa 13 — Loja virtual (v2) — planejada
-Docs: 11. Responder as perguntas de `docs/11-loja-virtual.md` §8 antes de começar.
-- [ ] Fotos dos produtos (painel: lista, detalhe, PDV; e site) e dados públicos do produto.
+## Etapa 13 — Loja virtual (v2) — em andamento
+Docs: 11 (respostas na §8, decisão 039).
+- [x] Fotos dos produtos no painel (até 5, capa, ordem, cor, “só interna”; lista, detalhe, busca e catálogo do PDV), volume `estoque_media` no backup.
+- [ ] Dados públicos do produto (mostrar no site, preço do site, esconder preço).
 - [ ] Editor do site (aparência, páginas, blocos, pré-visualizar, publicar).
-- [ ] Site público renderizado no servidor, no endereço da marca.
+- [ ] Site público renderizado no servidor em `/jooliv-lingeries`.
 - [ ] Carrinho sem conta, pedido do site e “virar venda” no PDV.
 - [ ] Interessados (contatos, carrinhos com contato) e produtos mais vistos.
-- [ ] Domínio da marca em produção e E2E do pedido.
+- [ ] E-mails (vendedora e cliente), E2E do pedido e publicação em produção.
 
 ---
 
 ## Depois da v1 (só com confirmação)
 Saldo anterior de fiado (se não entrou na 6) · canal de venda · taxa de entrega · reserva de peças · abertura/retiradas de caixa ·
-foto do produto · emissão fiscal integrada · app nativo.
+emissão fiscal integrada · app nativo.

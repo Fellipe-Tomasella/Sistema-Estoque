@@ -29,7 +29,7 @@ FROM oven/bun:1.3.13-slim AS runtime
 WORKDIR /app
 ENV NODE_ENV=production \
     PORT=3000 \
-    PUBLIC_DIR=/app/public
+    PUBLIC_DIR=/app/public     MEDIA_DIR=/app/media
 COPY --from=prod-deps /app ./
 COPY tsconfig.base.json ./
 COPY packages/shared packages/shared
@@ -37,6 +37,8 @@ COPY apps/api/tsconfig.json apps/api/
 COPY apps/api/src apps/api/src
 COPY --from=web /app/apps/web/dist ./public
 COPY --chmod=755 docker/entrypoint.sh /entrypoint.sh
+# fotos dos produtos: volume próprio na stack; a pasta já nasce do usuário bun para o volume herdar o dono
+RUN mkdir -p /app/media && chown bun:bun /app/media
 USER bun
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s \

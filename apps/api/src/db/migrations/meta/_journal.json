@@ -71,6 +71,13 @@
       "when": 1793380453977,
       "tag": "0009_fiscal_documents",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1793712190389,
+      "tag": "0010_product_images",
+      "breakpoints": true
     }
   ]
 }

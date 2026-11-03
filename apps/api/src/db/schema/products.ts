@@ -60,3 +60,25 @@ export const variants = pgTable(
 
 export type Product = typeof products.$inferSelect
 export type Variant = typeof variants.$inferSelect
+
+/** Fotos do produto (RN-PRO-12/13). Os arquivos ficam em MEDIA_DIR como `<id>-thumb.webp` e `<id>-large.webp`. */
+export const productImages = pgTable(
+  'product_images',
+  {
+    id: id(),
+    productId: uuid()
+      .notNull()
+      .references(() => products.id),
+    /** null = foto do produto em geral; com cor, é a foto daquela cor. */
+    color: text(),
+    /** 0 = capa. */
+    position: integer().notNull(),
+    showOnSite: boolean().notNull().default(true),
+    width: integer().notNull(),
+    height: integer().notNull(),
+    createdAt: createdAt(),
+  },
+  (table) => [index('product_images_product_idx').on(table.productId, table.position)],
+)
+
+export type ProductImage = typeof productImages.$inferSelect

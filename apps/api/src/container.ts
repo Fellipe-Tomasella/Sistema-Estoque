@@ -21,6 +21,7 @@ import { IntegrityRepository } from './modules/integrity/integrity.repository'
 import { IntegrityService } from './modules/integrity/integrity.service'
 import { PaymentsRepository } from './modules/payments/payments.repository'
 import { ProductsRepository } from './modules/products/products.repository'
+import { ProductImagesService } from './modules/products/product-images.service'
 import { ProductsService } from './modules/products/products.service'
 import { ReceivableReceiptsService } from './modules/receivables/receivable-receipts.service'
 import { ReceivablesRepository } from './modules/receivables/receivables.repository'
@@ -49,9 +50,11 @@ import { StockEntriesService } from './modules/stock/stock-entries.service'
 import { StockRepository } from './modules/stock/stock.repository'
 import { StockService } from './modules/stock/stock.service'
 import { createMailer } from './shared/mailer'
+import { MediaStorage } from './shared/media-storage'
 
 export function createContainer() {
   const mailer = createMailer()
+  const media = new MediaStorage()
   const repositories = {
     audit: new AuditRepository(db),
     auth: new AuthRepository(db),
@@ -78,7 +81,7 @@ export function createContainer() {
   const audit = new AuditService(repositories.audit)
   const settings = new SettingsService(repositories.settings, audit)
   const stock = new StockService(repositories.stock)
-  const products = new ProductsService(repositories.products, stock, settings, audit)
+  const products = new ProductsService(repositories.products, stock, settings, audit, media)
   const customers = new CustomersService(repositories.customers, settings, audit)
   const sales = new SalesService(
     repositories.sales,
@@ -120,10 +123,12 @@ export function createContainer() {
 
   return {
     mailer,
+    media,
     audit,
     settings,
     stock,
     products,
+    productImages: new ProductImagesService(repositories.products, media, audit),
     customers,
     sales,
     receivables,

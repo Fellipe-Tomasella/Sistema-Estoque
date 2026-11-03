@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/vue-query'
 import { computed, type MaybeRefOrGetter, toValue } from 'vue'
 import { client, unwrap } from '@/lib/api'
-import { invalidateStock, keys } from '@/lib/query'
+import { invalidateStock, keys, queryClient } from '@/lib/query'
 
 type ListQuery = NonNullable<Parameters<typeof client.products.get>[0]>['query']
 type CreateBody = Parameters<typeof client.products.post>[0]
@@ -64,6 +64,37 @@ export function useProductMutations() {
     removeVariant: useMutation({
       mutationFn: (id: string) => unwrap(client.variants({ id }).delete()),
       onSuccess: invalidateStock,
+    }),
+  }
+}
+
+type ImageBody = Parameters<ReturnType<ReturnType<typeof client.products>['images']>['patch']>[0]
+
+/** Fotos do produto (RN-PRO-12 a 14). Depois de cada mudança, listas, detalhe e busca do PDV se atualizam. */
+export function useProductImages(productId: MaybeRefOrGetter<string>) {
+  const images = () => client.products({ id: toValue(productId) }).images
+  const refresh = () =>
+    Promise.all([['products'], ['search'], ['variant']].map((queryKey) => queryClient.invalidateQueries({ queryKey })))
+  return {
+    /** Envia uma por vez, na ordem escolhida; para no primeiro erro (ex.: limite de 5). */
+    upload: useMutation({
+      mutationFn: async (files: File[]) => {
+        for (const file of files) await unwrap(images().post({ file }))
+      },
+      onSettled: refresh,
+    }),
+    update: useMutation({
+      mutationFn: ({ imageId, body }: { imageId: string; body: ImageBody }) =>
+        unwrap(images()({ imageId }).patch(body)),
+      onSuccess: refresh,
+    }),
+    reorder: useMutation({
+      mutationFn: (ids: string[]) => unwrap(images().order.post({ ids })),
+      onSuccess: refresh,
+    }),
+    remove: useMutation({
+      mutationFn: (imageId: string) => unwrap(images()({ imageId }).delete()),
+      onSuccess: refresh,
     }),
   }
 }

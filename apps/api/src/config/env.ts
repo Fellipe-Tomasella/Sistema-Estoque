@@ -20,6 +20,10 @@ export const env = {
   port: Number(process.env.PORT ?? 3000),
   /** Pasta do build do front (produção). Sem ela, só a API sobe. */
   publicDir: optional('PUBLIC_DIR'),
+  /** Pasta das fotos dos produtos (volume próprio em produção). Nos testes, uma pasta temporária. */
+  mediaDir: isTest
+    ? `${process.env.TMPDIR ?? process.env.TEMP ?? '/tmp'}/estoque-test-media`
+    : (optional('MEDIA_DIR') ?? './media'),
   /** Primeira conta (só com o banco vazio) — ver AuthService.ensureFirstUser. */
   firstUser: {
     name: optional('FIRST_USER_NAME'),

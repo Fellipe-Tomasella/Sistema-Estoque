@@ -1,5 +1,6 @@
 import { stockStatus } from '@estoque/shared'
-import type { Product, Variant } from '../../db/schema'
+import type { Product, ProductImage, Variant } from '../../db/schema'
+import { mediaUrl } from '../../shared/media-storage'
 
 export function toVariantDto(variant: Variant, product: Pick<Product, 'basePriceCents'>) {
   return {
@@ -20,7 +21,27 @@ export function toVariantDto(variant: Variant, product: Pick<Product, 'basePrice
 }
 export type VariantDto = ReturnType<typeof toVariantDto>
 
-export function toProductDto(product: Product, variants: Variant[]) {
+export function toImageDto(image: ProductImage) {
+  return {
+    id: image.id,
+    color: image.color,
+    showOnSite: image.showOnSite,
+    width: image.width,
+    height: image.height,
+    thumbUrl: mediaUrl(image.id, 'thumb'),
+    largeUrl: mediaUrl(image.id, 'large'),
+  }
+}
+export type ProductImageDto = ReturnType<typeof toImageDto>
+
+/** Miniatura que representa o produto (ou a cor): a primeira foto da cor; sem ela, a capa. */
+export function coverUrl(images: ProductImage[], color?: string) {
+  const match = color ? images.find((i) => i.color?.toLowerCase() === color.toLowerCase()) : undefined
+  const image = match ?? images[0]
+  return image ? mediaUrl(image.id, 'thumb') : null
+}
+
+export function toProductDto(product: Product, variants: Variant[], images: ProductImage[] = []) {
   const variantDtos = variants.map((v) => toVariantDto(v, product))
   return {
     id: product.id,
@@ -33,6 +54,8 @@ export function toProductDto(product: Product, variants: Variant[]) {
     active: product.active,
     totalStock: variantDtos.reduce((sum, v) => sum + v.stockQty, 0),
     variants: variantDtos,
+    coverUrl: coverUrl(images),
+    images: images.map(toImageDto),
     createdAt: product.createdAt,
     updatedAt: product.updatedAt,
   }

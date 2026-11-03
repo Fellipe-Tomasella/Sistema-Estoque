@@ -20,6 +20,9 @@ Origem: **[C]** confirmado · **[P]** proposto · **[D]** decidido em 30/10/2026
 | RN-PRO-09 | Corrigir cor/tamanho de uma variação com histórico é permitido (erro de digitação), com registro no `audit_log`; vendas antigas mantêm o rótulo antigo. Não pode colidir com outra variação (RN-PRO-02). | P |
 | RN-PRO-10 | Busca por nome sem diferenciar acentos/maiúsculas; filtros por cor, tamanho, categoria, situação (ativo/inativo), estoque (sem estoque / repor). | C |
 | RN-PRO-11 | Referência, categoria, custo e descrição são opcionais e nunca bloqueiam o cadastro. | C |
+| RN-PRO-12 | Produto tem **até 5 fotos** (opcionais). O servidor aceita JPG, PNG ou WebP, corrige a orientação da câmera e guarda só miniatura (400 px) e tamanho grande (1600 px) em WebP, sem metadados. | P |
+| RN-PRO-13 | A primeira foto é a **capa** (lista de produtos, PDV, site). A dona reordena as fotos; excluir uma refaz a ordem. Foto não é registro financeiro: excluir apaga o arquivo. | P |
+| RN-PRO-14 | Uma foto pode ser de uma **cor** do produto: a busca e o catálogo do PDV mostram a foto da cor da variação e, sem ela, a capa. Cada foto pode ficar fora do site (“só interna”). | P |
 
 ## RN-EST — Estoque
 

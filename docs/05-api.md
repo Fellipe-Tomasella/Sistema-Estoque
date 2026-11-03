@@ -39,6 +39,11 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 | POST | `/products/:id/deactivate` · `/activate` | |
 | DELETE | `/products/:id` · `/variants/:id` | só sem histórico (RN-PRO-08) |
 | GET | `/products/suggestions` | cores, tamanhos e categorias já usados |
+| GET | `/products/:id/images` | fotos na ordem (a primeira é a capa); o produto também traz `images` e `coverUrl` |
+| POST | `/products/:id/images` | multipart `file` (JPG/PNG/WebP, até 15 MB) + `color?` — até 5 (RN-PRO-12) |
+| POST | `/products/:id/images/order` | `{ ids }` com todas as fotos na nova ordem (RN-PRO-13) |
+| PATCH · DELETE | `/products/:id/images/:imageId` | `{ color?, showOnSite? }` · excluir |
+| GET | `/media/:id-thumb.webp` · `/media/:id-large.webp` | **sem login** (o site usa), cache longo |
 | GET | `/variants/search` | `?q` — busca rápida para PDV e entradas (nome + cor + tamanho, só ativos, com saldo e preço efetivo) |
 
 ## Estoque (`modules/stock`)

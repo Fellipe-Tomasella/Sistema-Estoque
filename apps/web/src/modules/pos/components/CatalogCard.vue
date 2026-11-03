@@ -2,6 +2,7 @@
 import { Minus, Plus, ShoppingCart } from '@lucide/vue'
 import { computed, ref, watch } from 'vue'
 import MoneyText from '@/components/common/MoneyText.vue'
+import ProductThumb from '@/components/common/ProductThumb.vue'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
@@ -17,6 +18,10 @@ const color = ref(colors.value[0] ?? '')
 const sizes = computed(() => variants.value.filter((v) => v.color === color.value))
 const chosen = ref<Variant | null>(null)
 const quantity = ref(1)
+/** RN-PRO-14: foto da cor escolhida; sem ela, a capa. */
+const photo = computed(
+  () => props.product.images.find((i) => i.color === color.value)?.thumbUrl ?? props.product.coverUrl,
+)
 
 // Troca de cor: pré-escolhe o primeiro tamanho com saldo.
 watch(sizes, (list) => (chosen.value = list.length === 1 ? list[0]! : (list.find((v) => v.stockQty > 0) ?? null)), {
@@ -32,8 +37,9 @@ function add() {
 
 <template>
   <Card class="gap-3 p-4 shadow-sm">
-    <div class="flex items-start justify-between gap-3">
-      <div class="min-w-0">
+    <div class="flex items-start gap-3">
+      <ProductThumb :src="photo" class="size-14" />
+      <div class="min-w-0 flex-1">
         <p class="font-semibold">{{ product.name }}</p>
         <p class="text-xs text-muted-foreground">{{ product.category ?? 'Sem categoria' }}</p>
       </div>

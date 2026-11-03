@@ -51,12 +51,15 @@ contagem real → no celular, Configurações → Instalar no celular.
 ## Backup
 
 O serviço `estoque-backup` faz `pg_dump` todo dia às 3h (fuso `TZ`) e guarda 14 dias no volume `estoque_backups`.
+As fotos dos produtos (volume `estoque_media`) são copiadas junto para `/backups/media`.
 
 - Backup na hora (ex.: antes de atualizar): console do container `estoque_estoque-backup…` → `sh /tmp/backup-agora.sh`.
 - Os arquivos ficam em `/backups` dentro desse container. **Para valer como backup, copie para fora da VPS**
   (pendência: definir destino — storage de objetos, outro servidor ou o seu computador).
 - Restaurar (console do `estoque-backup`): `pg_restore --clean --if-exists -d estoque /backups/estoque-AAAA-MM-DD_HHMM.dump`.
   Pare o `estoque-app` antes (Services → escalar para 0) e volte para 1 depois.
+- Fotos: o volume `estoque_media` só é montado para leitura no backup; para restaurar, num container com os dois
+  volumes, `cp -rn /backups/media/. /app/media/`.
 
 ## Atualizar
 

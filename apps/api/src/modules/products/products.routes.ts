@@ -4,9 +4,13 @@ import {
   AddVariantsBody,
   CreateProductBody,
   IdParams,
+  ImageParams,
   ListProductsQuery,
   MinStockBody,
+  ReorderImagesBody,
+  UpdateImageBody,
   UpdateProductBody,
+  UploadImageBody,
 } from './products.schemas'
 
 export const productsRoutes = new Elysia({ prefix: '/products' })
@@ -42,6 +46,29 @@ export const productsRoutes = new Elysia({ prefix: '/products' })
   .post('/:id/activate', ({ params, services, user }) => services.products.setActive(params.id, true, user.id), {
     params: IdParams,
   })
+  .get('/:id/images', ({ params, services }) => services.productImages.list(params.id), { params: IdParams })
+  .post(
+    '/:id/images',
+    ({ params, body, services, user, set }) => {
+      set.status = 201
+      return services.productImages.add(params.id, body.file, body.color, user.id)
+    },
+    { params: IdParams, body: UploadImageBody },
+  )
+  .post('/:id/images/order', ({ params, body, services }) => services.productImages.reorder(params.id, body.ids), {
+    params: IdParams,
+    body: ReorderImagesBody,
+  })
+  .patch(
+    '/:id/images/:imageId',
+    ({ params, body, services }) => services.productImages.update(params.id, params.imageId, body),
+    { params: ImageParams, body: UpdateImageBody },
+  )
+  .delete(
+    '/:id/images/:imageId',
+    ({ params, services, user }) => services.productImages.remove(params.id, params.imageId, user.id),
+    { params: ImageParams },
+  )
   .delete(
     '/:id',
     async ({ params, services, user }) => {

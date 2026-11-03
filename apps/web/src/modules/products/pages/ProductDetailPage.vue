@@ -16,6 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { formatBRL } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import StockStatusBadge from '../components/StockStatusBadge.vue'
+import ProductPhotos from '../components/ProductPhotos.vue'
 import VariantActions from '../components/VariantActions.vue'
 import VariantEditDialog from '../components/VariantEditDialog.vue'
 import VariantGrid from '../components/VariantGrid.vue'
@@ -180,6 +181,7 @@ async function applyMinForAll() {
       </Card>
 
       <div class="space-y-4">
+        <ProductPhotos :product="product" />
         <Card class="gap-3 p-5 shadow-sm">
           <p class="font-semibold">Grade cor × tamanho</p>
           <VariantGrid :variants="product.variants" @select="edit" />

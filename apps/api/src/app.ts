@@ -5,6 +5,7 @@ import { exportsRoutes } from './modules/exports/exports.routes'
 import { fiscalRoutes } from './modules/fiscal/fiscal.routes'
 import { healthRoutes } from './modules/health/health.routes'
 import { importsRoutes } from './modules/imports/imports.routes'
+import { mediaRoutes } from './modules/products/media.routes'
 import { productsRoutes } from './modules/products/products.routes'
 import { variantsRoutes } from './modules/products/variants.routes'
 import { receivablesRoutes } from './modules/receivables/receivables.routes'
@@ -23,6 +24,7 @@ export function createApp() {
     .use(healthRoutes)
     .use(authRoutes)
     .use(settingsRoutes)
+    .use(mediaRoutes)
     .use(productsRoutes)
     .use(variantsRoutes)
     .use(stockRoutes)

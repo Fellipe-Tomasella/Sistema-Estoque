@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ChevronDown, Shirt } from '@lucide/vue'
+import { ChevronDown } from '@lucide/vue'
 import { ref } from 'vue'
 import MoneyText from '@/components/common/MoneyText.vue'
+import ProductThumb from '@/components/common/ProductThumb.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
 import { Card } from '@/components/ui/card'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
@@ -27,11 +28,7 @@ const open = ref(true)
         >
           <ChevronDown :class="cn('size-4 transition-transform', !open && '-rotate-90')" />
         </CollapsibleTrigger>
-        <div
-          class="hidden size-11 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground sm:flex"
-        >
-          <Shirt class="size-5" />
-        </div>
+        <ProductThumb :src="product.coverUrl" class="hidden sm:flex" />
         <RouterLink :to="`/produtos/${product.id}`" class="min-w-0 flex-1 hover:underline">
           <p class="flex flex-wrap items-center gap-2 font-semibold">
             <span class="truncate">{{ product.name }}</span>
