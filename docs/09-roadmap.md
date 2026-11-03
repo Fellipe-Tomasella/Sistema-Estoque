@@ -159,6 +159,15 @@ Docs: 08.
 
 **Aceite:** sistema no ar com HTTPS, backup diário gerado e restaurado em teste, E2E verde.
 
+## Etapa 13 — Loja virtual (v2) — planejada
+Docs: 11. Responder as perguntas de `docs/11-loja-virtual.md` §8 antes de começar.
+- [ ] Fotos e dados públicos do produto.
+- [ ] Editor do site (aparência, páginas, blocos, pré-visualizar, publicar).
+- [ ] Site público renderizado no servidor, no endereço da marca.
+- [ ] Carrinho sem conta, pedido do site e “virar venda” no PDV.
+- [ ] Interessados (contatos, carrinhos com contato) e produtos mais vistos.
+- [ ] Domínio da marca em produção e E2E do pedido.
+
 ---
 
 ## Depois da v1 (só com confirmação)

@@ -25,6 +25,7 @@ Foco: **notebook (desktop)**. Celular: consulta e operações simples, instaláv
 10. `docs/09-roadmap.md` — **etapas de desenvolvimento, na ordem**. Trabalhe uma etapa por vez.
 11. `docs/10-pendencias.md` — perguntas abertas para a cliente e o contador.
 12. `docs/decisoes.md` — registro de decisões (ADR). Consulte antes de mudar algo estrutural.
+13. `docs/11-loja-virtual.md` — **planejamento da v2 (loja virtual)**, Etapa 13 do roadmap.
 
 ## Stack (resumo — justificativas em docs/02)
 
