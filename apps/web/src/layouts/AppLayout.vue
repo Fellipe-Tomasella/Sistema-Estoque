@@ -30,7 +30,7 @@ watch(
 
 <template>
   <div class="min-h-svh bg-background">
-    <aside class="fixed inset-y-0 left-0 z-40 hidden w-60 border-r md:block">
+    <aside class="fixed inset-y-0 left-0 z-40 hidden w-60 border-r lg:block">
       <AppSidebar :store-name="storeName" />
     </aside>
 
@@ -42,10 +42,11 @@ watch(
       </SheetContent>
     </Sheet>
 
-    <div class="md:pl-60">
+    <div class="lg:pl-60">
       <OfflineBanner />
       <AppHeader @menu="drawerOpen = true" @search="searchOpen = true" />
-      <main class="mx-auto w-full max-w-7xl px-4 pt-6 pb-24 md:px-6 md:pb-10 lg:px-10">
+      <!-- conteúdo ocupa a largura toda ao lado do menu (sem vão em monitor grande) -->
+      <main class="w-full px-4 pt-6 pb-24 md:px-6 md:pb-10 xl:px-8 2xl:px-10">
         <RouterView v-slot="{ Component }">
           <component :is="Component" />
         </RouterView>

@@ -37,4 +37,15 @@ export class DashboardRepository {
           where status = 'valid' and kind <> 'exchange_credit' and business_date = ${today})::int as received_today_cents`)
     return row!
   }
+
+  /** Vendas confirmadas por dia da loja, de `days` dias até `today` (dias sem venda vêm com zero). */
+  async dailySales(today: string, days: number) {
+    return this.db.execute<{ date: string; count: number; total_cents: number }>(sql`
+      select d::date::text as date,
+        count(s.id)::int as count,
+        coalesce(sum(s.total_cents), 0)::int as total_cents
+      from generate_series(${today}::date - ${days - 1}::int, ${today}::date, interval '1 day') d
+      left join sales s on s.status = 'confirmed' and s.business_date = d::date
+      group by d order by d`)
+  }
 }

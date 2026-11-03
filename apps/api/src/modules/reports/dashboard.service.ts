@@ -2,7 +2,7 @@ import type { SettingsService } from '../settings/settings.service'
 import type { StockService } from '../stock/stock.service'
 import type { DashboardRepository } from './dashboard.repository'
 
-/** Início (06 §3.1): avisos que levam às listas filtradas e o resumo de hoje — sem gráficos nem metas. */
+/** Início (06 §3.1): avisos que levam às listas filtradas, o resumo de hoje e as vendas dos últimos 14 dias (decisão 041). */
 export class DashboardService {
   constructor(
     private readonly repo: DashboardRepository,
@@ -12,8 +12,9 @@ export class DashboardService {
 
   async get() {
     const today = await this.settings.businessDate()
-    const [counts, alerts, store] = await Promise.all([
+    const [counts, daily, alerts, store] = await Promise.all([
       this.repo.counts(today),
+      this.repo.dailySales(today, 14),
       this.stock.alerts(),
       this.settings.get(),
     ])
@@ -35,6 +36,7 @@ export class DashboardService {
         salesTotalCents: counts.sales_today_cents,
         receivedCents: counts.received_today_cents,
       },
+      last14Days: daily.map((d) => ({ date: d.date, count: d.count, totalCents: d.total_cents })),
       fiscalRulesValidated: store.fiscalRulesValidated,
     }
   }

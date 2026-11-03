@@ -217,4 +217,8 @@ test('Início: avisos e resumo de hoje', async () => {
     todaySummary: { salesCount: 1, salesTotalCents: 1000, receivedCents: 1000 },
     fiscalRulesValidated: false,
   })
+  // 14 dias até hoje, com zero nos dias sem venda
+  expect(res.body.last14Days).toHaveLength(14)
+  expect(res.body.last14Days.at(-1)).toEqual({ date: today, count: 1, totalCents: 1000 })
+  expect(res.body.last14Days[0].totalCents).toBe(0)
 })
