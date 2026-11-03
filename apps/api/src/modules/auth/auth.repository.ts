@@ -12,6 +12,11 @@ export class AuthRepository {
     return user
   }
 
+  async hasUsers() {
+    const [row] = await this.db.select({ id: users.id }).from(users).limit(1)
+    return Boolean(row)
+  }
+
   async insertUser(values: typeof users.$inferInsert) {
     const [user] = await this.db.insert(users).values(values).returning()
     return user!

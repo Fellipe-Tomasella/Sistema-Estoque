@@ -185,3 +185,23 @@ describe('alterar senha', () => {
     expect(res.status).toBe(400)
   })
 })
+
+describe('primeira conta pelo deploy (FIRST_USER_*)', () => {
+  const first = { name: 'Dona', email: 'Dona@Loja.com', password: 'senha-provisoria-1' }
+
+  test('cria só com o banco vazio e entra com a senha informada', async () => {
+    const user = await services.auth.ensureFirstUser(first)
+    expect(user?.email).toBe('dona@loja.com')
+    const res = await request('POST', '/auth/login', { body: { email: first.email, password: first.password } })
+    expect(res.status).toBe(200)
+  })
+
+  test('com conta já existente não faz nada (restart não desfaz troca de senha)', async () => {
+    await createUser()
+    expect(await services.auth.ensureFirstUser(first)).toBeNull()
+  })
+
+  test('sem as três variáveis não cria nada', async () => {
+    expect(await services.auth.ensureFirstUser({ name: 'Dona', email: first.email })).toBeNull()
+  })
+})

@@ -13,8 +13,12 @@ git push origin v1.0.0
 ```
 
 O GitHub Actions (`.github/workflows/release.yml`) gera `ghcr.io/fellipe-tomasella/sistema-estoque:1.0.0` e `:latest`.
-Acompanhe em GitHub → Actions. Se o repositório for **privado**, a imagem também é: no Portainer, em
-Registries → Add registry → Custom, cadastre `ghcr.io` com seu usuário do GitHub e um token (classic) com `read:packages`.
+Acompanhe em GitHub → Actions.
+
+A stack do Swarm não guarda login de registry, então, para o Portainer baixar a imagem **sem cadastrar registry**,
+o pacote precisa ser público: GitHub → seu perfil → Packages → `sistema-estoque` → Package settings →
+Change visibility → **Public** (o repositório continua privado). Atenção: a imagem leva o código da API — quem souber
+o nome do pacote consegue baixá-la. Se não quiser isso, a alternativa é cadastrar `ghcr.io` em Registries no Portainer.
 
 ## 2. DNS
 
@@ -26,6 +30,7 @@ Aponte o domínio escolhido (ex.: `estoque.hyperdynamis.com`) para a VPS, igual 
    - `TROQUE_DOMINIO` (2 vezes) → o domínio, sem `https://` na regra do Traefik;
    - `TROQUE_SENHA_DO_BANCO` (3 vezes) → uma senha longa (`openssl rand -hex 24`);
    - `TROQUE_SEGREDO_LONGO_ALEATORIO` → `openssl rand -hex 32`;
+   - `TROQUE_NOME_DA_DONA`, `TROQUE_EMAIL_DA_DONA`, `TROQUE_SENHA_PROVISORIA` (mínimo 8 caracteres) → a primeira conta;
    - `CLIENT_IP_HEADER`: deixe se o domínio passa pelo Cloudflare (nuvem laranja); apague se não passa.
 2. Portainer → Stacks → Add stack → nome **`estoque`** → Web editor → cole → Deploy the stack.
 3. Confira `https://SEU_DOMINIO/api/health` → `{"ok":true,"db":true,...}`.
@@ -33,13 +38,10 @@ Aponte o domínio escolhido (ex.: `estoque.hyperdynamis.com`) para a VPS, igual 
 
 ## 4. Conta da dona
 
-Portainer → Containers → `estoque_estoque-app…` → Console → Connect (`/bin/sh`) e rode:
-
-```sh
-bun apps/api/src/scripts/create-user.ts --name "Nome da dona" --email "email@dela.com"
-```
-
-A senha é pedida ali mesmo (duas vezes). Para redefinir depois: `bun apps/api/src/scripts/reset-password.ts --email "…"`.
+É criada sozinha na primeira subida, com `FIRST_USER_NAME`, `FIRST_USER_EMAIL` e `FIRST_USER_PASSWORD` da stack
+(só quando o banco ainda não tem nenhuma conta). Entre com esses dados e troque a senha em Configurações → Acesso.
+Para redefinir uma senha esquecida: console do container `estoque_estoque-app…` →
+`bun apps/api/src/scripts/reset-password.ts --email "…"`.
 
 ## 5. Primeiro uso
 

@@ -53,6 +53,16 @@ export class AuthService {
     return toPublicUser(user)
   }
 
+  /**
+   * Primeira conta vinda do deploy (variáveis FIRST_USER_*): só é criada com o banco sem nenhuma conta,
+   * então trocar a senha depois pelo sistema não é desfeito no próximo restart.
+   */
+  async ensureFirstUser(input: { name?: string; email?: string; password?: string }): Promise<PublicUser | null> {
+    if (!input.name || !input.email || !input.password) return null
+    if (await this.repo.hasUsers()) return null
+    return this.createUser({ name: input.name, email: input.email, password: input.password })
+  }
+
   async login(input: { email: string; password: string }, client: ClientInfo) {
     const email = normalizeEmail(input.email)
     const limiterKey = `${client.ip ?? '?'}|${email}`

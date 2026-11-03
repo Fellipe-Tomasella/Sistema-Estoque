@@ -20,6 +20,12 @@ export const env = {
   port: Number(process.env.PORT ?? 3000),
   /** Pasta do build do front (produção). Sem ela, só a API sobe. */
   publicDir: optional('PUBLIC_DIR'),
+  /** Primeira conta (só com o banco vazio) — ver AuthService.ensureFirstUser. */
+  firstUser: {
+    name: optional('FIRST_USER_NAME'),
+    email: optional('FIRST_USER_EMAIL'),
+    password: optional('FIRST_USER_PASSWORD'),
+  },
   /** Cabeçalho com o IP real de quem acessa, preenchido pelo proxy. */
   clientIpHeader: (optional('CLIENT_IP_HEADER') ?? 'x-real-ip').toLowerCase(),
   appOrigin: required('APP_ORIGIN'),

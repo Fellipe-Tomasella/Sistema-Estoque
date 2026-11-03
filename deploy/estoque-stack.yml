@@ -6,7 +6,7 @@ version: "3.7"
 #   - A senha do banco aparece 3 vezes (DATABASE_URL, POSTGRES_PASSWORD e PGPASSWORD do backup) e não muda depois
 #     do primeiro deploy: o Postgres grava a senha na primeira subida.
 #   - SESSION_SECRET: texto aleatório longo (ex.: `openssl rand -hex 32`). Trocar depois desconecta todo mundo.
-#   - A conta da dona é criada depois de subir, pelo console do container (deploy/LEIA.md, passo 4).
+#   - FIRST_USER_*: conta da dona, criada sozinha na primeira subida (só com o banco vazio).
 
 services:
   estoque-app:
@@ -16,6 +16,11 @@ services:
       - DATABASE_URL=postgres://estoque:TROQUE_SENHA_DO_BANCO@estoque-db:5432/estoque
       - APP_ORIGIN=https://TROQUE_DOMINIO
       - SESSION_SECRET=TROQUE_SEGREDO_LONGO_ALEATORIO
+      # conta da dona: criada sozinha na primeira subida, só com o banco vazio (senha mínima de 8 caracteres).
+      # Depois de entrar, troque a senha em Configurações → Acesso; mudar estas linhas depois não tem efeito.
+      - FIRST_USER_NAME=TROQUE_NOME_DA_DONA
+      - FIRST_USER_EMAIL=TROQUE_EMAIL_DA_DONA
+      - FIRST_USER_PASSWORD=TROQUE_SENHA_PROVISORIA
       # atrás do Cloudflare (nuvem laranja): IP real de quem acessa, para o limite de tentativas do login.
       # Sem Cloudflare, apague a linha (o Traefik já manda o X-Real-IP).
       - CLIENT_IP_HEADER=cf-connecting-ip
