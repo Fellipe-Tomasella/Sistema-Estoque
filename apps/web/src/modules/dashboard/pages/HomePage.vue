@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   Ban,
   CalendarDays,
+  FilePlus,
   CheckCircle2,
   CircleDollarSign,
   ClipboardPlus,
@@ -123,7 +124,8 @@ const alerts = computed(() => {
 })
 
 const quickActions = [
-  { to: '/vender', title: 'Nova venda', text: 'Abrir o PDV', icon: ShoppingBag, primary: true },
+  { to: '/pdv', title: 'PDV', text: 'Venda rápida no balcão', icon: ShoppingBag, primary: true },
+  { to: '/vender?nova=1', title: 'Nova venda', text: 'Com cliente, envio e fiado', icon: FilePlus },
   { to: '/estoque/entradas/nova', title: 'Nova entrada', text: 'Mercadoria recebida', icon: ClipboardPlus },
   { to: '/fiado', title: 'Receber fiado', text: 'Pagamento total ou parcial', icon: HandCoins },
   { to: '/produtos/novo', title: 'Novo produto', text: 'Peça com cores e tamanhos', icon: PackagePlus },
@@ -139,7 +141,7 @@ const quickActions = [
     </template>
   </PageHeader>
 
-  <section class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+  <section class="grid grid-cols-2 gap-3 md:grid-cols-3 2xl:grid-cols-5">
     <RouterLink
       v-for="action in quickActions"
       :key="action.to"

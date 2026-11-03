@@ -23,8 +23,9 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { label: 'Início', to: '/', icon: House, match: [] },
+  { label: 'PDV', to: '/pdv', icon: ShoppingBag, match: ['/pdv'] },
   { label: 'Produtos e estoque', to: '/produtos', icon: Package, match: ['/produtos', '/estoque'] },
-  { label: 'Vendas', to: '/vendas', icon: ReceiptText, match: ['/vendas'] },
+  { label: 'Vendas', to: '/vendas', icon: ReceiptText, match: ['/vendas', '/vender'] },
   { label: 'Clientes e fiado', to: '/clientes', icon: Users, match: ['/clientes', '/fiado'] },
   { label: 'Pendências', to: '/pendencias', icon: BellRing, match: ['/pendencias'], badge: 'pending' },
   { label: 'Relatórios', to: '/relatorios/vendas', icon: BarChart3, match: ['/relatorios', '/fechamento'] },
@@ -35,7 +36,7 @@ export const navItems: NavItem[] = [
 export const mobileTabs = [
   { label: 'Início', to: '/', icon: House, match: [] as string[] },
   { label: 'Estoque', to: '/produtos', icon: Package, match: ['/produtos', '/estoque'] },
-  { label: 'Vender', to: '/vender', icon: ShoppingBag, match: ['/vender'], primary: true },
+  { label: 'Vender', to: '/pdv', icon: ShoppingBag, match: ['/pdv', '/vender'], primary: true },
   { label: 'Fiado', to: '/fiado', icon: Wallet, match: ['/fiado', '/clientes'] },
 ]
 

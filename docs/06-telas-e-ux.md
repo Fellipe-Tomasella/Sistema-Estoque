@@ -119,3 +119,15 @@ Configuração (`vite-plugin-pwa`):
 - `sw.js` e `manifest.webmanifest` servidos com `Cache-Control: no-cache`.
 
 Aplicativo nativo: fora do escopo atual. Se vier, o mesmo backend serve; o PWA cobre o uso de consulta no celular.
+
+## PDV clássico (decisão 041)
+
+- `/pdv`, em **tela cheia, sem menu**: abre já numa venda nova (rascunho no servidor). Topo: “PDV”, situação do
+  rascunho, Rascunhos e **Sair do PDV**.
+- **Passo 1 — Produtos:** busca (o leitor de código “digita” e o Enter adiciona), filtro por categoria, catálogo com
+  cor/tamanho e, ao lado, os itens escolhidos com o total e **Ir para pagamento (F4)**.
+- **Passo 2 — Pagamento:** cliente, envio, desconto, itens; à direita formas de pagamento, totais e **Confirmar
+  (Ctrl+Enter)**. **Esc** volta aos produtos. Depois de confirmar: comprovante e “Nova venda” (outra venda limpa).
+- Celular: os mesmos passos, com total e “Pagamento” fixos embaixo.
+- **Nova venda** (`/vender`) continua como a venda completa (todos os campos numa tela). No topo do painel: “Abrir PDV”
+  (principal) e “Nova venda”; no celular, a aba Vender abre o PDV.

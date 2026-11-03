@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LogOut, Menu, Plus, Search, Settings } from '@lucide/vue'
+import { LogOut, Menu, Plus, Search, Settings, ShoppingBag } from '@lucide/vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { Button } from '@/components/ui/button'
@@ -52,8 +52,11 @@ const initials = (name: string) =>
 
     <!-- ações à direita, longe da busca -->
     <div class="ml-auto hidden sm:block" />
+    <Button variant="outline" as-child class="hidden md:inline-flex">
+      <RouterLink to="/vender?nova=1"><Plus /> Nova venda</RouterLink>
+    </Button>
     <Button as-child class="hidden bg-brand text-brand-foreground hover:bg-brand/90 sm:inline-flex">
-      <RouterLink to="/vender"><Plus /> Nova venda</RouterLink>
+      <RouterLink to="/pdv"><ShoppingBag /> Abrir PDV</RouterLink>
     </Button>
 
     <DropdownMenu>

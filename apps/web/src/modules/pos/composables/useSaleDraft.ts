@@ -92,6 +92,7 @@ export function useSaleDraft(id: Ref<string>) {
   const query = useQuery({
     queryKey: computed(() => keys.sale(id.value)),
     queryFn: () => unwrap(client.sales({ id: id.value }).get()),
+    enabled: computed(() => Boolean(id.value)),
     // Recarregar ao voltar para a aba atrapalharia a digitação; conflito entre aparelhos é tratado no 409.
     refetchOnWindowFocus: false,
   })

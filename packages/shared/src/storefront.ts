@@ -7,6 +7,7 @@ export const PANEL_PATHS = [
   'produtos',
   'estoque',
   'vender',
+  'pdv',
   'vendas',
   'clientes',
   'fiado',

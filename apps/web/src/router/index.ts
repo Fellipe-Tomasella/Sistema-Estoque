@@ -161,6 +161,13 @@ const routes: RouteRecordRaw[] = [
   // Layout persistente: o menu é montado uma vez; só a área de conteúdo troca.
   // Vem antes do layout de acesso: os dois têm path '/', e '/' precisa cair aqui.
   { path: '/', component: () => import('@/layouts/AppLayout.vue'), children: appRoutes },
+  // PDV clássico em tela cheia, fora do layout com menu (decisão 041)
+  {
+    path: '/pdv/:draftId?',
+    name: 'pdv',
+    component: () => import('@/modules/pos/pages/PdvPage.vue'),
+    meta: { title: 'PDV' },
+  },
   {
     path: '/',
     component: () => import('@/layouts/AuthLayout.vue'),
