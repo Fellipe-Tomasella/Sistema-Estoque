@@ -17,9 +17,11 @@ export class DashboardRepository {
       sales_today: number
       sales_today_cents: number
       received_today_cents: number
+      web_orders_new: number
     }>(sql`
       select
         (select count(*) from sales where status = 'draft')::int as drafts,
+        (select count(*) from web_orders where status = 'new')::int as web_orders_new,
         (select count(*) from sales where status = 'confirmed' and shipping_status = 'pending')::int as shipping_pending,
         (select count(*) from returns where status = 'awaiting_items')::int as returns_awaiting,
         (select count(*) from refunds where status = 'pending')::int as refunds_pending,

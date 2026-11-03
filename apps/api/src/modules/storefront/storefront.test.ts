@@ -118,6 +118,16 @@ describe('site público', () => {
     expect((await visit('/jooliv-lingeries'))!.text).not.toContain('Calcinha zero')
   })
 
+  test('sacola e privacidade: páginas do site com o formulário curto e o aceite', async () => {
+    await openStore()
+    const bag = (await visit('/jooliv-lingeries/sacola'))!
+    expect(bag.status).toBe(200)
+    expect(bag.text).toContain('Finalizar pedido')
+    expect(bag.text).toContain('name="consent"')
+    expect(bag.text).toContain('name="website"')
+    expect((await visit('/jooliv-lingeries/privacidade'))!.text).toContain('Política de privacidade')
+  })
+
   test('site desligado: só quem está logada vê (pré-visualização); outro caminho fica com o painel', async () => {
     await put({ slug: 'jooliv-lingeries' })
     expect(await visit('/jooliv-lingeries')).toBeNull()

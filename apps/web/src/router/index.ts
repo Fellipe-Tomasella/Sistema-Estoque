@@ -150,6 +150,12 @@ const appRoutes: RouteRecordRaw[] = [
     meta: { title: 'Fechamento do dia' },
   },
   {
+    path: 'pedidos',
+    name: 'web-orders',
+    component: () => import('@/modules/web-orders/pages/WebOrdersPage.vue'),
+    meta: { title: 'Pedidos do site' },
+  },
+  {
     path: 'configuracoes',
     name: 'settings',
     component: () => import('@/modules/settings/pages/SettingsPage.vue'),

@@ -24,6 +24,7 @@ export class DashboardService {
         outOfStock: alerts.outCount,
         lowStock: alerts.lowCount,
         drafts: counts.drafts,
+        webOrdersNew: counts.web_orders_new,
         shippingPending: counts.shipping_pending,
         returnsAwaiting: counts.returns_awaiting,
         refundsPending: counts.refunds_pending,

@@ -195,6 +195,10 @@ Para o dia D (`business_date`):
 | RN-LOJ-02 | **Preço do site** por produto, opcional: vazio = preço do PDV (o da variação, ou o base). Preenchido, vale para todas as variações no site. Mudar o preço do site não mexe no PDV nem em vendas. | Dev |
 | RN-LOJ-03 | “Esconder preço”: o site mostra “Consulte” no lugar do valor. | Dev |
 | RN-LOJ-04 | Descrição do site separada da descrição interna (que pode ter anotações da dona). | P |
+| RN-LOJ-05 | **Pedido do site**: sacola no navegador, formulário curto (nome, WhatsApp, e-mail/cidade/observação opcionais) e aceite da privacidade. Não mexe no estoque. O servidor recalcula preço e disponibilidade (peça esgotada ou fora do site é recusada com aviso). Contra duplicidade: chave do envio; contra robô: campo isca e no máximo 5 pedidos a cada 10 min por IP. | Dev |
+| RN-LOJ-06 | Aviso por **e-mail para a vendedora** (endereço em Configurações → Loja virtual) e **confirmação para a cliente** se ela deixou e-mail; aviso também no sistema (menu e Início). Falha no e-mail não perde o pedido. | Dev |
+| RN-LOJ-07 | **Virar venda**: abre a venda com a cliente (achada pelo WhatsApp ou cadastrada na hora) e as peças; preço do site menor que o do PDV entra como desconto em reais, com explicação na observação. O estoque só baixa ao confirmar a venda. Um pedido vira venda uma vez só. | Dev |
+| RN-LOJ-08 | Pedido pode ser marcado **atendido**, **recusado** (com motivo) e reaberto; produto com pedido do site não pode ser excluído, só inativado. | P |
 
 ## RN-ACE — Acesso e dados
 

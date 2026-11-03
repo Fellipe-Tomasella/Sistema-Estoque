@@ -2,6 +2,7 @@
 import {
   BarChart3,
   BellRing,
+  Globe,
   House,
   type LucideIcon,
   Package,
@@ -18,7 +19,7 @@ export interface NavItem {
   icon: LucideIcon
   /** Rotas que também deixam o item marcado como ativo. */
   match: string[]
-  badge?: 'pending'
+  badge?: 'pending' | 'web'
 }
 
 export const navItems: NavItem[] = [
@@ -27,6 +28,7 @@ export const navItems: NavItem[] = [
   { label: 'Produtos e estoque', to: '/produtos', icon: Package, match: ['/produtos', '/estoque'] },
   { label: 'Vendas', to: '/vendas', icon: ReceiptText, match: ['/vendas', '/vender'] },
   { label: 'Clientes e fiado', to: '/clientes', icon: Users, match: ['/clientes', '/fiado'] },
+  { label: 'Pedidos do site', to: '/pedidos', icon: Globe, match: ['/pedidos'], badge: 'web' },
   { label: 'Pendências', to: '/pendencias', icon: BellRing, match: ['/pendencias'], badge: 'pending' },
   { label: 'Relatórios', to: '/relatorios/vendas', icon: BarChart3, match: ['/relatorios', '/fechamento'] },
   { label: 'Configurações', to: '/configuracoes', icon: Settings, match: ['/configuracoes'] },

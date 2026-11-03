@@ -10,5 +10,6 @@ export function useDashboard() {
     const a = query.data.value?.alerts
     return a ? a.returnsAwaiting + a.refundsPending + a.fiscalPending + a.shippingPending : 0
   })
-  return { ...query, pendingCount }
+  const webOrdersCount = computed(() => query.data.value?.alerts.webOrdersNew ?? 0)
+  return { ...query, pendingCount, webOrdersCount }
 }

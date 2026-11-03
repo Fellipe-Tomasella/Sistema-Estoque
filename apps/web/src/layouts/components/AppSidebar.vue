@@ -9,7 +9,7 @@ defineProps<{ storeName: string }>()
 const emit = defineEmits<{ navigate: [] }>()
 
 const route = useRoute()
-const { pendingCount } = useDashboard()
+const { pendingCount, webOrdersCount } = useDashboard()
 </script>
 
 <template>
@@ -43,6 +43,12 @@ const { pendingCount } = useDashboard()
         class="flex h-5 min-w-5 items-center justify-center rounded-md bg-red-100 px-1.5 text-[11px] font-semibold text-red-700"
       >
         {{ pendingCount }}
+      </span>
+      <span
+        v-else-if="item.badge === 'web' && webOrdersCount > 0"
+        class="flex h-5 min-w-5 items-center justify-center rounded-md bg-brand px-1.5 text-[11px] font-semibold text-brand-foreground"
+      >
+        {{ webOrdersCount }}
       </span>
     </RouterLink>
   </nav>

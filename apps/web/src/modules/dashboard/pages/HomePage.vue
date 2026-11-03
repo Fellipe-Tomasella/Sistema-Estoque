@@ -6,6 +6,7 @@ import {
   Ban,
   CalendarDays,
   FilePlus,
+  Globe,
   CheckCircle2,
   CircleDollarSign,
   ClipboardPlus,
@@ -47,6 +48,16 @@ const alerts = computed(() => {
   const a = data.value?.alerts
   if (!a) return []
   return [
+    {
+      count: a.webOrdersNew,
+      title: 'Pedidos do site',
+      description: 'Pedidos novos esperando contato.',
+      tag: 'Novo',
+      tone: 'info',
+      icon: Globe,
+      to: '/pedidos',
+      linkLabel: 'Ver pedidos',
+    },
     {
       count: a.outOfStock,
       title: 'Sem estoque',

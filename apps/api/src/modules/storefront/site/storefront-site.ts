@@ -2,7 +2,7 @@ import { PANEL_PATHS } from '@estoque/shared'
 import { env } from '../../../config/env'
 import type { Services } from '../../../container'
 import { SESSION_COOKIE } from '../../../shared/auth.plugin'
-import { homePage, notFoundPage, productPage, productPath, type SiteContext } from './pages'
+import { cartPage, homePage, notFoundPage, privacyPage, productPage, productPath, type SiteContext } from './pages'
 
 const UUID = /^[0-9a-f-]{36}$/
 
@@ -34,6 +34,8 @@ export async function renderStorefront(
   const ctx: SiteContext = { settings: site.settings, title: site.title, origin: env.appOrigin, preview }
   if (rest.length === 0) return page(homePage(ctx, site.products, url.searchParams.get('categoria')))
 
+  if (rest.length === 1 && rest[0] === 'sacola') return page(cartPage(ctx))
+  if (rest.length === 1 && rest[0] === 'privacidade') return page(privacyPage(ctx))
   if (rest[0] === 'p' && rest[1] && UUID.test(rest[1])) {
     const product = await services.storefront.product(rest[1])
     if (product && !(site.settings.hideSoldOut && product.soldOut)) {

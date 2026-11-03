@@ -1,6 +1,5 @@
 // Estilo do site público (sem framework: a página chega pronta do servidor e abre rápido no celular).
-export const SITE_CSS = `
-*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+export const SITE_CSS = `*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#1f1b24;background:#fbf9fa}
 a{color:inherit}img{display:block;max-width:100%}
 .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
@@ -49,4 +48,28 @@ a{color:inherit}img{display:block;max-width:100%}
 .desc{color:#4a4150;margin-top:24px;border-top:1px solid #eee6ea;padding-top:8px}
 .foot{border-top:1px solid #eee6ea;padding:24px 0 40px;color:#6b6070;font-size:14px}
 .foot p{margin:4px 0;display:flex;flex-wrap:wrap;gap:16px}.brand-small{font:600 18px ui-serif,Georgia,serif;color:#1f1b24}
+.bag{position:relative;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:inherit}
+.bag svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round}
+.bag span{position:absolute;top:4px;right:2px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--accent);color:#fff;font:600 11px/18px system-ui;text-align:center}
+.wa-float{position:fixed;right:16px;bottom:16px;z-index:10;width:52px;height:52px;border-radius:999px;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.wa-float svg{width:28px;height:28px;fill:#fff}
+.btn.wide{width:100%;margin-top:8px}.btn:disabled{opacity:.55;cursor:not-allowed;filter:none}
+.ok{color:#047857;font-size:14px}.muted{color:#6b6070;font-size:14px;margin:0}
+.hero.small{padding:24px 0 8px}
+.cart{display:grid;gap:32px;margin-bottom:64px}@media(min-width:860px){.cart{grid-template-columns:minmax(0,1fr) 380px}}
+.bag-list{list-style:none;margin:0;padding:0}
+.bag-line{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:12px;padding:12px 0;border-bottom:1px solid #eee6ea;align-items:start}
+.ph.small{aspect-ratio:4/5;border-radius:10px}
+.bag-info .name{font-weight:600;text-decoration:none}
+.qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+.qty button{width:32px;height:32px;border-radius:8px;border:1px solid #e3d9df;background:#fff;cursor:pointer;font-size:16px}
+.qty .link{width:auto;border:0;background:none;color:#9f1239;font-size:13px;text-decoration:underline}
+.bag-total{display:flex;justify-content:space-between;font-size:18px;margin-top:12px}
+.checkout,.done{background:#fff;border:1px solid #eee6ea;border-radius:16px;padding:20px;align-self:start}
+.checkout h2,.done h2{font:600 22px ui-serif,Georgia,serif;margin:0 0 4px}
+.checkout label{display:block;font-size:14px;font-weight:600;margin-top:12px}
+.checkout input:not([type=checkbox]),.checkout textarea{display:block;width:100%;margin-top:4px;padding:10px 12px;border:1px solid #e3d9df;border-radius:10px;font:inherit;font-weight:400}
+.checkout .check{display:flex;gap:8px;align-items:flex-start;font-weight:400}.checkout .check input{margin-top:3px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.text-left{text-align:left}.text-left h1{font:600 30px ui-serif,Georgia,serif}
 `
