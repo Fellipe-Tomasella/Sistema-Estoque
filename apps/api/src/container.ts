@@ -196,4 +196,9 @@ export function createContainer() {
 }
 
 export type Services = ReturnType<typeof createContainer>
-export const services = createContainer()
+/**
+ * Congelado de propósito: o Elysia mescla (mergeDeep) o `decorate('services', …)` a cada `.use` e, como os
+ * métodos de classe não são enumeráveis, percorria o grafo inteiro (até o cliente do banco) — ~3,5 s por grupo
+ * de rotas, mais de 1 min para subir a API. Objeto congelado ele não percorre.
+ */
+export const services: Services = Object.freeze(createContainer())
