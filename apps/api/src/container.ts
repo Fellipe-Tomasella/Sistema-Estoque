@@ -49,6 +49,8 @@ import { StockEntriesRepository } from './modules/stock/stock-entries.repository
 import { StockEntriesService } from './modules/stock/stock-entries.service'
 import { StockRepository } from './modules/stock/stock.repository'
 import { StockService } from './modules/stock/stock.service'
+import { StorefrontRepository } from './modules/storefront/storefront.repository'
+import { StorefrontService } from './modules/storefront/storefront.service'
 import { createMailer } from './shared/mailer'
 import { MediaStorage } from './shared/media-storage'
 
@@ -76,6 +78,7 @@ export function createContainer() {
     settings: new SettingsRepository(db),
     stock: new StockRepository(db),
     stockEntries: new StockEntriesRepository(db),
+    storefront: new StorefrontRepository(db),
   }
 
   const audit = new AuditService(repositories.audit)
@@ -173,6 +176,7 @@ export function createContainer() {
     saleDrafts: new SaleDraftsService(repositories.sales, sales, customers),
     stockAdjustments: new StockAdjustmentsService(stock, settings, audit),
     stockEntries: new StockEntriesService(repositories.stockEntries, stock, settings),
+    storefront: new StorefrontService(repositories.storefront, settings, audit),
   }
 }
 

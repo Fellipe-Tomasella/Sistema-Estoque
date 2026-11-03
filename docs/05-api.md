@@ -130,3 +130,10 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 
 ## Exportação (`modules/exports`)
 | GET | `/exports/full.zip` | RN-ACE-04 |
+
+## Loja virtual (`modules/storefront`) — docs/11
+
+| Método | Rota | Descrição |
+| --- | --- | --- |
+| GET · PUT | `/storefront/settings` | `{ enabled, slug, title, tagline, about, whatsapp, instagram, accentColor, hideSoldOut, notifyEmail }` |
+| GET | `/<slug>` · `/<slug>?categoria=` · `/<slug>/p/:id/:nome` | **HTML** do site (fora de `/api`), sem login quando no ar (RN-LOJ-01) |

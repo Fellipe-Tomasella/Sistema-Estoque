@@ -6,14 +6,18 @@ import { Card } from '@/components/ui/card'
 import InstallCard from '../components/InstallCard.vue'
 import SecurityCard from '../components/SecurityCard.vue'
 import StoreSettingsCard from '../components/StoreSettingsCard.vue'
+import StorefrontCard from '../components/StorefrontCard.vue'
 
-/** Configurações (06 §Configurações): loja, acesso, cópia dos dados e instalar no celular. */
+/** Configurações (06 §Configurações): loja, loja virtual, acesso, cópia dos dados e instalar no celular. */
 </script>
 
 <template>
   <PageHeader title="Configurações" description="Dados da loja, acesso e cópia de segurança." />
   <div class="grid gap-4 lg:grid-cols-[1fr_380px]">
-    <StoreSettingsCard />
+    <div class="min-w-0 space-y-4">
+      <StoreSettingsCard />
+      <StorefrontCard />
+    </div>
     <div class="space-y-4">
       <SecurityCard />
       <Card class="gap-3 p-5 shadow-sm">

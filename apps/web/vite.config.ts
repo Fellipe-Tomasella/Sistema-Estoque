@@ -3,6 +3,13 @@ import vue from '@vitejs/plugin-vue'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import { PANEL_PATHS } from '../../packages/shared/src/storefront'
+
+/** O service worker só responde com o painel nas rotas do painel: o site da loja (`/<nome>`) vem do servidor. */
+const panelRoutes = new RegExp(`^/(${PANEL_PATHS.filter((p) => p !== 'api' && p !== 'assets').join('|')})?(/|$)`)
+
+const api = `http://127.0.0.1:${process.env.API_PORT ?? 3000}`
+const storefrontPaths = `^/(?!(?:${[...PANEL_PATHS, 'src', 'node_modules'].join('|')})(?:/|[?]|$))[a-z0-9-]+(?:/|[?]|$)`
 
 export default defineConfig({
   plugins: [
@@ -32,6 +39,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         navigateFallbackDenylist: [/^\/api\//],
+        navigateFallbackAllowlist: [panelRoutes],
         cleanupOutdatedCaches: true,
       },
     }),
@@ -44,6 +52,10 @@ export default defineConfig({
     // Mesma origem em desenvolvimento: o navegador fala só com o Vite, que repassa /api para a API.
     // 127.0.0.1 e não localhost: no Windows “localhost” resolve para IPv6 (::1) e a API escuta em IPv4.
     // API_PORT: os testes E2E sobem outra API (banco de teste) em outra porta.
-    proxy: { '/api': { target: `http://127.0.0.1:${process.env.API_PORT ?? 3000}`, changeOrigin: false } },
+    proxy: {
+      '/api': { target: api, changeOrigin: false },
+      // site da loja (`/<nome-da-loja>`): quem gera é a API; o resto fica com o Vite
+      [storefrontPaths]: { target: api, changeOrigin: false },
+    },
   },
 })

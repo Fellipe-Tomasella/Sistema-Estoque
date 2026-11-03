@@ -163,8 +163,9 @@ Docs: 08.
 Docs: 11 (respostas na §8, decisão 039).
 - [x] Fotos dos produtos no painel (até 5, capa, ordem, cor, “só interna”; lista, detalhe, busca e catálogo do PDV), volume `estoque_media` no backup.
 - [x] Dados do produto para o site (mostrar no site, preço do site, esconder preço, descrição do site) — RN-LOJ-01 a 04.
-- [ ] Editor do site (aparência, páginas, blocos, pré-visualizar, publicar).
-- [ ] Site público renderizado no servidor em `/jooliv-lingeries`.
+- [x] Configurações → Loja virtual: no ar/fora do ar (pré-visualização logada), endereço, nome, frase, sobre, cor, WhatsApp, Instagram, e-mail de avisos, esconder esgotados.
+- [ ] Editor de páginas e blocos (banner, vitrines, perguntas frequentes) com publicar.
+- [x] Site público renderizado no servidor em `/<nome-da-loja>`: início com categorias, página do produto (fotos por cor, tamanhos esgotados, WhatsApp com a escolha), prévia no WhatsApp (Open Graph).
 - [ ] Carrinho sem conta, pedido do site e “virar venda” no PDV.
 - [ ] Interessados (contatos, carrinhos com contato) e produtos mais vistos.
 - [ ] E-mails (vendedora e cliente), E2E do pedido e publicação em produção.
