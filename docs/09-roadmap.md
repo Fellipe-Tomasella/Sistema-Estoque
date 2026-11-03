@@ -161,7 +161,7 @@ Docs: 08.
 
 ## Etapa 13 — Loja virtual (v2) — planejada
 Docs: 11. Responder as perguntas de `docs/11-loja-virtual.md` §8 antes de começar.
-- [ ] Fotos e dados públicos do produto.
+- [ ] Fotos dos produtos (painel: lista, detalhe, PDV; e site) e dados públicos do produto.
 - [ ] Editor do site (aparência, páginas, blocos, pré-visualizar, publicar).
 - [ ] Site público renderizado no servidor, no endereço da marca.
 - [ ] Carrinho sem conta, pedido do site e “virar venda” no PDV.

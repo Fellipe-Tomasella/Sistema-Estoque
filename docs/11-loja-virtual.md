@@ -21,6 +21,15 @@ curinga nem de um site por pessoa.
 - **Depois:** domínio próprio da marca (`nomedamarca.com.br`) do mesmo jeito: só mais um `Host` no Traefik.
 - Configurações → Loja virtual guarda o endereço público (usado em links, compartilhamento e e-mails).
 
+## 2.1 Fotos dos produtos (painel e site)
+
+Pedido do dev: as fotos servem **para o catálogo interno e para o site**, não só para o site.
+- Upload no cadastro/edição do produto (várias fotos, arrastar para ordenar, escolher a capa); foto opcional por cor.
+- No painel: miniatura na lista de produtos, no detalhe, na busca do PDV, nos cards do catálogo do PDV e no
+  comprovante (opcional).
+- No site: galeria do produto e vitrines. Uma foto pode ficar só interna (“não mostrar no site”).
+- Servidor gera miniatura e tamanho grande (WebP), limite de tamanho por arquivo, e as fotos entram no backup.
+
 ## 3. O que a dona edita (painel)
 
 - **Aparência:** logo, cor principal, nome, frase de apresentação, redes sociais, WhatsApp de atendimento.
