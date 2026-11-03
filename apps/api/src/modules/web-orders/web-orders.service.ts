@@ -147,7 +147,7 @@ export class WebOrdersService {
 
     const customerId = await this.findOrCreateCustomer(order)
     const draft = await this.drafts.create(userId)
-    let sale = await this.drafts.update(draft.id, {
+    const sale = await this.drafts.update(draft.id, {
       version: draft.version,
       customerId,
       items: items.map((i) => ({ variantId: i.variantId, quantity: i.quantity })),
@@ -161,7 +161,7 @@ export class WebOrdersService {
         : sum
     }, 0)
     if (discountCents > 0) {
-      sale = await this.drafts.update(draft.id, {
+      await this.drafts.update(draft.id, {
         version: sale.version,
         discount: { kind: 'amount', value: discountCents },
         notes: `${sale.notes} Desconto = diferença para o preço do site.`,
