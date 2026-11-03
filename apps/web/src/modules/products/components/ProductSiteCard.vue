@@ -8,22 +8,50 @@ import { Card } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { formatBRL } from '@/lib/format'
 import { useProductMutations } from '../composables/useProducts'
 import type { Product } from '../types'
 
-/** Como o produto aparece na loja virtual (RN-LOJ-01 a 04). Não muda o PDV. */
+/** Como o produto aparece na loja virtual (RN-LOJ-01 a 04 e 09). Não muda o PDV. */
 const props = defineProps<{ product: Product }>()
 const { update } = useProductMutations()
 
-const form = reactive({ visible: false, priceCents: null as number | null, hidePrice: false, description: '' })
-const load = () => Object.assign(form, { ...props.product.site, description: props.product.site.description ?? '' })
+type Visibility = 'hidden' | 'unlisted' | 'visible'
+const VISIBILITY: { value: Visibility; label: string; hint: string }[] = [
+  { value: 'visible', label: 'Visível', hint: 'Aparece nas vitrines e categorias do site.' },
+  {
+    value: 'unlisted',
+    label: 'Só pelo link',
+    hint: 'Fora das vitrines; abre por quem tiver o link (bom para o WhatsApp).',
+  },
+  { value: 'hidden', label: 'Oculto', hint: 'Não aparece no site.' },
+]
+const visibilityOf = (site: Product['site']): Visibility =>
+  !site.visible ? 'hidden' : site.unlisted ? 'unlisted' : 'visible'
+
+const form = reactive({
+  visibility: 'hidden' as Visibility,
+  priceCents: null as number | null,
+  compareAtCents: null as number | null,
+  hidePrice: false,
+  description: '',
+})
+const load = () =>
+  Object.assign(form, {
+    visibility: visibilityOf(props.product.site),
+    priceCents: props.product.site.priceCents,
+    compareAtCents: props.product.site.compareAtCents,
+    hidePrice: props.product.site.hidePrice,
+    description: props.product.site.description ?? '',
+  })
 watch(() => props.product.site, load, { immediate: true })
 
 const dirty = computed(
   () =>
-    form.visible !== props.product.site.visible ||
+    form.visibility !== visibilityOf(props.product.site) ||
     form.priceCents !== props.product.site.priceCents ||
+    form.compareAtCents !== props.product.site.compareAtCents ||
     form.hidePrice !== props.product.site.hidePrice ||
     form.description.trim() !== (props.product.site.description ?? ''),
 )
@@ -39,33 +67,53 @@ async function save() {
   await update.mutateAsync({
     id: props.product.id,
     body: {
-      showOnSite: form.visible,
+      showOnSite: form.visibility !== 'hidden',
+      siteUnlisted: form.visibility === 'unlisted',
       sitePriceCents: form.priceCents,
+      siteCompareAtCents: form.compareAtCents,
       hideSitePrice: form.hidePrice,
       siteDescription: form.description,
     },
   })
-  toast.success(form.visible ? 'Dados do site salvos: o produto aparece na loja virtual.' : 'Dados do site salvos.')
+  toast.success('Dados do site salvos.')
 }
 </script>
 
 <template>
   <Card class="gap-4 p-5 shadow-sm">
-    <div class="flex items-center justify-between gap-3">
-      <Label for="site-visible" class="flex items-center gap-2 text-base font-semibold">
-        <Globe class="size-4" /> Mostrar no site
-      </Label>
-      <Switch id="site-visible" v-model="form.visible" />
-    </div>
-    <p v-if="!product.active && form.visible" class="-mt-2 text-xs text-amber-700">
-      O produto está inativo: só aparece no site depois de reativado.
-    </p>
+    <p class="flex items-center gap-2 font-semibold"><Globe class="size-4" /> No site</p>
 
     <div class="space-y-1.5">
-      <Label for="site-price">Preço no site</Label>
-      <MoneyInput id="site-price" v-model="form.priceCents" :placeholder="`Igual ao PDV`" />
-      <p class="text-xs text-muted-foreground">Vazio = preço do PDV ({{ pdvPrice }}). Não muda o preço do PDV.</p>
+      <ToggleGroup
+        type="single"
+        variant="outline"
+        class="w-full"
+        :model-value="form.visibility"
+        @update:model-value="(v) => v && (form.visibility = v as Visibility)"
+      >
+        <ToggleGroupItem v-for="v in VISIBILITY" :key="v.value" :value="v.value" class="flex-1 text-xs">
+          {{ v.label }}
+        </ToggleGroupItem>
+      </ToggleGroup>
+      <p class="text-xs text-muted-foreground">{{ VISIBILITY.find((v) => v.value === form.visibility)?.hint }}</p>
+      <p v-if="!product.active && form.visibility !== 'hidden'" class="text-xs text-amber-700">
+        O produto está inativo: só aparece no site depois de reativado.
+      </p>
     </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <div class="space-y-1.5">
+        <Label for="site-price">Preço no site</Label>
+        <MoneyInput id="site-price" v-model="form.priceCents" placeholder="Igual ao PDV" />
+      </div>
+      <div class="space-y-1.5">
+        <Label for="site-compare">Preço “de” (riscado)</Label>
+        <MoneyInput id="site-compare" v-model="form.compareAtCents" placeholder="Sem promoção" />
+      </div>
+    </div>
+    <p class="-mt-2 text-xs text-muted-foreground">
+      Preço vazio = o do PDV ({{ pdvPrice }}). O “de” só aparece se for maior. Nada disso muda o PDV.
+    </p>
 
     <div class="flex items-center justify-between gap-3">
       <Label for="site-hide-price" class="font-normal">Esconder preço (mostra “Consulte”)</Label>

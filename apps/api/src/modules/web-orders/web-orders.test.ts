@@ -109,6 +109,14 @@ describe('pedido pelo site (sem login)', () => {
     )
   })
 
+  test('RN-LOJ-10: observação obrigatória quando a dona exige', async () => {
+    await services.storefront.updateSettings({ notesRequired: true, notesLabel: 'Medidas' }, userId)
+    const res = await send(order())
+    expect(res.status).toBe(400)
+    expect(res.body.error.message).toBe('Preencha o campo “Medidas”.')
+    expect((await send(order({ notes: 'Busto 90' }))).status).toBe(201)
+  })
+
   test('RN-LOJ-05: limite de pedidos por IP', async () => {
     const one = order({ items: [{ variantId: variantP, quantity: 1 }] })
     for (let i = 0; i < 5; i++) expect((await send(one, undefined, '10.9.9.9')).status).toBe(201)

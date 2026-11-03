@@ -36,6 +36,9 @@ const form = reactive({
   accentColor: '#7c3aed',
   hideSoldOut: false,
   notifyEmail: '',
+  checkoutNotice: '',
+  notesLabel: '',
+  notesRequired: false,
 })
 watch(
   data,
@@ -52,6 +55,9 @@ watch(
       accentColor: s.accentColor,
       hideSoldOut: s.hideSoldOut,
       notifyEmail: s.notifyEmail ?? '',
+      checkoutNotice: s.checkoutNotice ?? '',
+      notesLabel: s.notesLabel ?? '',
+      notesRequired: s.notesRequired,
     })
   },
   { immediate: true },
@@ -79,6 +85,9 @@ async function submit() {
     accentColor: form.accentColor,
     hideSoldOut: form.hideSoldOut,
     notifyEmail: orNull(form.notifyEmail),
+    checkoutNotice: orNull(form.checkoutNotice),
+    notesLabel: orNull(form.notesLabel),
+    notesRequired: form.notesRequired,
   })
   toast.success(form.enabled ? 'Loja virtual salva e no ar.' : 'Loja virtual salva (fora do ar).')
 }
@@ -157,6 +166,23 @@ async function submit() {
       <div class="space-y-1 sm:col-span-2">
         <Label for="sf-email">E-mail que recebe os pedidos do site</Label>
         <Input id="sf-email" v-model="form.notifyEmail" type="email" placeholder="voce@email.com" />
+      </div>
+      <div class="space-y-1 sm:col-span-2">
+        <Label for="sf-notice">Aviso no finalizar pedido (opcional)</Label>
+        <Input
+          id="sf-notice"
+          v-model="form.checkoutNotice"
+          maxlength="500"
+          placeholder="Ex.: Trocas em até 7 dias. Enviamos para todo o Brasil."
+        />
+      </div>
+      <div class="space-y-1">
+        <Label for="sf-notes-label">Nome do campo de observação</Label>
+        <Input id="sf-notes-label" v-model="form.notesLabel" maxlength="80" placeholder="Observação" />
+      </div>
+      <div class="flex items-end justify-between gap-3 pb-2">
+        <Label for="sf-notes-required" class="font-normal">Observação obrigatória</Label>
+        <Switch id="sf-notes-required" v-model="form.notesRequired" />
       </div>
       <div class="flex items-center justify-between gap-3 sm:col-span-2">
         <Label for="sf-soldout" class="font-normal">Esconder do site as peças esgotadas</Label>

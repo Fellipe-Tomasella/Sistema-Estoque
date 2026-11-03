@@ -40,6 +40,8 @@ export const UpdateProductBody = t.Object({
   showOnSite: t.Optional(t.Boolean()),
   sitePriceCents: t.Optional(t.Nullable(Cents)),
   hideSitePrice: t.Optional(t.Boolean()),
+  siteCompareAtCents: t.Optional(t.Nullable(Cents)),
+  siteUnlisted: t.Optional(t.Boolean()),
   siteDescription: OptionalText(2000),
 })
 export type UpdateProductInput = typeof UpdateProductBody.static

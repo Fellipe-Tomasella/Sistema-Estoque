@@ -118,6 +118,33 @@ describe('site público', () => {
     expect((await visit('/jooliv-lingeries'))!.text).not.toContain('Calcinha zero')
   })
 
+  test('RN-LOJ-09/01: “de” riscado quando maior que o preço; “só pelo link” fora da vitrine mas abre', async () => {
+    await openStore()
+    const promo = await createProduct(userId, { name: 'Camisola cetim', basePriceCents: 12000 })
+    await services.products.update(
+      promo.id,
+      { showOnSite: true, sitePriceCents: 9900, siteCompareAtCents: 12000 },
+      userId,
+    )
+    const link = await createProduct(userId, { name: 'Peça exclusiva' })
+    await services.products.update(link.id, { showOnSite: true, siteUnlisted: true }, userId)
+
+    const home = (await visit('/jooliv-lingeries'))!.text
+    expect(home).toContain('<s class="was">R$ 120,00</s>')
+    expect(home).toContain('R$ 99,00')
+    expect(home).not.toContain('Peça exclusiva')
+    expect((await visit(`/jooliv-lingeries/p/${link.id}/peca-exclusiva`))!.status).toBe(200)
+  })
+
+  test('RN-LOJ-10: aviso e observação obrigatória com o nome escolhido pela dona', async () => {
+    await openStore()
+    await put({ checkoutNotice: 'Trocas em até 7 dias.', notesLabel: 'Tamanho do sutiã', notesRequired: true })
+    const bag = (await visit('/jooliv-lingeries/sacola'))!.text
+    expect(bag).toContain('Trocas em até 7 dias.')
+    expect(bag).toContain('Tamanho do sutiã')
+    expect(bag).toMatch(/name="notes"[^>]*required/)
+  })
+
   test('sacola e privacidade: páginas do site com o formulário curto e o aceite', async () => {
     await openStore()
     const bag = (await visit('/jooliv-lingeries/sacola'))!

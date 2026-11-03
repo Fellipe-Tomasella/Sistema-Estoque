@@ -53,13 +53,13 @@ NCM, CEST) · **visibilidade: visível / não listado (só por link) / oculto** 
 
 | Recurso Nuvemshop | Nós hoje | Proposta |
 | --- | --- | --- |
-| Preço promocional (de/por) | Preço do site ≠ PDV | **Aproveitar**: “preço promocional” com o antigo riscado no site (e opcional no PDV). |
-| Visível / não listado / oculto | Mostrar no site sim/não | **Aproveitar**: 3 estados (não listado = só pelo link, bom para mandar no WhatsApp). |
-| Código de barras por variação | SKU | **Aproveitar**: GTIN/código na variação + busca no PDV por leitor (o leitor “digita” e dá Enter). |
+| Preço promocional (de/por) | Preço do site ≠ PDV | ✅ **Feito** (RN-LOJ-09): “preço promocional” com o antigo riscado no site (e opcional no PDV). |
+| Visível / não listado / oculto | Mostrar no site sim/não | ✅ **Feito** (RN-LOJ-09): 3 estados (não listado = só pelo link, bom para mandar no WhatsApp). |
+| Código de barras por variação | SKU | ✅ **Feito** (RN-PRO-15): GTIN/código na variação + busca no PDV por leitor (o leitor “digita” e dá Enter). |
 | Destaque na loja / categorias em destaque | Categoria simples | **Aproveitar** no editor: vitrines “Destaques”, “Novidades”, “Promoções” e por categoria. |
 | Editor por seções com publicar | Configurações do site (sem blocos) | **Aproveitar** (já era a etapa “Editor de páginas e blocos”): Hero/Carrossel, Banners, Vitrine, Categorias, Texto, Imagem+texto, Ícones (troca/entrega), Depoimentos, Perguntas frequentes, Newsletter/“avise-me” (vira Interessados), Separador. Rascunho + publicar, prévia celular/computador. |
-| Botão de WhatsApp flutuante | Botão no topo | **Aproveitar** (pequeno). |
-| Opções do checkout / mensagem antes de finalizar | Formulário fixo | **Aproveitar**: aviso configurável + campo de observação com nome e obrigatoriedade configuráveis. |
+| Botão de WhatsApp flutuante | Botão no topo | ✅ **Feito**. |
+| Opções do checkout / mensagem antes de finalizar | Formulário fixo | ✅ **Feito** (RN-LOJ-10): aviso configurável + campo de observação com nome e obrigatoriedade configuráveis. |
 | E-mails automáticos (compra, envio com rastreio, cancelamento) | Só pedido do site e senha | **Aproveitar parte**: e-mail da venda confirmada e do envio com código de rastreio (já temos o rastreio), se a cliente tiver e-mail. |
 | Cupons | Desconto manual no PDV | **Avaliar**: cupom com código (%, valor), período, limite, valor mínimo; usado no PDV e no site. |
 | Importar clientes | Importa produtos | **Avaliar**: importar clientes por planilha (mesmo esquema da importação de produtos). |

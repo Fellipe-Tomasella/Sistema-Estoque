@@ -58,6 +58,10 @@ export class WebOrdersService {
     }
     const site = await this.storefront.getSettings()
     if (!site.enabled) throw new BusinessRuleError('A loja está fora do ar no momento.')
+    // RN-LOJ-10: a dona pode tornar a observação obrigatória (ex.: “Medidas” ou “Tamanho do sutiã”)
+    if (site.notesRequired && !input.notes?.trim()) {
+      throw new ValidationError(`Preencha o campo “${site.notesLabel ?? 'Observação'}”.`, { field: 'notes' })
+    }
     if (!input.consent) throw new ValidationError('É preciso aceitar a política de privacidade.', { field: 'consent' })
     const whatsapp = normalizeWhatsapp(input.whatsapp)
     if (!whatsapp) throw new ValidationError('WhatsApp inválido. Use DDD + número.', { field: 'whatsapp' })

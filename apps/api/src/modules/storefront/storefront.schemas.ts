@@ -13,5 +13,8 @@ export const UpdateStorefrontBody = t.Object({
   accentColor: t.Optional(t.String({ maxLength: 7 })),
   hideSoldOut: t.Optional(t.Boolean()),
   notifyEmail: OptionalText(120),
+  checkoutNotice: OptionalText(500),
+  notesLabel: OptionalText(80),
+  notesRequired: t.Optional(t.Boolean()),
 })
 export type UpdateStorefrontInput = typeof UpdateStorefrontBody.static

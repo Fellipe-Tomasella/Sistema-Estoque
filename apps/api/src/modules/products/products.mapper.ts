@@ -57,6 +57,8 @@ export function toProductDto(product: Product, variants: Variant[], images: Prod
       visible: product.showOnSite,
       priceCents: product.sitePriceCents,
       hidePrice: product.hideSitePrice,
+      compareAtCents: product.siteCompareAtCents,
+      unlisted: product.siteUnlisted,
       description: product.siteDescription,
     },
     totalStock: variantDtos.reduce((sum, v) => sum + v.stockQty, 0),

@@ -18,6 +18,10 @@ export const products = pgTable(
     /** null = preço do PDV. */
     sitePriceCents: integer(),
     hideSitePrice: boolean().notNull().default(false),
+    /** “De” riscado no site (RN-LOJ-09): só aparece se for maior que o preço do site. */
+    siteCompareAtCents: integer(),
+    /** Só pelo link (RN-LOJ-01): fora das vitrines e categorias, mas a página abre. */
+    siteUnlisted: boolean().notNull().default(false),
     siteDescription: text(),
     createdAt: createdAt(),
     updatedAt: updatedAt(),

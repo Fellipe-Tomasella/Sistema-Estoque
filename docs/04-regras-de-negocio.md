@@ -199,6 +199,8 @@ Para o dia D (`business_date`):
 | RN-LOJ-06 | Aviso por **e-mail para a vendedora** (endereço em Configurações → Loja virtual) e **confirmação para a cliente** se ela deixou e-mail; aviso também no sistema (menu e Início). Falha no e-mail não perde o pedido. | Dev |
 | RN-LOJ-07 | **Virar venda**: abre a venda com a cliente (achada pelo WhatsApp ou cadastrada na hora) e as peças; preço do site menor que o do PDV entra como desconto em reais, com explicação na observação. O estoque só baixa ao confirmar a venda. Um pedido vira venda uma vez só. | Dev |
 | RN-LOJ-08 | Pedido pode ser marcado **atendido**, **recusado** (com motivo) e reaberto; produto com pedido do site não pode ser excluído, só inativado. | P |
+| RN-LOJ-09 | **Preço “de/por”**: a dona pode informar um preço “de” (riscado) no site; só aparece se for maior que o preço mostrado e nunca com “Consulte”. Visibilidade em 3 estados: **visível**, **só pelo link** (fora das vitrines e categorias, a página abre) e **oculto**. | Dev |
+| RN-LOJ-10 | **Finalizar pedido configurável**: aviso exibido antes do envio e campo de observação com nome escolhido pela dona, opcionalmente obrigatório (o servidor também exige). | Dev |
 
 ## RN-ACE — Acesso e dados
 

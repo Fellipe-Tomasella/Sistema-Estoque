@@ -139,13 +139,25 @@ describe('edição', () => {
 
   test('RN-LOJ-01 a 04: produto começa fora do site; preço do site não muda o PDV e fica auditado', async () => {
     const product = await createProduct(userId, { basePriceCents: 5000 })
-    expect(product.site).toEqual({ visible: false, priceCents: null, hidePrice: false, description: null })
+    expect(product.site).toEqual({
+      visible: false,
+      priceCents: null,
+      hidePrice: false,
+      compareAtCents: null,
+      unlisted: false,
+      description: null,
+    })
 
     const res = await request('PATCH', `/products/${product.id}`, {
       cookie,
       body: { showOnSite: true, sitePriceCents: 4500, hideSitePrice: true, siteDescription: '  Renda francesa  ' },
     })
-    expect(res.body.site).toEqual({ visible: true, priceCents: 4500, hidePrice: true, description: 'Renda francesa' })
+    expect(res.body.site).toMatchObject({
+      visible: true,
+      priceCents: 4500,
+      hidePrice: true,
+      description: 'Renda francesa',
+    })
     expect(res.body.basePriceCents).toBe(5000)
     expect(res.body.variants[0].effectivePriceCents).toBe(5000)
     const [entry] = await db.select().from(auditLog).where(eq(auditLog.action, 'update'))

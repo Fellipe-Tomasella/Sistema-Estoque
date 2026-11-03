@@ -19,6 +19,10 @@ export const productPath = (ctx: SiteContext, p: PublicProduct) => `${base(ctx)}
 const price = (p: PublicProduct) =>
   p.priceCents === null ? 'Consulte' : `${p.priceFrom ? 'a partir de ' : ''}${formatBRL(p.priceCents)}`
 
+/** Preço com o “de” riscado quando houver (RN-LOJ-09). */
+const priceHtml = (p: PublicProduct) =>
+  p.compareAtCents ? html`<s class="was">${formatBRL(p.compareAtCents)}</s> ${price(p)}` : html`${price(p)}`
+
 export const whatsappLink = (ctx: SiteContext, text: string) =>
   ctx.settings.whatsapp ? `https://wa.me/${ctx.settings.whatsapp}?text=${encodeURIComponent(text)}` : null
 
@@ -99,7 +103,7 @@ function card(ctx: SiteContext, p: PublicProduct) {
         ${p.soldOut ? html`<em class="tag">Esgotado</em>` : ''}
       </div>
       <p class="name">${p.name}</p>
-      <p class="price">${price(p)}</p>
+      <p class="price">${priceHtml(p)}</p>
     </a>
   </li>`
 }
@@ -162,7 +166,7 @@ export function productPage(ctx: SiteContext, p: PublicProduct) {
       </div>
       <div class="info">
         <h1>${p.name}</h1>
-        <p class="price big">${price(p)}</p>
+        <p class="price big">${priceHtml(p)}</p>
         ${p.soldOut ? html`<p class="warn">Esgotado no momento.</p>` : ''}
         ${
           p.colors.length
@@ -223,7 +227,15 @@ export function cartPage(ctx: SiteContext) {
         /></label>
         <label>E-mail (opcional)<input name="email" type="email" autocomplete="email" /></label>
         <label>Cidade (opcional)<input name="city" maxlength="100" autocomplete="address-level2" /></label>
-        <label>Observação (opcional)<textarea name="notes" rows="2" maxlength="1000"></textarea></label>
+        <label
+          >${ctx.settings.notesLabel ?? 'Observação'}${ctx.settings.notesRequired ? '' : ' (opcional)'}<textarea
+            name="notes"
+            rows="2"
+            maxlength="1000"
+            ${ctx.settings.notesRequired ? raw('required') : ''}
+          ></textarea>
+        </label>
+        ${ctx.settings.checkoutNotice ? html`<p class="notice">${ctx.settings.checkoutNotice}</p>` : ''}
         <label class="hp" aria-hidden="true">Site<input name="website" tabindex="-1" autocomplete="off" /></label>
         <label class="check"
           ><input type="checkbox" name="consent" required /> Li e aceito a

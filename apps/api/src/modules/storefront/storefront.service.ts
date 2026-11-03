@@ -30,6 +30,14 @@ export function toPublicProduct({ product, variants, images }: CatalogEntry) {
     priceCents: product.hideSitePrice ? null : (product.sitePriceCents ?? minPrice),
     /** Variações com preços diferentes e sem preço do site: “a partir de”. */
     priceFrom: !product.hideSitePrice && product.sitePriceCents === null && new Set(prices).size > 1,
+    /** RN-LOJ-09: “de” riscado só quando maior que o preço mostrado. */
+    compareAtCents:
+      !product.hideSitePrice &&
+      product.siteCompareAtCents !== null &&
+      product.siteCompareAtCents > (product.sitePriceCents ?? minPrice)
+        ? product.siteCompareAtCents
+        : null,
+    unlisted: product.siteUnlisted,
     soldOut: !variants.some((v) => v.stockQty > 0),
     colors,
     images: images.map((i) => ({
@@ -75,7 +83,8 @@ export class StorefrontService {
     const settings = await this.repo.getSettings()
     if (!settings.slug || settings.slug !== slug) return null
     const store = await this.settings.get()
-    const products = (await this.repo.catalog()).map(toPublicProduct)
+    // RN-LOJ-01: “só pelo link” fica fora das vitrines (a página do produto abre normalmente)
+    const products = (await this.repo.catalog()).map(toPublicProduct).filter((p) => !p.unlisted)
     return {
       settings,
       title: settings.title ?? store.storeName,
@@ -94,7 +103,9 @@ export class StorefrontService {
 
     if (input.enabled !== undefined) changes.enabled = input.enabled
     if (input.hideSoldOut !== undefined) changes.hideSoldOut = input.hideSoldOut
-    for (const key of ['title', 'tagline', 'about'] as const) if (key in input) changes[key] = text(input[key])
+    if (input.notesRequired !== undefined) changes.notesRequired = input.notesRequired
+    for (const key of ['title', 'tagline', 'about', 'checkoutNotice', 'notesLabel'] as const)
+      if (key in input) changes[key] = text(input[key])
 
     if ('slug' in input) {
       const slug = text(input.slug)

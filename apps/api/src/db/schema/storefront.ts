@@ -23,6 +23,10 @@ export const storefrontSettings = pgTable(
     hideSoldOut: boolean().notNull().default(false),
     /** Quem recebe o aviso de pedido/interesse do site. */
     notifyEmail: text(),
+    /** Finalizar pedido (RN-LOJ-10): aviso antes de enviar e o campo de observação. */
+    checkoutNotice: text(),
+    notesLabel: text(),
+    notesRequired: boolean().notNull().default(false),
     updatedAt: updatedAt(),
   },
   (table) => [check('storefront_settings_single_row', sql`${table.id} = 1`)],

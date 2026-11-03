@@ -72,4 +72,6 @@ a{color:inherit}img{display:block;max-width:100%}
 .checkout .check{display:flex;gap:8px;align-items:flex-start;font-weight:400}.checkout .check input{margin-top:3px}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .text-left{text-align:left}.text-left h1{font:600 30px ui-serif,Georgia,serif}
+.was{color:#9b8f97;font-weight:400;margin-right:4px}
+.notice{background:#fdf2f8;border-radius:10px;padding:10px 12px;font-size:14px;color:#4a4150;margin:12px 0 0}
 `

@@ -124,6 +124,8 @@ export class ProductsService {
       if (input.showOnSite !== undefined) changes.showOnSite = input.showOnSite
       if ('sitePriceCents' in input) changes.sitePriceCents = input.sitePriceCents ?? null
       if (input.hideSitePrice !== undefined) changes.hideSitePrice = input.hideSitePrice
+      if ('siteCompareAtCents' in input) changes.siteCompareAtCents = input.siteCompareAtCents ?? null
+      if (input.siteUnlisted !== undefined) changes.siteUnlisted = input.siteUnlisted
       if ('siteDescription' in input) changes.siteDescription = input.siteDescription?.trim() || null
 
       const after = await this.repo.updateProduct(id, changes, tx)
