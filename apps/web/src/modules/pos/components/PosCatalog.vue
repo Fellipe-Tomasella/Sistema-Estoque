@@ -57,7 +57,9 @@ defineExpose({ focus: () => picker.value?.focus() })
       </p>
     </Card>
 
-    <div v-if="isPending" class="grid gap-3 xl:grid-cols-2 2xl:grid-cols-3"><Skeleton v-for="i in 4" :key="i" class="h-40" /></div>
+    <div v-if="isPending" class="grid gap-3 xl:grid-cols-2 2xl:grid-cols-3">
+      <Skeleton v-for="i in 4" :key="i" class="h-40" />
+    </div>
     <EmptyState
       v-else-if="!products.length"
       :icon="Shirt"
