@@ -13,3 +13,4 @@ stich modelos/
 e2e/.auth/
 test-results/
 playwright-report/
+deploy/*.local.yml

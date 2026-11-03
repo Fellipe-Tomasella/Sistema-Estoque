@@ -1,0 +1,135 @@
+version: "3.7"
+
+# Sistema de Estoque no Portainer (Docker Swarm + Traefik). Passo a passo: deploy/LEIA.md.
+#
+# MODELO: troque todos os TROQUE_* antes de colar no Portainer. A cópia preenchida tem senhas e NÃO vai para o git.
+#   - A senha do banco aparece 3 vezes (DATABASE_URL, POSTGRES_PASSWORD e PGPASSWORD do backup) e não muda depois
+#     do primeiro deploy: o Postgres grava a senha na primeira subida.
+#   - SESSION_SECRET: texto aleatório longo (ex.: `openssl rand -hex 32`). Trocar depois desconecta todo mundo.
+#   - A conta da dona é criada depois de subir, pelo console do container (deploy/LEIA.md, passo 4).
+
+services:
+  estoque-app:
+    image: ghcr.io/fellipe-tomasella/sistema-estoque:latest
+
+    environment:
+      - DATABASE_URL=postgres://estoque:TROQUE_SENHA_DO_BANCO@estoque-db:5432/estoque
+      - APP_ORIGIN=https://TROQUE_DOMINIO
+      - SESSION_SECRET=TROQUE_SEGREDO_LONGO_ALEATORIO
+      # atrás do Cloudflare (nuvem laranja): IP real de quem acessa, para o limite de tentativas do login.
+      # Sem Cloudflare, apague a linha (o Traefik já manda o X-Real-IP).
+      - CLIENT_IP_HEADER=cf-connecting-ip
+      # e-mail de “esqueci a senha” (opcional; sem SMTP, a senha se redefine pelo console)
+      - SMTP_HOST=
+      - SMTP_PORT=587
+      - SMTP_USER=
+      - SMTP_PASS=
+      - SMTP_FROM=
+
+    networks:
+      - HDSwarmNet
+      - estoque-interna
+
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.estoque.rule=Host(`TROQUE_DOMINIO`)"
+        - "traefik.http.routers.estoque.entrypoints=websecure"
+        - "traefik.http.routers.estoque.tls=true"
+        - "traefik.http.routers.estoque.tls.certresolver=letsencryptresolver"
+        - "traefik.http.routers.estoque.service=estoque"
+        # porta da API (que também serve as telas)
+        - "traefik.http.services.estoque.loadbalancer.server.port=3000"
+        - "traefik.docker.network=HDSwarmNet"
+
+  estoque-db:
+    image: postgres:18-alpine
+
+    environment:
+      - POSTGRES_USER=estoque
+      - POSTGRES_PASSWORD=TROQUE_SENHA_DO_BANCO
+      - POSTGRES_DB=estoque
+
+    # produtos, estoque, clientes, vendas e fiado ficam aqui
+    # (Postgres 18: o volume vai em /var/lib/postgresql, não mais em .../data)
+    volumes:
+      - estoque_db:/var/lib/postgresql
+
+    # só a rede interna da stack: o banco não aparece para os outros serviços da VPS
+    networks:
+      - estoque-interna
+
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+
+  # Backup diário (pg_dump -Fc) às BACKUP_HOUR no fuso TZ, guardando KEEP_DAYS dias no volume estoque_backups.
+  # Backup na hora: console do container estoque_estoque-backup → `sh /tmp/backup-agora.sh`.
+  estoque-backup:
+    image: postgres:18-alpine
+
+    environment:
+      - PGHOST=estoque-db
+      - PGUSER=estoque
+      - PGPASSWORD=TROQUE_SENHA_DO_BANCO
+      - PGDATABASE=estoque
+      - KEEP_DAYS=14
+      - BACKUP_HOUR=3
+      - TZ=America/Sao_Paulo
+
+    volumes:
+      - estoque_backups:/backups
+
+    # Mesmo roteiro de docker/backup.sh, embutido aqui porque o Portainer não tem a pasta do repositório.
+    # ($$ = $ para o compose)
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        set -eu
+        mkdir -p /backups
+        cat > /tmp/backup-agora.sh <<'FIM'
+        f="/backups/$${PGDATABASE}-$$(date +%Y-%m-%d_%H%M).dump"
+        pg_dump -Fc -f "$$f.tmp" && mv "$$f.tmp" "$$f" && echo "$$(date '+%F %T') backup ok: $$f"
+        find /backups -name "$${PGDATABASE}-*.dump" -mtime +"$${KEEP_DAYS}" -delete
+        FIM
+        until pg_isready -q; do sleep 2; done
+        last=""
+        while true; do
+          today=$$(date +%F)
+          if [ "$$(date +%H)" -ge "$${BACKUP_HOUR}" ] && [ "$$today" != "$$last" ]; then
+            sh /tmp/backup-agora.sh || echo "$$(date '+%F %T') backup FALHOU" >&2
+            last=$$today
+          fi
+          sleep 600
+        done
+
+    networks:
+      - estoque-interna
+
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 30s
+
+volumes:
+  estoque_db:
+    driver: local
+  estoque_backups:
+    driver: local
+
+networks:
+  HDSwarmNet:
+    external: true
+    name: HDSwarmNet
+
+  estoque-interna:
+    driver: overlay
+    internal: true

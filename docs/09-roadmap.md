@@ -150,7 +150,7 @@ Docs: 06 §5.
 ## Etapa 12 — Produção
 Docs: 08.
 - [x] Dockerfile, entrypoint com migrations, `backup.sh`, exemplo de Nginx (`docker/`). Imagem testada localmente.
-- [ ] Compose de produção (stack Swarm no Portainer) — aguardando o exemplo de compose do dev.
+- [x] Stack de produção (Swarm + Traefik no Portainer): `deploy/estoque-stack.yml` + `deploy/LEIA.md`. Backup e restauração testados localmente.
 - [x] `release.yml` (GHCR) e build no `ci.yml`.
 - [x] Exportação ZIP (RN-ACE-04) — `GET /api/exports/full.zip`.
 - [x] Testes E2E Playwright dos cenários A1–A10 + login (`bun run test:e2e`, banco de teste).

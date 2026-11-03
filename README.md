@@ -27,7 +27,7 @@ bun run dev                 # API em :3000 e front em http://localhost:5173
 | Redefinir senha | `cd apps/api && bun run user:reset-password --email "…"` |
 | Conferir integridade (estoque, fiado) | `cd apps/api && bun run check-integrity` |
 
-Produção (Docker + Portainer + Nginx, backup, runbook): `docs/08-deploy.md`. No container, os scripts rodam com
+Produção (Docker Swarm + Traefik no Portainer, backup): passo a passo em `deploy/LEIA.md`. No container, os scripts rodam com
 `bun apps/api/src/scripts/<nome>.ts`. Publicar versão: criar uma tag `vX.Y.Z` — o GitHub Actions envia a imagem ao GHCR.
 
 ## Mapa dos documentos
@@ -43,7 +43,7 @@ Produção (Docker + Portainer + Nginx, backup, runbook): `docs/08-deploy.md`. N
 | `docs/05-api.md` | Rotas |
 | `docs/06-telas-e-ux.md` | Telas, fluxos, PWA |
 | `docs/07-fiscal-mei.md` | Fiscal do MEI e perguntas ao contador |
-| `docs/08-deploy.md` | Docker, Nginx, Portainer, backup |
+| `docs/08-deploy.md` | Docker, Swarm/Traefik, Portainer, backup |
 | `docs/09-roadmap.md` | Etapas 0–12 com critérios de aceite |
 | `docs/10-pendencias.md` | Perguntas abertas |
 | `docs/decisoes.md` | Registro de decisões |

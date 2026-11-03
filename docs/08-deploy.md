@@ -1,4 +1,8 @@
-# 08 — Deploy (Docker + VPS com Nginx e Portainer)
+# 08 — Deploy (Docker Swarm + Traefik no Portainer)
+
+> **Atualizado (decisão 036):** a VPS usa **Docker Swarm com Traefik** (rede `HDSwarmNet`), não Nginx.
+> O que vale para subir é `deploy/estoque-stack.yml` + `deploy/LEIA.md`. As seções 4 e 5 abaixo (compose com
+> `container_name`/Nginx) ficam só como histórico do plano original.
 
 ## 1. Visão
 

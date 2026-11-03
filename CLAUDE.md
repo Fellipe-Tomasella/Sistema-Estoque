@@ -21,7 +21,7 @@ Foco: **notebook (desktop)**. Celular: consulta e operações simples, instaláv
 6. `docs/05-api.md` — contrato das rotas.
 7. `docs/06-telas-e-ux.md` — telas, fluxos, responsivo, PWA.
 8. `docs/07-fiscal-mei.md` — o que o sistema faz (e não faz) na parte fiscal.
-9. `docs/08-deploy.md` — Docker, VPS com Nginx/Portainer, backup.
+9. `docs/08-deploy.md` — Docker, VPS com Swarm/Traefik no Portainer, backup (subir: `deploy/LEIA.md`).
 10. `docs/09-roadmap.md` — **etapas de desenvolvimento, na ordem**. Trabalhe uma etapa por vez.
 11. `docs/10-pendencias.md` — perguntas abertas para a cliente e o contador.
 12. `docs/decisoes.md` — registro de decisões (ADR). Consulte antes de mudar algo estrutural.
@@ -33,7 +33,7 @@ Foco: **notebook (desktop)**. Celular: consulta e operações simples, instaláv
 - Web: **Vue 3 + Vite + TypeScript**, Vue Router, Pinia, TanStack Query (vue-query), **shadcn-vue + Tailwind CSS v4**, @lucide/vue, vee-validate + zod 3. Visual: `design/stitch` (decisão 031).
 - Cliente HTTP tipado: **Eden Treaty** (tipos vêm direto da API).
 - PWA: `vite-plugin-pwa` (instalável; sem cache de dados da API).
-- Deploy: Docker (1 imagem `app` que serve API + SPA) + Postgres + backup, atrás do **Nginx já existente** na VPS, gerenciado pelo Portainer.
+- Deploy: Docker (1 imagem `app` que serve API + SPA) + Postgres + backup, atrás do **Traefik** da VPS (Docker Swarm no Portainer) — `deploy/estoque-stack.yml`.
 
 ## Comandos (criar na Etapa 0 e manter atualizados aqui)
 
