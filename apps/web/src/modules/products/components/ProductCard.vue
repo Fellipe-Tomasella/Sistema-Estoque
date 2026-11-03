@@ -36,6 +36,7 @@ const open = ref(true)
               Ref. {{ product.reference }}
             </span>
             <StatusBadge v-if="!product.active" tone="neutral">Inativo</StatusBadge>
+            <StatusBadge v-if="product.site.visible" tone="info">No site</StatusBadge>
           </p>
           <p class="truncate text-xs text-muted-foreground">
             {{ product.category ?? 'Sem categoria' }} · {{ product.variants.length }}

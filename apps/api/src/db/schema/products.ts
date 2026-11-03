@@ -13,10 +13,17 @@ export const products = pgTable(
     basePriceCents: integer().notNull(),
     costCents: integer(),
     active: boolean().notNull().default(true),
+    /** Loja virtual (RN-LOJ-01 a 04). */
+    showOnSite: boolean().notNull().default(false),
+    /** null = preço do PDV. */
+    sitePriceCents: integer(),
+    hideSitePrice: boolean().notNull().default(false),
+    siteDescription: text(),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
   (table) => [
+    check('products_site_price_check', sql`${table.sitePriceCents} >= 0`),
     check('products_base_price_check', sql`${table.basePriceCents} >= 0`),
     check('products_cost_check', sql`${table.costCents} >= 0`),
     index('products_name_search_idx').using('gin', sql`immutable_unaccent(lower(${table.name})) gin_trgm_ops`),

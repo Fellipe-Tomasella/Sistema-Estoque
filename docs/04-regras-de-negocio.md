@@ -185,11 +185,20 @@ Para o dia D (`business_date`):
 | RN-FIS-08 | Nada fiscal cria venda, dívida ou movimento de estoque. Cancelar venda não cancela nota (RN-CAN-10). | C |
 | RN-FIS-09 | Comprovantes sempre com “não é documento fiscal”. | C |
 
+## RN-LOJ — Loja virtual (v2) — ver `11-loja-virtual.md`
+
+| ID | Regra | Origem |
+| --- | --- | --- |
+| RN-LOJ-01 | Produto só aparece no site com **“mostrar no site”** ligado (padrão: desligado) e ativo. Fotos marcadas “só interna” não aparecem (RN-PRO-14). | Dev |
+| RN-LOJ-02 | **Preço do site** por produto, opcional: vazio = preço do PDV (o da variação, ou o base). Preenchido, vale para todas as variações no site. Mudar o preço do site não mexe no PDV nem em vendas. | Dev |
+| RN-LOJ-03 | “Esconder preço”: o site mostra “Consulte” no lugar do valor. | Dev |
+| RN-LOJ-04 | Descrição do site separada da descrição interna (que pode ter anotações da dona). | P |
+
 ## RN-ACE — Acesso e dados
 
 | ID | Regra | Origem |
 | --- | --- | --- |
-| RN-ACE-01 | Tudo exige login, exceto `/login`, `/esqueci-senha`, `/redefinir-senha` e `/api/health`. | C |
+| RN-ACE-01 | Tudo exige login, exceto `/login`, `/esqueci-senha`, `/redefinir-senha`, `/api/health`, as fotos (`/api/media`) e, na v2, o site público da loja. | C |
 | RN-ACE-02 | Recuperação de acesso por e-mail (SMTP) ou script no servidor. | C |
 | RN-ACE-03 | “Sair de todos os aparelhos”. | P |
 | RN-ACE-04 | **Exportar dados**: ZIP com CSVs de produtos, variações, movimentos, clientes, vendas, itens, pagamentos, dívidas, devoluções. | C |

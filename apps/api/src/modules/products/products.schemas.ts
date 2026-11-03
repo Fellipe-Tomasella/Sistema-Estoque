@@ -35,6 +35,11 @@ export const UpdateProductBody = t.Object({
   category: OptionalText(60),
   description: OptionalText(1000),
   costCents: t.Optional(t.Nullable(Cents)),
+  // loja virtual (RN-LOJ-01 a 04)
+  showOnSite: t.Optional(t.Boolean()),
+  sitePriceCents: t.Optional(t.Nullable(Cents)),
+  hideSitePrice: t.Optional(t.Boolean()),
+  siteDescription: OptionalText(2000),
 })
 export type UpdateProductInput = typeof UpdateProductBody.static
 

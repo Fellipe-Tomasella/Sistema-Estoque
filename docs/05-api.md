@@ -32,7 +32,7 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 | GET | `/products` | `?q&color&size&category&status=active\|inactive\|all&stock=out\|low` — produtos com variações e saldos |
 | GET | `/products/:id` | detalhe com variações |
 | POST | `/products` | `{ name, basePriceCents, reference?, category?, costCents?, description?, variants: [{ color, size, priceCents?, initialQty?, minStock?, sku? }] }` |
-| PATCH | `/products/:id` | campos do produto |
+| PATCH | `/products/:id` | campos do produto, inclusive os do site: `showOnSite`, `sitePriceCents` (null = preço do PDV), `hideSitePrice`, `siteDescription` (RN-LOJ-01 a 04) |
 | POST | `/products/:id/variants` | adicionar variações (com `initialQty`) |
 | PATCH | `/variants/:id` | cor, tamanho, preço, mínimo, sku, ativo |
 | POST | `/products/:id/min-stock` | `{ minStock \| null }` para todas as variações |

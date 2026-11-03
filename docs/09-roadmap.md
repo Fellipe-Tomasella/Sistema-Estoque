@@ -162,7 +162,7 @@ Docs: 08.
 ## Etapa 13 — Loja virtual (v2) — em andamento
 Docs: 11 (respostas na §8, decisão 039).
 - [x] Fotos dos produtos no painel (até 5, capa, ordem, cor, “só interna”; lista, detalhe, busca e catálogo do PDV), volume `estoque_media` no backup.
-- [ ] Dados públicos do produto (mostrar no site, preço do site, esconder preço).
+- [x] Dados do produto para o site (mostrar no site, preço do site, esconder preço, descrição do site) — RN-LOJ-01 a 04.
 - [ ] Editor do site (aparência, páginas, blocos, pré-visualizar, publicar).
 - [ ] Site público renderizado no servidor em `/jooliv-lingeries`.
 - [ ] Carrinho sem conta, pedido do site e “virar venda” no PDV.

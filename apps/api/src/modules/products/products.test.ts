@@ -137,6 +137,27 @@ describe('edição', () => {
     expect(entry).toMatchObject({ before: { basePriceCents: 5000 }, after: { basePriceCents: 5500 } })
   })
 
+  test('RN-LOJ-01 a 04: produto começa fora do site; preço do site não muda o PDV e fica auditado', async () => {
+    const product = await createProduct(userId, { basePriceCents: 5000 })
+    expect(product.site).toEqual({ visible: false, priceCents: null, hidePrice: false, description: null })
+
+    const res = await request('PATCH', `/products/${product.id}`, {
+      cookie,
+      body: { showOnSite: true, sitePriceCents: 4500, hideSitePrice: true, siteDescription: '  Renda francesa  ' },
+    })
+    expect(res.body.site).toEqual({ visible: true, priceCents: 4500, hidePrice: true, description: 'Renda francesa' })
+    expect(res.body.basePriceCents).toBe(5000)
+    expect(res.body.variants[0].effectivePriceCents).toBe(5000)
+    const [entry] = await db.select().from(auditLog).where(eq(auditLog.action, 'update'))
+    expect(entry).toMatchObject({
+      before: { showOnSite: false, sitePriceCents: null },
+      after: { showOnSite: true, sitePriceCents: 4500 },
+    })
+
+    const cleared = await request('PATCH', `/products/${product.id}`, { cookie, body: { sitePriceCents: null } })
+    expect(cleared.body.site.priceCents).toBeNull()
+  })
+
   test('RN-PRO-09 corrigir cor/tamanho com histórico é permitido e auditado, sem colidir', async () => {
     const product = await createProduct(userId, {
       variants: [

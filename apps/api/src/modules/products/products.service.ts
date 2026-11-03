@@ -118,17 +118,24 @@ export class ProductsService {
       if ('category' in input) changes.category = optionalText(input.category)
       if ('description' in input) changes.description = input.description?.trim() || null
       if ('costCents' in input) changes.costCents = input.costCents ?? null
+      if (input.showOnSite !== undefined) changes.showOnSite = input.showOnSite
+      if ('sitePriceCents' in input) changes.sitePriceCents = input.sitePriceCents ?? null
+      if (input.hideSitePrice !== undefined) changes.hideSitePrice = input.hideSitePrice
+      if ('siteDescription' in input) changes.siteDescription = input.siteDescription?.trim() || null
 
       const after = await this.repo.updateProduct(id, changes, tx)
       // RN-PRO-06: vendas confirmadas guardam nome e preço próprios; aqui só auditamos a mudança.
-      if (before.name !== after.name || before.basePriceCents !== after.basePriceCents) {
+      const audited = (['name', 'basePriceCents', 'showOnSite', 'sitePriceCents'] as const).filter(
+        (k) => before[k] !== after[k],
+      )
+      if (audited.length > 0) {
         await this.audit.record(
           {
             entity: 'product',
             entityId: id,
             action: 'update',
-            before: { name: before.name, basePriceCents: before.basePriceCents },
-            after: { name: after.name, basePriceCents: after.basePriceCents },
+            before: Object.fromEntries(audited.map((k) => [k, before[k]])),
+            after: Object.fromEntries(audited.map((k) => [k, after[k]])),
             userId,
           },
           tx,
