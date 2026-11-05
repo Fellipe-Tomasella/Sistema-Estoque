@@ -20,6 +20,20 @@ o pacote precisa ser público: GitHub → seu perfil → Packages → `sistema-e
 Change visibility → **Public** (o repositório continua privado). Atenção: a imagem leva o código da API — quem souber
 o nome do pacote consegue baixá-la. Se não quiser isso, a alternativa é cadastrar `ghcr.io` em Registries no Portainer.
 
+### Publicar pelo PC (sem GitHub Actions)
+
+Se o Actions não rodar (ex.: conta do GitHub bloqueada por cobrança), a imagem é montada e enviada do PC.
+Uma vez só: `docker login ghcr.io -u Fellipe-Tomasella` com um token (classic) com `write:packages`.
+Depois, a cada versão (troque `1.4.0`):
+
+```bash
+git checkout v1.4.0
+docker build --build-arg APP_VERSION=1.4.0 -f docker/Dockerfile -t ghcr.io/fellipe-tomasella/sistema-estoque:1.4.0 -t ghcr.io/fellipe-tomasella/sistema-estoque:latest .
+docker push ghcr.io/fellipe-tomasella/sistema-estoque:1.4.0
+docker push ghcr.io/fellipe-tomasella/sistema-estoque:latest
+git checkout main
+```
+
 ## 2. DNS
 
 Aponte o domínio escolhido (ex.: `estoque.hyperdynamis.com`) para a VPS, igual ao `rpg.hyperdynamis.com`.
