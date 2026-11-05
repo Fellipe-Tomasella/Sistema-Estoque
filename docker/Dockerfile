@@ -40,9 +40,9 @@ COPY apps/api/tsconfig.json apps/api/
 COPY apps/api/src apps/api/src
 COPY --from=web /app/apps/web/dist ./public
 COPY --chmod=755 docker/entrypoint.sh /entrypoint.sh
-# fotos dos produtos: volume próprio na stack; a pasta já nasce do usuário bun para o volume herdar o dono
+# fotos dos produtos: volume próprio na stack. O entrypoint começa como root, acerta o dono da pasta
+# (volume já criado como root) e troca para o usuário bun antes de subir a API.
 RUN mkdir -p /app/media && chown bun:bun /app/media
-USER bun
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s \
   CMD bun -e "fetch('http://localhost:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
