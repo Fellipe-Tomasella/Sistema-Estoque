@@ -14,6 +14,8 @@ export const storefrontSettings = pgTable(
     /** Nome no site; vazio = nome da loja (store_settings). */
     title: text(),
     tagline: text(),
+    /** Faixa de anúncio no topo do site (ex.: “Frete grátis acima de R$ 199”). */
+    announcement: text(),
     about: text(),
     /** Só dígitos, com DDI (ex.: 5511999998888). */
     whatsapp: text(),

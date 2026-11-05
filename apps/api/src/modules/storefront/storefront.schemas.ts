@@ -7,6 +7,7 @@ export const UpdateStorefrontBody = t.Object({
   slug: OptionalText(40),
   title: OptionalText(80),
   tagline: OptionalText(160),
+  announcement: OptionalText(140),
   about: OptionalText(3000),
   whatsapp: OptionalText(30),
   instagram: OptionalText(60),

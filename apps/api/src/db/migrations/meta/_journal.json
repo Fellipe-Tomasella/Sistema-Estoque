@@ -113,6 +113,13 @@
       "when": 1793732796994,
       "tag": "0015_site_promo_unlisted_checkout",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1793839795518,
+      "tag": "0016_storefront_announcement",
+      "breakpoints": true
     }
   ]
 }

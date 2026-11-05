@@ -1,29 +1,109 @@
 // Scripts do site público (sem framework). A sacola fica no navegador (localStorage), por loja;
 // o servidor recalcula preços e disponibilidade quando o pedido é enviado (RN-LOJ-05).
 
-/** Sacola: leitura/gravação e o número no ícone do topo. Vai em todas as páginas. */
+/**
+ * Em todas as páginas (fim do <body>): sacola (ler/gravar), contador no topo, gaveta lateral que abre ao
+ * adicionar (“Adicionado à sacola”), aviso rápido (toast) e animação de aparecer ao rolar.
+ */
 export const BAG_SCRIPT = `(() => {
   const key = 'sacola:' + document.body.dataset.store
+  const brl = (c) => (c / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
   const read = () => { try { return JSON.parse(localStorage.getItem(key) || '[]') } catch { return [] } }
-  const write = (items) => { try { localStorage.setItem(key, JSON.stringify(items)) } catch {} ; window.bag.paint() }
-  window.bag = {
-    read, write,
-    add(item) {
+  const save = (items) => { try { localStorage.setItem(key, JSON.stringify(items)) } catch {} }
+  const drawer = document.getElementById('drawer')
+  const overlay = document.getElementById('overlay')
+  const list = drawer && drawer.querySelector('.list')
+  const listeners = []
+
+  function lineHtml(item, i) {
+    const li = document.createElement('div')
+    li.className = 'line'
+    li.innerHTML = '<a class="ph"></a><div><a class="n"></a><span class="v"></span>'
+      + '<div class="mini-qty"><button type="button" data-d="-1" aria-label="Menos">−</button><b></b>'
+      + '<button type="button" data-d="1" aria-label="Mais">+</button><button type="button" class="rm">Remover</button></div></div>'
+      + '<span class="pr"></span>'
+    const ph = li.querySelector('.ph'); ph.href = item.url
+    if (item.image) { const img = document.createElement('img'); img.src = item.image; img.alt = ''; ph.appendChild(img) }
+    const n = li.querySelector('.n'); n.href = item.url; n.textContent = item.name
+    li.querySelector('.v').textContent = [item.color, item.size].filter(Boolean).join(' · ')
+    li.querySelector('.mini-qty b').textContent = item.qty
+    li.querySelector('.pr').textContent = item.priceCents === null ? 'Consulte' : brl(item.priceCents * item.qty)
+    li.querySelectorAll('[data-d]').forEach((b) => b.addEventListener('click', () => {
+      const all = read(); all[i].qty = Math.max(1, Math.min(20, all[i].qty + Number(b.dataset.d))); bag.write(all)
+    }))
+    li.querySelector('.rm').addEventListener('click', () => { const all = read(); all.splice(i, 1); bag.write(all) })
+    return li
+  }
+
+  function totals(items) {
+    let cents = 0, hidden = false
+    for (const i of items) { if (i.priceCents === null) hidden = true; else cents += i.priceCents * i.qty }
+    return { cents, hidden, label: brl(cents) + (hidden ? ' + a consultar' : ''), count: items.reduce((s, i) => s + i.qty, 0) }
+  }
+
+  function paint(animate) {
+    const items = read(), t = totals(items)
+    document.querySelectorAll('[data-bag-count]').forEach((el) => {
+      el.textContent = t.count ? String(t.count) : ''; el.hidden = !t.count
+      if (animate) { el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop') }
+    })
+    if (list) {
+      list.innerHTML = ''
+      if (!items.length) list.innerHTML = '<p class="empty">Sua sacola está vazia.</p>'
+      items.forEach((item, i) => list.appendChild(lineHtml(item, i)))
+      drawer.querySelector('[data-total]').textContent = items.length ? t.label : brl(0)
+      drawer.querySelector('[data-checkout]').hidden = !items.length
+    }
+    listeners.forEach((fn) => fn(items, t))
+  }
+
+  function open(added) {
+    if (!drawer) return
+    drawer.querySelector('.added').hidden = !added
+    drawer.classList.add('open'); overlay.classList.add('open'); drawer.setAttribute('aria-hidden', 'false')
+  }
+  function close() {
+    if (!drawer) return
+    drawer.classList.remove('open'); overlay.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true')
+  }
+
+  const bag = window.bag = {
+    read, totals, brl, open, close,
+    write(items) { save(items); paint(false) },
+    onChange(fn) { listeners.push(fn) },
+    add(item, qty) {
       const items = read()
       const found = items.find((i) => i.variantId === item.variantId)
-      if (found) found.qty = Math.min(20, found.qty + 1)
-      else items.push({ ...item, qty: 1 })
-      write(items)
-    },
-    paint() {
-      const n = read().reduce((s, i) => s + i.qty, 0)
-      document.querySelectorAll('[data-bag-count]').forEach((el) => { el.textContent = n ? String(n) : ''; el.hidden = !n })
+      if (found) found.qty = Math.min(20, found.qty + qty)
+      else items.push({ ...item, qty: Math.min(20, qty) })
+      save(items); paint(true); open(true)
     },
   }
-  window.bag.paint()
+
+  window.toast = (text) => {
+    let el = document.querySelector('.toast')
+    if (!el) { el = document.createElement('div'); el.className = 'toast'; el.setAttribute('role', 'status'); document.body.appendChild(el) }
+    el.textContent = text; el.classList.add('show')
+    clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 2600)
+  }
+
+  document.querySelectorAll('[data-open-bag]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); open(false) }))
+  document.querySelectorAll('[data-close-bag]').forEach((b) => b.addEventListener('click', close))
+  if (overlay) overlay.addEventListener('click', close)
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') close() })
+
+  // aparecer ao rolar (cards, seções)
+  const io = 'IntersectionObserver' in window && new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } })
+  }, { rootMargin: '0px 0px -40px 0px' })
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    if (!io) return el.classList.add('in')
+    el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el)
+  })
+  paint(false)
 })()`
 
-/** Página do produto: troca de cor (fotos e tamanhos), adicionar à sacola e WhatsApp com a escolha. */
+/** Página do produto: cor (fotos e tamanhos dela), tamanho, quantidade, setas da galeria e barra fixa no celular. */
 export const PRODUCT_SCRIPT = `(() => {
   const data = JSON.parse(document.getElementById('product-data').textContent)
   const main = document.getElementById('main-img')
@@ -32,23 +112,35 @@ export const PRODUCT_SCRIPT = `(() => {
   const sizesBox = document.getElementById('sizes')
   const ask = document.getElementById('ask')
   const add = document.getElementById('add')
-  const added = document.getElementById('added')
+  const qtyEl = document.getElementById('qty')
+  const colorName = document.getElementById('color-name')
+  const sizeName = document.getElementById('size-name')
+  const buybar = document.querySelector('.buybar')
   const initial = colors.find((b) => b.classList.contains('on')) || colors[0]
   let color = initial ? initial.dataset.color : null
   let chosen = null
+  let qty = 1
 
+  // galeria: mostra as fotos da cor escolhida (e as gerais); setas passam entre elas
+  const visibleThumbs = () => thumbs.filter((t) => !t.dataset.color || t.dataset.color === color)
   function show(btn) {
     if (!main || !btn) return
     main.src = btn.dataset.large
     thumbs.forEach((b) => b.classList.toggle('on', b === btn))
   }
   thumbs.forEach((b) => b.addEventListener('click', () => show(b)))
+  document.querySelectorAll('.gallery .arrow').forEach((a) => a.addEventListener('click', () => {
+    const list = visibleThumbs(); if (!list.length) return
+    const i = list.findIndex((t) => t.classList.contains('on'))
+    show(list[(i + Number(a.dataset.d) + list.length) % list.length])
+  }))
 
   function refresh() {
-    if (add) {
-      add.disabled = !chosen
-      add.textContent = chosen ? 'Adicionar à sacola' : 'Escolha o tamanho'
-    }
+    const label = chosen ? 'Adicionar à sacola' : 'Escolha o tamanho'
+    if (add) { add.disabled = !chosen; add.textContent = label }
+    if (buybar) buybar.querySelector('.btn').textContent = chosen ? 'Adicionar' : 'Escolher tamanho'
+    if (colorName) colorName.textContent = color || ''
+    if (sizeName) sizeName.textContent = chosen ? chosen.size : ''
     if (!ask || !data.whatsapp) return
     const choice = [color, chosen && chosen.size].filter(Boolean).join(' / ')
     const text = 'Olá! Tenho interesse em: ' + data.name + (choice ? ' (' + choice + ')' : '') + '\\n' + data.url
@@ -60,13 +152,10 @@ export const PRODUCT_SCRIPT = `(() => {
     const entry = data.colors.find((c) => c.color === color)
     sizesBox.innerHTML = ''
     const sizes = entry ? entry.sizes : []
-    // um tamanho só e disponível: já vem escolhido
     chosen = sizes.length === 1 && sizes[0].available ? sizes[0] : null
     for (const s of sizes) {
       const b = document.createElement('button')
-      b.type = 'button'
-      b.textContent = s.size
-      b.disabled = !s.available
+      b.type = 'button'; b.textContent = s.size; b.disabled = !s.available
       if (!s.available) b.title = 'Esgotado'
       if (chosen === s) b.classList.add('on')
       b.addEventListener('click', () => {
@@ -79,23 +168,37 @@ export const PRODUCT_SCRIPT = `(() => {
     refresh()
   }
 
-  colors.forEach((b) =>
-    b.addEventListener('click', () => {
-      color = b.dataset.color
-      colors.forEach((x) => x.classList.toggle('on', x === b))
-      show(thumbs.find((t) => t.dataset.color === color))
-      renderSizes()
-    }),
-  )
-  if (add) add.addEventListener('click', () => {
-    if (!chosen) return
-    const photo = (thumbs.find((t) => t.dataset.color === color) || {}).dataset
+  colors.forEach((b) => b.addEventListener('click', () => {
+    color = b.dataset.color
+    colors.forEach((x) => x.classList.toggle('on', x === b))
+    show(visibleThumbs()[0])
+    renderSizes()
+  }))
+  document.querySelectorAll('[data-q]').forEach((b) => b.addEventListener('click', () => {
+    qty = Math.max(1, Math.min(20, qty + Number(b.dataset.q))); if (qtyEl) qtyEl.textContent = qty
+  }))
+
+  function addToBag() {
+    if (!chosen) {
+      (sizesBox || document.body).scrollIntoView({ behavior: 'smooth', block: 'center' })
+      window.toast && window.toast('Escolha o tamanho primeiro')
+      return
+    }
+    const photo = visibleThumbs()[0]
     window.bag.add({
       variantId: chosen.variantId, name: data.name, color, size: chosen.size, priceCents: data.priceCents,
-      image: (photo && photo.thumb) || data.image, url: data.url,
-    })
-    if (added) added.hidden = false
-  })
+      image: (photo && photo.dataset.thumb) || data.image, url: data.url,
+    }, qty)
+  }
+  if (add) add.addEventListener('click', addToBag)
+  if (buybar) {
+    buybar.querySelector('.btn').addEventListener('click', addToBag)
+    document.body.classList.add('has-buybar')
+    // barra fixa aparece quando o botão principal sai da tela
+    if (add && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => buybar.classList.toggle('show', !e.isIntersecting)).observe(add)
+    }
+  }
   renderSizes()
 })()`
 
@@ -103,51 +206,52 @@ export const PRODUCT_SCRIPT = `(() => {
 // espera a página carregar: o BAG_SCRIPT (window.bag) vem no fim do <body>
 export const CART_SCRIPT = `addEventListener('DOMContentLoaded', () => {
   const cfg = JSON.parse(document.getElementById('cart-data').textContent)
+  const bag = window.bag
   const list = document.getElementById('bag-items')
   const totalEl = document.getElementById('bag-total')
   const form = document.getElementById('checkout')
   const empty = document.getElementById('bag-empty')
+  const summary = document.getElementById('bag-summary')
   const done = document.getElementById('done')
   const errorEl = document.getElementById('form-error')
-  const brl = (c) => (c / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+  const steps = [...document.querySelectorAll('.steps span')]
   const keyName = 'pedido:' + document.body.dataset.store
+  const step = (n) => steps.forEach((s, i) => s.classList.toggle('on', i <= n))
 
-  function render() {
-    const items = window.bag.read()
+  function render(items, t) {
     list.innerHTML = ''
     empty.hidden = items.length > 0
     form.hidden = items.length === 0
-    let total = 0, hidden = false
+    summary.hidden = items.length === 0
     items.forEach((item, index) => {
-      if (item.priceCents === null) hidden = true; else total += item.priceCents * item.qty
-      const li = document.createElement('li')
-      li.className = 'bag-line'
-      li.innerHTML = '<a class="ph small"></a><div class="bag-info"><a class="name"></a><p class="muted"></p>'
-        + '<div class="qty"><button type="button" data-d="-1" aria-label="Menos">−</button><span></span>'
-        + '<button type="button" data-d="1" aria-label="Mais">+</button>'
-        + '<button type="button" class="link" data-rm>Remover</button></div></div><p class="price"></p>'
+      const li = document.createElement('div')
+      li.className = 'line'
+      li.innerHTML = '<a class="ph"></a><div><a class="n"></a><span class="v"></span>'
+        + '<div class="mini-qty"><button type="button" data-d="-1" aria-label="Menos">−</button><b></b>'
+        + '<button type="button" data-d="1" aria-label="Mais">+</button><button type="button" class="rm">Remover</button></div></div>'
+        + '<span class="pr"></span>'
       const ph = li.querySelector('.ph'); ph.href = item.url
       if (item.image) { const img = document.createElement('img'); img.src = item.image; img.alt = ''; ph.appendChild(img) }
-      const name = li.querySelector('.name'); name.href = item.url; name.textContent = item.name
-      li.querySelector('.muted').textContent = [item.color, item.size].filter(Boolean).join(' / ')
-      li.querySelector('.qty span').textContent = item.qty
-      li.querySelector('.price').textContent = item.priceCents === null ? 'Consulte' : brl(item.priceCents * item.qty)
+      const n = li.querySelector('.n'); n.href = item.url; n.textContent = item.name
+      li.querySelector('.v').textContent = [item.color, item.size].filter(Boolean).join(' · ')
+      li.querySelector('.mini-qty b').textContent = item.qty
+      li.querySelector('.pr').textContent = item.priceCents === null ? 'Consulte' : bag.brl(item.priceCents * item.qty)
       li.querySelectorAll('[data-d]').forEach((b) => b.addEventListener('click', () => {
-        const all = window.bag.read(); const it = all[index]
-        it.qty = Math.max(1, Math.min(20, it.qty + Number(b.dataset.d))); window.bag.write(all); render()
+        const all = bag.read(); all[index].qty = Math.max(1, Math.min(20, all[index].qty + Number(b.dataset.d))); bag.write(all)
       }))
-      li.querySelector('[data-rm]').addEventListener('click', () => {
-        const all = window.bag.read(); all.splice(index, 1); window.bag.write(all); render()
-      })
+      li.querySelector('.rm').addEventListener('click', () => { const all = bag.read(); all.splice(index, 1); bag.write(all) })
       list.appendChild(li)
     })
-    totalEl.textContent = items.length ? brl(total) + (hidden ? ' + itens a consultar' : '') : ''
+    totalEl.textContent = items.length ? t.label : ''
   }
+  bag.onChange(render)
+  render(bag.read(), bag.totals(bag.read()))
+  form.addEventListener('focusin', () => step(1))
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
     errorEl.hidden = true
-    const items = window.bag.read()
+    const items = bag.read()
     if (!items.length) return
     const fd = new FormData(form)
     let key = sessionStorage.getItem(keyName)
@@ -168,17 +272,18 @@ export const CART_SCRIPT = `addEventListener('DOMContentLoaded', () => {
       const body = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error((body.error && body.error.message) || 'Não foi possível enviar. Tente de novo.')
       sessionStorage.removeItem(keyName)
-      const summary = items.map((i) => i.qty + 'x ' + i.name + ' (' + [i.color, i.size].filter(Boolean).join(' / ') + ')').join('\\n')
-      window.bag.write([])
-      form.hidden = true; list.innerHTML = ''; totalEl.textContent = ''
+      const text = items.map((i) => i.qty + 'x ' + i.name + ' (' + [i.color, i.size].filter(Boolean).join(' / ') + ')').join('\\n')
+      bag.write([])
+      form.hidden = true; summary.hidden = true; empty.hidden = true
       done.hidden = false
+      step(2)
       done.querySelector('[data-number]').textContent = body.number ? 'nº ' + body.number : ''
       const wa = done.querySelector('[data-wa]')
       if (wa && cfg.whatsapp) {
         wa.href = 'https://wa.me/' + cfg.whatsapp + '?text=' + encodeURIComponent(
-          'Olá! Acabei de fazer o pedido ' + (body.number ? 'nº ' + body.number + ' ' : '') + 'pelo site:\\n' + summary)
+          'Olá! Acabei de fazer o pedido ' + (body.number ? 'nº ' + body.number + ' ' : '') + 'pelo site:\\n' + text)
       }
-      done.scrollIntoView({ behavior: 'smooth' })
+      scrollTo({ top: 0, behavior: 'smooth' })
     } catch (err) {
       errorEl.textContent = err.message === 'Failed to fetch' ? 'Sem internet. Tente de novo.' : err.message
       errorEl.hidden = false
@@ -186,5 +291,4 @@ export const CART_SCRIPT = `addEventListener('DOMContentLoaded', () => {
       button.disabled = false; button.textContent = 'Enviar pedido'
     }
   })
-  render()
 })`

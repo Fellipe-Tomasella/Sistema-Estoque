@@ -39,6 +39,11 @@ export function toPublicProduct({ product, variants, images }: CatalogEntry) {
         : null,
     unlisted: product.siteUnlisted,
     soldOut: !variants.some((v) => v.stockQty > 0),
+    /** “Últimas peças”: sobram 1 a 3 no total (não mostra o número exato). */
+    fewLeft: (() => {
+      const left = variants.reduce((sum, v) => sum + Math.max(0, v.stockQty), 0)
+      return left > 0 && left <= 3
+    })(),
     colors,
     images: images.map((i) => ({
       color: i.color,
@@ -104,7 +109,7 @@ export class StorefrontService {
     if (input.enabled !== undefined) changes.enabled = input.enabled
     if (input.hideSoldOut !== undefined) changes.hideSoldOut = input.hideSoldOut
     if (input.notesRequired !== undefined) changes.notesRequired = input.notesRequired
-    for (const key of ['title', 'tagline', 'about', 'checkoutNotice', 'notesLabel'] as const)
+    for (const key of ['title', 'tagline', 'announcement', 'about', 'checkoutNotice', 'notesLabel'] as const)
       if (key in input) changes[key] = text(input[key])
 
     if ('slug' in input) {

@@ -30,6 +30,7 @@ const form = reactive({
   slug: '',
   title: '',
   tagline: '',
+  announcement: '',
   about: '',
   whatsapp: '',
   instagram: '',
@@ -49,6 +50,7 @@ watch(
       slug: s.slug ?? '',
       title: s.title ?? '',
       tagline: s.tagline ?? '',
+      announcement: s.announcement ?? '',
       about: s.about ?? '',
       whatsapp: s.whatsapp ?? '',
       instagram: s.instagram ?? '',
@@ -79,6 +81,7 @@ async function submit() {
     slug: orNull(form.slug),
     title: orNull(form.title),
     tagline: orNull(form.tagline),
+    announcement: orNull(form.announcement),
     about: orNull(form.about),
     whatsapp: orNull(form.whatsapp),
     instagram: orNull(form.instagram),
@@ -149,6 +152,15 @@ async function submit() {
           v-model="form.tagline"
           maxlength="160"
           placeholder="Lingerie com conforto e delicadeza"
+        />
+      </div>
+      <div class="space-y-1 sm:col-span-2">
+        <Label for="sf-announcement">Faixa de anúncio no topo (opcional)</Label>
+        <Input
+          id="sf-announcement"
+          v-model="form.announcement"
+          maxlength="140"
+          placeholder="Ex.: Frete grátis para Campinas acima de R$ 199"
         />
       </div>
       <div class="space-y-1 sm:col-span-2">

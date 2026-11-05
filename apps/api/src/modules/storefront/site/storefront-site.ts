@@ -31,7 +31,8 @@ export async function renderStorefront(
   const preview = !site.settings.enabled
   if (preview && !(await services.auth.authenticate(cookies[SESSION_COOKIE]))) return null
 
-  const ctx: SiteContext = { settings: site.settings, title: site.title, origin: env.appOrigin, preview }
+  const categories = [...new Set(site.products.map((p) => p.category).filter((c): c is string => Boolean(c)))].sort()
+  const ctx: SiteContext = { settings: site.settings, title: site.title, origin: env.appOrigin, preview, categories }
   if (rest.length === 0) return page(homePage(ctx, site.products, url.searchParams.get('categoria')))
 
   if (rest.length === 1 && rest[0] === 'sacola') return page(cartPage(ctx))
