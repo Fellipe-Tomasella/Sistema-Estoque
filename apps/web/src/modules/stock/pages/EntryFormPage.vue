@@ -17,7 +17,7 @@ import { pieces, localToday } from '@/lib/format'
 import { useDashboard } from '@/modules/dashboard/composables/useDashboard'
 import VariantPicker from '@/modules/products/components/VariantPicker.vue'
 import type { VariantSearchResult } from '@/modules/products/types'
-import NfeImport, { type NfeApplied } from '../components/NfeImport.vue'
+import NfeImport, { type NfeApplied, type NfeHeader } from '../components/NfeImport.vue'
 import { useStockMutations, useVariant } from '../composables/useStock'
 
 interface Line {
@@ -47,10 +47,15 @@ function applyNfe(data: NfeApplied) {
     if (existing) existing.quantity += line.quantity
     else lines.value.push({ ...line })
   }
-  form.supplierName = data.supplierName
-  form.reference = data.reference
-  if (data.entryDate && data.entryDate <= today.value) form.entryDate = data.entryDate
+  fillHeader(data)
   nfe.value = data.nfe
+}
+
+/** Ao ler a nota (XML ou PDF), fornecedor, número e data já entram nos dados da entrada. */
+function fillHeader(data: NfeHeader) {
+  if (data.supplierName) form.supplierName = data.supplierName
+  if (data.reference && data.reference !== 'NF-e') form.reference = data.reference
+  if (data.entryDate && data.entryDate <= today.value) form.entryDate = data.entryDate
 }
 
 function add(variant: VariantSearchResult) {
@@ -101,7 +106,7 @@ async function save() {
 
   <div class="grid gap-4 pb-24 lg:grid-cols-[1fr_320px]">
     <div class="min-w-0 space-y-4">
-      <NfeImport @apply="applyNfe" />
+      <NfeImport @apply="applyNfe" @header="fillHeader" />
       <Card class="gap-4 p-5 shadow-sm">
         <p class="font-semibold">Peças recebidas</p>
         <VariantPicker autofocus @select="add" />

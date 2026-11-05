@@ -20,6 +20,8 @@ import { ImportsService } from './modules/imports/imports.service'
 import { IntegrityRepository } from './modules/integrity/integrity.repository'
 import { IntegrityService } from './modules/integrity/integrity.service'
 import { PaymentsRepository } from './modules/payments/payments.repository'
+import { ProductOptionsRepository } from './modules/products/product-options.repository'
+import { ProductOptionsService } from './modules/products/product-options.service'
 import { ProductsRepository } from './modules/products/products.repository'
 import { ProductImagesService } from './modules/products/product-images.service'
 import { ProductsService } from './modules/products/products.service'
@@ -72,6 +74,7 @@ export function createContainer() {
     integrity: new IntegrityRepository(db),
     payments: new PaymentsRepository(db),
     products: new ProductsRepository(db),
+    productOptions: new ProductOptionsRepository(db),
     receivables: new ReceivablesRepository(db),
     refunds: new RefundsRepository(db),
     reports: new ReportsRepository(db),
@@ -136,6 +139,7 @@ export function createContainer() {
     settings,
     stock,
     products,
+    productOptions: new ProductOptionsService(repositories.productOptions, audit),
     productImages: new ProductImagesService(repositories.products, media, audit),
     customers,
     sales,

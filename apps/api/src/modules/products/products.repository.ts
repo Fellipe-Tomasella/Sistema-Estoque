@@ -284,24 +284,4 @@ export class ProductsRepository {
       .orderBy(asc(sql`lower(${products.name})`), ...variantOrder)
       .limit(limit)
   }
-
-  async suggestions() {
-    const [colors, sizes, categories] = await Promise.all([
-      this.db.selectDistinct({ value: variants.color }).from(variants).orderBy(variants.color),
-      this.db
-        .selectDistinct({ value: variants.size, sort: variants.sizeSort })
-        .from(variants)
-        .orderBy(variants.sizeSort, variants.size),
-      this.db
-        .selectDistinct({ value: products.category })
-        .from(products)
-        .where(isNotNull(products.category))
-        .orderBy(products.category),
-    ])
-    return {
-      colors: colors.map((r) => r.value),
-      sizes: sizes.map((r) => r.value),
-      categories: categories.map((r) => r.value!),
-    }
-  }
 }

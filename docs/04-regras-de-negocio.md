@@ -25,6 +25,7 @@ Origem: **[C]** confirmado · **[P]** proposto · **[D]** decidido em 30/10/2026
 | RN-PRO-14 | Uma foto pode ser de uma **cor** do produto: a busca e o catálogo do PDV mostram a foto da cor da variação e, sem ela, a capa. Cada foto pode ficar fora do site (“só interna”). | P |
 | RN-PRO-15 | **Código padrão**: produto sem referência recebe a próxima da sequência `P00001`, `P00002`…; variação sem SKU recebe `REFERÊNCIA-COR-TAMANHO` (ex.: `P00012-PRE-M`, `P00012-AZUC-GG`). Referência/SKU digitados são mantidos. Código de barras (EAN, 8 a 14 dígitos) é opcional e único; a busca do PDV acha a peça por ele ou pelo SKU exato. | Dev |
 | RN-PRO-16 | **Códigos e etiquetas**: peça sem código de barras recebe um EAN-13 interno (prefixo `20`, uso só da loja, sequencial com dígito verificador); a que já tem (etiqueta do fornecedor, EAN da NF-e) mantém o dela. A tela lista referência, SKU, código de barras e códigos dos fornecedores e imprime etiquetas (A4 3×10 ou térmica 50×30/40×25) com loja, peça, cor/tamanho, preço opcional e código. No PDV e na Nova venda, o **leitor** (bipar) e a **câmera** acham a peça por código de barras, SKU ou código do fornecedor e a põem no carrinho. | Dev |
+| RN-PRO-17 | **Aba Opções** (cores, tamanhos e categorias): lista cada valor usado nas peças com quantas peças ativas o usam. **Renomear** troca o valor em todas as peças (vendas antigas mantêm o rótulo, RN-PRO-09); é barrado se um produto ficaria com cor e tamanho repetidos. **Excluir** só quando nenhuma peça ativa (variação ativa de produto ativo; na categoria, produto ativo) usa o valor: ele sai da lista e das sugestões, peças inativas e histórico ficam como estão; se uma peça ativa voltar a usá-lo, ele reaparece. | Dev |
 
 ## RN-EST — Estoque
 
@@ -42,7 +43,7 @@ Origem: **[C]** confirmado · **[P]** proposto · **[D]** decidido em 30/10/2026
 | RN-EST-10 | Histórico por variação: data, tipo, quantidade (+/−), saldo depois, motivo, referência clicável (entrada, venda #, devolução, importação). | C |
 | RN-EST-11 | Consulta de estoque em grade **produto × cor × tamanho**, com destaque para “sem estoque” e “repor”. | C |
 | RN-EST-12 | **Produtos novos da nota**: da descrição “NOME (COR) - Tamanho X” o sistema separa produto, cor e tamanho; casa com a peça existente por nome + cor + tamanho (sem acento/maiúsculas) e, para as que não existem, cadastra de uma vez agrupando por produto, com o custo da nota e o preço de venda definido pela dona (sugestão: custo × margem, terminando em ,90). Produto que já existe ganha só as variações que faltam. Saldo entra pela entrada, não pelo cadastro. | Dev |
-| RN-EST-11 | **Entrada pela NF-e**: a dona envia o XML da nota do fornecedor; o sistema lê fornecedor, número, chave e itens (código, EAN, quantidade, custo) e sugere a variação de cada item por vínculo lembrado do mesmo fornecedor, código de barras ou SKU. O que não casar, ela escolhe (ou ignora). Vira uma entrada comum (RN-EST-03), guarda os vínculos para as próximas notas e a mesma chave de acesso não entra duas vezes. Quantidade fracionada é arredondada com aviso. Não valida assinatura nem consulta a SEFAZ. | Dev |
+| RN-EST-11 | **Entrada pela NF-e**: a dona envia o XML ou o PDF (DANFE) da nota do fornecedor; ao ler, fornecedor, número e data já preenchem os dados da entrada; o sistema lê fornecedor, número, chave e itens (código, EAN, quantidade, custo) e sugere a variação de cada item por vínculo lembrado do mesmo fornecedor, código de barras ou SKU. O que não casar, ela escolhe (ou ignora). Vira uma entrada comum (RN-EST-03), guarda os vínculos para as próximas notas e a mesma chave de acesso não entra duas vezes. Quantidade fracionada é arredondada com aviso. Não valida assinatura nem consulta a SEFAZ. | Dev |
 
 ## RN-IMP — Importação da planilha inicial [D]
 
@@ -159,6 +160,7 @@ Origem: **[C]** confirmado · **[P]** proposto · **[D]** decidido em 30/10/2026
 | RN-REL-04 | **Mais e menos vendidos** no período, por produto e por variação: quantidade vendida (vendas confirmadas, não canceladas, com `business_date` no período), quantidade devolvida dessas vendas, **líquido**. Inclui produtos/variações **ativos sem venda** (quantidade 0). Ordenação nos dois sentidos. Itens de venda de troca contam como vendidos. | C/P |
 | RN-REL-05 | **Fechamento do dia**: ver RN-FEC. | C |
 | RN-REL-06 | Exportar cada relatório em CSV. | P |
+| RN-REL-07 | **Estoque**: peças, produtos e variações ativos com saldo, mínimo, custo e preço (da variação ou do produto), valor a custo e a preço de venda, diferença (só das peças com custo), resumo por categoria, última entrada e última venda. Peça sem custo cadastrado fica fora do valor a custo e é contada à parte. Filtros: com estoque, sem estoque, a repor, categoria e busca; exporta CSV. | Dev |
 
 ## RN-FEC — Fechamento diário
 

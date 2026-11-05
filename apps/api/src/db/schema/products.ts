@@ -96,3 +96,21 @@ export const productImages = pgTable(
 )
 
 export type ProductImage = typeof productImages.$inferSelect
+
+/**
+ * Cores, tamanhos e categorias que a dona excluiu da lista de opções (RN-PRO-17). As opções nascem das variações e dos
+ * produtos; excluir só tira das sugestões e da aba Opções enquanto nenhuma peça ativa usar o valor.
+ */
+export const hiddenOptions = pgTable(
+  'hidden_options',
+  {
+    id: id(),
+    kind: text().notNull(),
+    value: text().notNull(),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    uniqueIndex('hidden_options_kind_value_uq').on(table.kind, sql`lower(${table.value})`),
+    check('hidden_options_kind_ck', sql`${table.kind} in ('color', 'size', 'category')`),
+  ],
+)

@@ -66,6 +66,12 @@ const appRoutes: RouteRecordRaw[] = [
     meta: { title: 'Importar planilha' },
   },
   {
+    path: 'estoque/opcoes',
+    name: 'stock-options',
+    component: () => import('@/modules/stock/pages/OptionsPage.vue'),
+    meta: { title: 'Cores, tamanhos e categorias' },
+  },
+  {
     path: 'estoque/codigos',
     name: 'stock-codes',
     component: () => import('@/modules/stock/pages/CodesPage.vue'),

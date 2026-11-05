@@ -121,3 +121,11 @@ export const UpdateImageBody = t.Object({
 export type UpdateImageInput = typeof UpdateImageBody.static
 
 export const ReorderImagesBody = t.Object({ ids: t.Array(t.String({ format: 'uuid' }), { maxItems: 5 }) })
+
+// RN-PRO-17: aba Opções
+export const OptionParams = t.Object({ kind: OneOf(['color', 'size', 'category'] as const) })
+export const RenameOptionBody = t.Object({
+  from: t.String({ minLength: 1, maxLength: 60 }),
+  to: t.String({ minLength: 1, maxLength: 60 }),
+})
+export const OptionValueQuery = t.Object({ value: t.String({ minLength: 1, maxLength: 60 }) })

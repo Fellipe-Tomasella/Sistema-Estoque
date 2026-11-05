@@ -15,6 +15,9 @@ import type { VariantSearchResult } from '@/modules/products/types'
 
 type Preview = Awaited<ReturnType<typeof readNote>>
 type NfeItem = Preview['items'][number]
+/** Dados da nota que já vão para a entrada assim que ela é lida (fornecedor, número e data). */
+export type NfeHeader = Pick<NfeApplied, 'supplierName' | 'reference' | 'entryDate'>
+
 export interface NfeApplied {
   lines: { variant: VariantSearchResult; quantity: number; unitCostCents: number }[]
   supplierName: string
@@ -31,7 +34,7 @@ export interface NfeApplied {
  * Entrada pela NF-e (RN-EST-11/12): lê o XML ou o PDF (DANFE), mostra cada item com a variação sugerida (vínculo, código de
  * barras ou SKU) e deixa a dona escolher a dos que faltam ou ignorar. Nada é gravado aqui.
  */
-const emit = defineEmits<{ apply: [data: NfeApplied] }>()
+const emit = defineEmits<{ apply: [data: NfeApplied]; header: [data: NfeHeader] }>()
 
 const readNote = (file: File) => unwrap(client.stock.entries['nfe-preview'].post({ file }))
 const read = useMutation({ mutationFn: readNote })
@@ -50,7 +53,14 @@ async function pick(event: Event) {
   if (!file) return
   note.value = await read.mutateAsync(file)
   chosen.value = {}
+  emit('header', headerOf(note.value))
 }
+
+const headerOf = (n: Preview): NfeHeader => ({
+  supplierName: n.supplier.name,
+  reference: `NF-e ${n.number ?? ''}${n.series ? ` série ${n.series}` : ''}`.trim(),
+  entryDate: n.issuedAt,
+})
 
 /** Itens sem peça no estoque mas com produto/cor/tamanho lidos: dá para cadastrar de uma vez. */
 const creatable = computed(
@@ -87,9 +97,7 @@ async function apply() {
     const n = note.value
     emit('apply', {
       lines,
-      supplierName: n.supplier.name,
-      reference: `NF-e ${n.number ?? ''}${n.series ? ` série ${n.series}` : ''}`.trim(),
-      entryDate: n.issuedAt,
+      ...headerOf(n),
       nfe: { accessKey: n.accessKey, supplierDocument: n.supplier.document, links },
     })
     toast.success(

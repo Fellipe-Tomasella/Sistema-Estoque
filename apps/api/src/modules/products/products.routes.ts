@@ -9,7 +9,10 @@ import {
   ImageParams,
   ListProductsQuery,
   MinStockBody,
+  OptionParams,
+  OptionValueQuery,
   ProductsFromInvoiceBody,
+  RenameOptionBody,
   ReorderImagesBody,
   UpdateImageBody,
   UpdateProductBody,
@@ -20,7 +23,22 @@ export const productsRoutes = new Elysia({ prefix: '/products' })
   .use(authPlugin)
   .guard({ auth: true })
   .get('/', ({ query, services }) => services.products.list(query), { query: ListProductsQuery })
-  .get('/suggestions', ({ services }) => services.products.suggestions())
+  .get('/suggestions', ({ services }) => services.productOptions.suggestions())
+  // RN-PRO-17: aba Opções (cores, tamanhos e categorias)
+  .get('/options', ({ services }) => services.productOptions.list())
+  .put(
+    '/options/:kind',
+    ({ params, body, services, user }) => services.productOptions.rename(params.kind, body, user.id),
+    {
+      params: OptionParams,
+      body: RenameOptionBody,
+    },
+  )
+  .delete(
+    '/options/:kind',
+    ({ params, query, services, user }) => services.productOptions.remove(params.kind, query.value, user.id),
+    { params: OptionParams, query: OptionValueQuery },
+  )
   // RN-EST-12: cadastrar os produtos novos que vieram na nota do fornecedor
   .post('/from-invoice', ({ body, services, user }) => services.products.createFromInvoice(body, user.id), {
     body: ProductsFromInvoiceBody,

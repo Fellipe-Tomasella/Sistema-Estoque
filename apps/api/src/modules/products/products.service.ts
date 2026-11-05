@@ -60,10 +60,6 @@ export class ProductsService {
     return toProductDto(product, variants, await this.repo.findImages([id], tx))
   }
 
-  suggestions() {
-    return this.repo.suggestions()
-  }
-
   /** Uma variação com o nome do produto (telas de entrada e acerto abertas a partir de uma variação). */
   async getVariant(id: string) {
     const variant = await this.requireVariant(id)

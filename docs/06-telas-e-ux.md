@@ -22,12 +22,12 @@ Configurações). Cabeçalho com busca.
 | --- | --- | --- |
 | Início | `/` | avisos e atalhos |
 | Produtos | `/produtos`, `/produtos/novo`, `/produtos/:id` | cadastro e variações |
-| Estoque | `/estoque`, `/estoque/entradas`, `/estoque/entradas/nova`, `/estoque/acertos/novo`, `/estoque/importar`, `/estoque/movimentos` | |
+| Estoque | `/estoque`, `/estoque/entradas`, `/estoque/entradas/nova`, `/estoque/acertos/novo`, `/estoque/importar`, `/estoque/movimentos`, `/estoque/codigos`, `/estoque/opcoes` (cores, tamanhos e categorias) | |
 | Nova venda (PDV) | `/vender`, `/vender/:draftId` | |
 | Vendas | `/vendas`, `/vendas/:id` | histórico, detalhe, cancelar, devolver/trocar, envio, NF |
 | Clientes e fiado | `/clientes`, `/clientes/:id`, `/fiado` (em aberto), `/fiado/receber?cliente=` | |
 | Pendências | `/pendencias` | retornos físicos, devoluções de valor, envios, fiscal (abas) |
-| Relatórios | `/relatorios/vendas`, `/relatorios/fiado`, `/relatorios/mais-vendidos`, `/fechamento/:data?` | |
+| Relatórios | `/relatorios/vendas`, `/relatorios/fiado`, `/relatorios/mais-vendidos`, `/relatorios/estoque`, `/fechamento/:data?` | |
 | Configurações | `/configuracoes` | loja, fuso, fiscal, senha, sessões, exportar dados, tema |
 | Login | `/login`, `/esqueci-senha`, `/redefinir-senha` | |
 

@@ -40,6 +40,7 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 | DELETE | `/products/:id` · `/variants/:id` | só sem histórico (RN-PRO-08) |
 | GET | `/products/suggestions` | cores, tamanhos e categorias já usados |
 | GET · POST | `/products/codes` · `/products/codes/generate` | `?q&missing&ids` lista de códigos; gerar EAN interno/SKU que faltam (`{ variantIds? }`) (RN-PRO-16) |
+| GET · PUT · DELETE | `/products/options` · `/products/options/:kind` · `/products/options/:kind?value=` | opções (`color`, `size`, `category`) com uso; renomear `{ from, to }`; excluir se nenhuma peça ativa usa (RN-PRO-17) |
 | GET | `/variants/by-code/:code` | peça pelo código bipado (barras, SKU ou código do fornecedor) |
 | GET | `/products/:id/images` | fotos na ordem (a primeira é a capa); o produto também traz `images` e `coverUrl` |
 | POST | `/products/:id/images` | multipart `file` (JPG/PNG/WebP, até 15 MB) + `color?` — até 5 (RN-PRO-12) |
@@ -121,8 +122,9 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 | --- | --- | --- |
 | GET | `/reports/sales` | `?from&to&groupBy=day\|week\|month` |
 | GET | `/reports/receivables` | fiado em aberto |
+| GET | `/reports/stock` | posição do estoque `?status=all\|in\|out\|low&category&q` (RN-REL-07) |
 | GET | `/reports/products-ranking` | `?from&to&level=product\|variant&order=desc\|asc` |
-| GET | `/reports/sales.csv` · `/reports/receivables.csv` · `/reports/products-ranking.csv` | exportação CSV (`;`, vírgula decimal, UTF-8 com BOM) |
+| GET | `/reports/sales.csv` · `/reports/receivables.csv` · `/reports/products-ranking.csv` · `/reports/stock.csv` | exportação CSV (`;`, vírgula decimal, UTF-8 com BOM) |
 | GET | `/closings/:date` | cálculo do dia + snapshot salvo + diferenças |
 | PUT | `/closings/:date` | `{ countedCashCents, notes? }` salva/refaz |
 | GET | `/dashboard` | dados do Início: alertas de estoque, rascunhos, envios pendentes, retornos pendentes, devoluções de valor pendentes, pendências fiscais, fiado em atraso, resumo de hoje |
