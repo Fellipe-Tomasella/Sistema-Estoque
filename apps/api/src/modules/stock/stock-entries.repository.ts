@@ -1,5 +1,6 @@
 import { and, count, desc, eq, gte, inArray, lte, sql, sum } from 'drizzle-orm'
 import type { DbOrTx } from '../../db/client'
+import { searchable } from '../../shared/sql'
 import { products, stockEntries, stockEntryItems, supplierItemLinks, variants } from '../../db/schema'
 
 export interface EntryFilters {
@@ -62,6 +63,16 @@ export class StockEntriesRepository {
         : [],
     ])
     return { links, byBarcode, bySku }
+  }
+
+  /** Variações ativas dos produtos com estes nomes (comparados sem acento e sem maiúsculas). */
+  variantsByProductNames(names: string[]) {
+    if (!names.length) return Promise.resolve([])
+    return this.db
+      .select({ variantId: variants.id, productName: products.name, color: variants.color, size: variants.size })
+      .from(variants)
+      .innerJoin(products, eq(products.id, variants.productId))
+      .where(and(eq(variants.active, true), eq(products.active, true), sql`${searchable(products.name)} in ${names}`))
   }
 
   /** Lembra (ou corrige) o vínculo código do fornecedor → variação. */

@@ -41,6 +41,7 @@ Origem: **[C]** confirmado · **[P]** proposto · **[D]** decidido em 30/10/2026
 | RN-EST-09 | Definir o mínimo para todas as variações de um produto de uma vez (e editar individualmente). | P |
 | RN-EST-10 | Histórico por variação: data, tipo, quantidade (+/−), saldo depois, motivo, referência clicável (entrada, venda #, devolução, importação). | C |
 | RN-EST-11 | Consulta de estoque em grade **produto × cor × tamanho**, com destaque para “sem estoque” e “repor”. | C |
+| RN-EST-12 | **Produtos novos da nota**: da descrição “NOME (COR) - Tamanho X” o sistema separa produto, cor e tamanho; casa com a peça existente por nome + cor + tamanho (sem acento/maiúsculas) e, para as que não existem, cadastra de uma vez agrupando por produto, com o custo da nota e o preço de venda definido pela dona (sugestão: custo × margem, terminando em ,90). Produto que já existe ganha só as variações que faltam. Saldo entra pela entrada, não pelo cadastro. | Dev |
 | RN-EST-11 | **Entrada pela NF-e**: a dona envia o XML da nota do fornecedor; o sistema lê fornecedor, número, chave e itens (código, EAN, quantidade, custo) e sugere a variação de cada item por vínculo lembrado do mesmo fornecedor, código de barras ou SKU. O que não casar, ela escolhe (ou ignora). Vira uma entrada comum (RN-EST-03), guarda os vínculos para as próximas notas e a mesma chave de acesso não entra duas vezes. Quantidade fracionada é arredondada com aviso. Não valida assinatura nem consulta a SEFAZ. | Dev |
 
 ## RN-IMP — Importação da planilha inicial [D]

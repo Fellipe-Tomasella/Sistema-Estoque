@@ -56,7 +56,8 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 | GET | `/variants/:id/movements` | histórico (RN-EST-10) |
 | GET | `/stock/movements` | histórico geral com filtros (período, tipo) |
 | POST | `/stock/entries` | **[IK]** `{ entryDate, supplierName?, reference?, notes?, items: [{ variantId, quantity, unitCostCents? }] }` |
-| POST | `/stock/entries/nfe-preview` | multipart `file` (XML da NF-e) → fornecedor, número, chave e itens com a variação sugerida; não grava (RN-EST-11). `POST /stock/entries` aceita `nfe: { accessKey, supplierDocument, links }` |
+| POST | `/stock/entries/nfe-preview` | multipart `file` (XML ou PDF/DANFE da NF-e) → fornecedor, número, chave e itens com a variação sugerida; não grava (RN-EST-11). `POST /stock/entries` aceita `nfe: { accessKey, supplierDocument, links }` |
+| POST | `/products/from-invoice` | `{ products: [{ name, category?, basePriceCents, costCents?, variants: [{ color, size }] }] }` → variações criadas (RN-EST-12) |
 | GET | `/stock/entries` · `/stock/entries/:id` | |
 | POST | `/stock/adjustments` | **[IK]** `{ variantId, reason: count\|loss\|damage\|error\|other, countedQty? , quantityDelta?, note? }` |
 | GET | `/stock/import/template` | baixa modelo `.xlsx` |

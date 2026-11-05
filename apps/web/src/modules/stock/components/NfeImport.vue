@@ -10,6 +10,7 @@ import { Card } from '@/components/ui/card'
 import { client, unwrap } from '@/lib/api'
 import { formatDate } from '@/lib/format'
 import VariantPicker from '@/modules/products/components/VariantPicker.vue'
+import NewProductsFromInvoice, { type InvoiceItem } from './NewProductsFromInvoice.vue'
 import type { VariantSearchResult } from '@/modules/products/types'
 
 type Preview = Awaited<ReturnType<typeof readNote>>
@@ -27,7 +28,7 @@ export interface NfeApplied {
 }
 
 /**
- * Entrada pela NF-e (RN-EST-11): lê o XML, mostra cada item com a variação sugerida (vínculo, código de
+ * Entrada pela NF-e (RN-EST-11/12): lê o XML ou o PDF (DANFE), mostra cada item com a variação sugerida (vínculo, código de
  * barras ou SKU) e deixa a dona escolher a dos que faltam ou ignorar. Nada é gravado aqui.
  */
 const emit = defineEmits<{ apply: [data: NfeApplied] }>()
@@ -40,7 +41,7 @@ const chosen = ref<Record<number, VariantSearchResult | null | undefined>>({})
 const input = useTemplateRef('input')
 const applying = ref(false)
 
-const BY = { link: 'nota anterior', barcode: 'código de barras', sku: 'SKU' } as const
+const BY = { link: 'nota anterior', barcode: 'código de barras', sku: 'SKU', name: 'nome, cor e tamanho' } as const
 
 async function pick(event: Event) {
   const target = event.target as HTMLInputElement
@@ -49,6 +50,20 @@ async function pick(event: Event) {
   if (!file) return
   note.value = await read.mutateAsync(file)
   chosen.value = {}
+}
+
+/** Itens sem peça no estoque mas com produto/cor/tamanho lidos: dá para cadastrar de uma vez. */
+const creatable = computed(
+  () =>
+    (note.value?.items.filter((i) => !resolved(i) && i.parsed) ?? []) as (NfeItem & {
+      parsed: InvoiceItem['parsed']
+    })[],
+)
+const creating = ref(false)
+async function onCreated(byItem: Record<number, string>) {
+  const entries = Object.entries(byItem)
+  const variants = await Promise.all(entries.map(([, id]) => unwrap(client.variants({ id }).get())))
+  entries.forEach(([index], i) => (chosen.value[Number(index)] = variants[i]))
 }
 
 const variantOf = (item: NfeItem) => (item.index in chosen.value ? chosen.value[item.index] : undefined)
@@ -92,12 +107,20 @@ async function apply() {
     <div class="flex flex-wrap items-center justify-between gap-3">
       <div>
         <p class="font-semibold">Nota fiscal do fornecedor</p>
-        <p class="text-sm text-muted-foreground">Envie o XML da NF-e e as peças entram com quantidade e custo.</p>
+        <p class="text-sm text-muted-foreground">
+          Envie o PDF (DANFE) ou o XML da NF-e e as peças entram com quantidade e custo.
+        </p>
       </div>
       <Button variant="secondary" :disabled="read.isPending.value" @click="input?.click()">
-        <LoaderCircle v-if="read.isPending.value" class="animate-spin" /><FileUp v-else /> Importar XML da NF-e
+        <LoaderCircle v-if="read.isPending.value" class="animate-spin" /><FileUp v-else /> Importar nota (PDF ou XML)
       </Button>
-      <input ref="input" type="file" accept=".xml,text/xml,application/xml" class="hidden" @change="pick" />
+      <input
+        ref="input"
+        type="file"
+        accept=".xml,.pdf,text/xml,application/xml,application/pdf"
+        class="hidden"
+        @change="pick"
+      />
     </div>
 
     <template v-if="note">
@@ -173,6 +196,24 @@ async function apply() {
           </div>
         </li>
       </ul>
+
+      <div
+        v-if="creatable.length"
+        class="flex flex-wrap items-center gap-3 rounded-lg border border-dashed border-brand/40 bg-brand-soft p-3"
+      >
+        <PackagePlus class="size-5 text-brand" />
+        <p class="min-w-0 flex-1 text-sm">
+          <b
+            >{{ creatable.length }}
+            {{ creatable.length === 1 ? 'item ainda não existe' : 'itens ainda não existem' }}</b
+          >
+          no estoque. Cadastre todos de uma vez, já com cor, tamanho e custo da nota.
+        </p>
+        <Button size="sm" class="bg-brand text-brand-foreground hover:bg-brand/90" @click="creating = true">
+          Cadastrar produtos novos
+        </Button>
+      </div>
+      <NewProductsFromInvoice v-model:open="creating" :items="creatable" @created="onCreated" />
 
       <div class="flex flex-wrap items-center justify-end gap-3">
         <p v-if="pending" class="text-sm text-amber-700">

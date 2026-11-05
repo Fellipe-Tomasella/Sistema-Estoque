@@ -136,6 +136,16 @@ export class ProductsRepository {
     return row!.n
   }
 
+  /** Produto pelo nome (sem acento e sem maiúsculas), para não duplicar ao cadastrar da nota. */
+  async findProductByName(name: string, tx: DbOrTx = this.db) {
+    const [product] = await tx
+      .select()
+      .from(products)
+      .where(sql`${searchable(products.name)} = ${searchable(name)}`)
+      .limit(1)
+    return product
+  }
+
   /** Próximo número do código padrão do produto (RN-PRO-15). */
   async nextProductCode(tx: DbOrTx = this.db) {
     const [row] = await tx.execute<{ n: number }>(sql`select nextval('product_code_seq')::int as n`)

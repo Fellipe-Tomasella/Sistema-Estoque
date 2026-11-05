@@ -14,6 +14,7 @@ import type {
   CreateProductInput,
   ListProductsFilters,
   NewVariantInput,
+  ProductsFromInvoiceInput,
   UpdateProductInput,
   UpdateVariantInput,
 } from './products.schemas'
@@ -328,6 +329,49 @@ export class ProductsService {
       (await this.repo.hasSaleItems(variantIds, tx)) ||
       (await this.webOrders.hasItemsFor(variantIds, tx))
     if (hasHistory) throw new BusinessRuleError(message)
+  }
+
+  /**
+   * RN-EST-12: cadastra de uma vez os produtos que vieram na nota e ainda não existem (agrupados por nome, com
+   * as cores e tamanhos da nota, custo da nota e o preço de venda que a dona definiu). Se o produto já existe,
+   * só acrescenta as variações que faltam. Saldo inicial zero: quem soma o estoque é a entrada da nota.
+   */
+  async createFromInvoice(input: ProductsFromInvoiceInput, userId: string) {
+    return this.withUniqueGuard(() =>
+      db.transaction(async (tx) => {
+        const created: { name: string; color: string; size: string; variantId: string }[] = []
+        for (const p of input.products) {
+          const existing = await this.repo.findProductByName(cleanText(p.name), tx)
+          let productId: string
+          if (existing) {
+            const current = await this.repo.findVariants(existing.id, tx)
+            const missing = p.variants.filter(
+              (v) => !current.some((c) => variantKey(c.color, c.size) === variantKey(v.color, v.size)),
+            )
+            if (missing.length) await this.addVariantsWithin(tx, existing.id, missing, userId)
+            productId = existing.id
+          } else {
+            productId = await this.createWithin(
+              tx,
+              {
+                name: p.name,
+                category: p.category,
+                basePriceCents: p.basePriceCents,
+                costCents: p.costCents,
+                variants: p.variants,
+              },
+              userId,
+            )
+          }
+          for (const v of await this.repo.findVariants(productId, tx)) {
+            if (p.variants.some((w) => variantKey(w.color, w.size) === variantKey(v.color, v.size))) {
+              created.push({ name: p.name, color: v.color, size: v.size, variantId: v.id })
+            }
+          }
+        }
+        return created
+      }),
+    )
   }
 
   /** Tela Códigos e etiquetas: referência, SKU, código de barras e códigos dos fornecedores de cada peça. */

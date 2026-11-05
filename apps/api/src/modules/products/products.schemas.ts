@@ -93,6 +93,20 @@ export const GenerateCodesBody = t.Object({
   variantIds: t.Optional(t.Array(t.String({ format: 'uuid' }), { maxItems: 1000 })),
 })
 
+export const ProductsFromInvoiceBody = t.Object({
+  products: t.Array(
+    t.Object({
+      name: t.String({ minLength: 1, maxLength: 120 }),
+      category: OptionalText(60),
+      basePriceCents: Cents,
+      costCents: t.Optional(t.Nullable(Cents)),
+      variants: t.Array(t.Object({ color: Label, size: Label }), { minItems: 1, maxItems: 300 }),
+    }),
+    { minItems: 1, maxItems: 200 },
+  ),
+})
+export type ProductsFromInvoiceInput = typeof ProductsFromInvoiceBody.static
+
 export const ImageParams = t.Object({ id: t.String({ format: 'uuid' }), imageId: t.String({ format: 'uuid' }) })
 
 export const UploadImageBody = t.Object({

@@ -1,9 +1,10 @@
-import { normalizeBarcode } from '@estoque/shared'
+import { matchKey, normalizeBarcode, parseItemDescription } from '@estoque/shared'
 import { db } from '../../db/client'
 import { ConflictError, NotFoundError, ValidationError } from '../../shared/errors'
 import { isUniqueViolation } from '../../shared/sql'
 import type { SettingsService } from '../settings/settings.service'
 import type { EntryFilters, StockEntriesRepository } from './stock-entries.repository'
+import { readDanfePdf } from './danfe-reader'
 import { readNfe } from './nfe-reader'
 import type { CreateEntryInput } from './stock.schemas'
 import type { StockService } from './stock.service'
@@ -78,7 +79,10 @@ export class StockEntriesService {
    * anterior, código de barras ou SKU). Não grava nada: a dona confere e lança como uma entrada normal.
    */
   async previewNfe(file: Blob) {
-    const doc = readNfe(await file.text())
+    const bytes = new Uint8Array(await file.arrayBuffer())
+    // PDF (DANFE) ou XML da NF-e: os dois viram a mesma prévia
+    const isPdf = new TextDecoder().decode(bytes.slice(0, 5)) === '%PDF-'
+    const doc = isPdf ? await readDanfePdf(bytes) : readNfe(new TextDecoder().decode(bytes))
     if (doc.accessKey) {
       const existing = await this.repo.findByAccessKey(doc.accessKey)
       if (existing) {
@@ -90,6 +94,12 @@ export class StockEntriesService {
     const codes = doc.items.map((i) => i.code)
     const barcodes = doc.items.flatMap((i) => (i.barcode ? [i.barcode] : []))
     const found = await this.repo.nfeCandidates(doc.supplier.document, codes, barcodes)
+    // produto, cor e tamanho lidos da descrição (“CAMISOLA LIA (AZUL) - Tamanho GG”)
+    const parsed = new Map(doc.items.map((i) => [i.index, parseItemDescription(i.description)]))
+    const names = [...new Set([...parsed.values()].flatMap((p) => (p ? [matchKey(p.name)] : [])))]
+    const byName = new Map(
+      (await this.repo.variantsByProductNames(names)).map((v) => [matchKey(v.productName, v.color, v.size), v]),
+    )
     const label = (v: { productName: string; color: string; size: string; variantId: string }) => ({
       variantId: v.variantId,
       productName: v.productName,
@@ -101,14 +111,18 @@ export class StockEntriesService {
         const link = found.links.find((l) => l.supplierCode === item.code)
         const barcode = item.barcode ? found.byBarcode.find((v) => v.barcode === item.barcode) : undefined
         const sku = found.bySku.find((v) => v.sku?.toLowerCase() === item.code.toLowerCase())
+        const info = parsed.get(item.index) ?? null
+        const named = info ? byName.get(matchKey(info.name, info.color, info.size)) : undefined
         const match = link
           ? { ...label(link), by: 'link' as const }
           : barcode
             ? { ...label(barcode), by: 'barcode' as const }
             : sku
               ? { ...label(sku), by: 'sku' as const }
-              : null
-        return { ...item, match }
+              : named
+                ? { ...label(named), by: 'name' as const }
+                : null
+        return { ...item, parsed: info, match }
       }),
     }
   }

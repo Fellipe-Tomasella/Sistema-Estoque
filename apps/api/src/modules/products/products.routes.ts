@@ -9,6 +9,7 @@ import {
   ImageParams,
   ListProductsQuery,
   MinStockBody,
+  ProductsFromInvoiceBody,
   ReorderImagesBody,
   UpdateImageBody,
   UpdateProductBody,
@@ -20,6 +21,10 @@ export const productsRoutes = new Elysia({ prefix: '/products' })
   .guard({ auth: true })
   .get('/', ({ query, services }) => services.products.list(query), { query: ListProductsQuery })
   .get('/suggestions', ({ services }) => services.products.suggestions())
+  // RN-EST-12: cadastrar os produtos novos que vieram na nota do fornecedor
+  .post('/from-invoice', ({ body, services, user }) => services.products.createFromInvoice(body, user.id), {
+    body: ProductsFromInvoiceBody,
+  })
   // RN-PRO-16: tela Códigos e etiquetas
   .get(
     '/codes',
