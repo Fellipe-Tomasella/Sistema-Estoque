@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test } from 'bun:test'
 import { eq } from 'drizzle-orm'
 import { db } from '../../db/client'
-import { receivables, sales } from '../../db/schema'
+import { products, receivables, sales } from '../../db/schema'
 import { services } from '../../container'
 import { resetDatabase } from '../../../test/db'
 import { createConfirmedSale, createCustomer, createProduct, loggedIn } from '../../../test/factories'
@@ -221,4 +221,52 @@ test('Início: avisos e resumo de hoje', async () => {
   expect(res.body.last14Days).toHaveLength(14)
   expect(res.body.last14Days.at(-1)).toEqual({ date: today, count: 1, totalCents: 1000 })
   expect(res.body.last14Days[0].totalCents).toBe(0)
+})
+
+describe('RN-REL-07 posição do estoque', () => {
+  test('saldo, valor a custo e a preço, peça sem custo à parte, filtros e CSV', async () => {
+    const body = await createProduct(userId, {
+      name: 'Body Renda',
+      basePriceCents: 8990,
+      variants: [
+        ['Preta', 'M', 3],
+        ['Vermelha', 'G', 0],
+      ],
+    })
+    await createProduct(userId, { name: 'Calcinha Fio', basePriceCents: 2990, variants: [['Branca', 'P', 5]] })
+    await db.update(products).set({ costCents: 4000, category: 'Bodies' }).where(eq(products.id, body.id))
+
+    const all = await request('GET', '/reports/stock', { cookie })
+    expect(all.status).toBe(200)
+    expect(all.body.totals).toMatchObject({
+      products: 2,
+      variants: 3,
+      pieces: 8,
+      costCents: 3 * 4000,
+      valueCents: 3 * 8990 + 5 * 2990,
+      piecesWithoutCost: 5,
+      marginCents: 3 * (8990 - 4000),
+    })
+    expect(all.body.byCategory[0]).toMatchObject({ category: 'Sem categoria', pieces: 5 })
+    const preta = all.body.rows.find((r: { color: string }) => r.color === 'Preta')
+    expect(preta).toMatchObject({
+      stockQty: 3,
+      costCents: 4000,
+      stockCostCents: 12000,
+      lastEntry: today,
+      lastSale: null,
+    })
+
+    const out = await request('GET', '/reports/stock?status=out', { cookie })
+    expect(out.body.rows.map((r: { color: string }) => r.color)).toEqual(['Vermelha'])
+    const search = await request('GET', '/reports/stock?q=calcinha', { cookie })
+    expect(search.body.totals.pieces).toBe(5)
+    const category = await request('GET', '/reports/stock?category=Bodies', { cookie })
+    expect(category.body.totals.variants).toBe(2)
+
+    const csv = await request('GET', '/reports/stock.csv', { cookie })
+    const text = await csv.response.text()
+    expect(text).toContain('Produto;Referência;Categoria')
+    expect(text).toContain('Body Renda')
+  })
 })

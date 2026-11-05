@@ -12,6 +12,11 @@ const RankingQuery = t.Object({
   order: t.Optional(OneOf(['desc', 'asc'])),
 })
 const DateParams = t.Object({ date: DateString })
+const StockQuery = t.Object({
+  status: t.Optional(OneOf(['all', 'in', 'out', 'low'])),
+  category: t.Optional(t.String({ maxLength: 60 })),
+  q: t.Optional(t.String({ maxLength: 100 })),
+})
 
 function csvResponse(set: { headers: Record<string, string | number> }, fileName: string, content: string) {
   set.headers['content-type'] = 'text/csv; charset=utf-8'
@@ -50,6 +55,35 @@ export const reportsRoutes = new Elysia()
       return csvResponse(set, `vendas-${query.from}-a-${query.to}.csv`, csv)
     },
     { query: SalesQuery },
+  )
+  .get('/reports/stock', ({ query, services }) => services.reports.stock(query), { query: StockQuery })
+  .get(
+    '/reports/stock.csv',
+    async ({ query, services, set }) => {
+      const report = await services.reports.stock(query)
+      const money = (cents: number | null) => (cents === null ? '' : csvMoney(cents))
+      const csv = toCsv(
+        [
+          { header: 'Produto', value: (r) => r.productName },
+          { header: 'Referência', value: (r) => r.reference },
+          { header: 'Categoria', value: (r) => r.category },
+          { header: 'Cor', value: (r) => r.color },
+          { header: 'Tamanho', value: (r) => r.size },
+          { header: 'SKU', value: (r) => r.sku },
+          { header: 'Saldo', value: (r) => r.stockQty },
+          { header: 'Mínimo', value: (r) => r.minStock },
+          { header: 'Custo', value: (r) => money(r.costCents) },
+          { header: 'Preço', value: (r) => money(r.priceCents) },
+          { header: 'Valor a custo', value: (r) => money(r.stockCostCents) },
+          { header: 'Valor a preço de venda', value: (r) => money(r.stockValueCents) },
+          { header: 'Última entrada', value: (r) => r.lastEntry },
+          { header: 'Última venda', value: (r) => r.lastSale },
+        ],
+        report.rows,
+      )
+      return csvResponse(set, 'estoque.csv', csv)
+    },
+    { query: StockQuery },
   )
   .get('/reports/receivables.csv', async ({ services, set }) => {
     const report = await services.reports.receivables()

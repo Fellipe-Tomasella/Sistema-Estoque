@@ -8,6 +8,7 @@ const tabs = [
   { to: '/relatorios/vendas', label: 'Vendas' },
   { to: '/relatorios/fiado', label: 'Fiado em aberto' },
   { to: '/relatorios/mais-vendidos', label: 'Mais e menos vendidos' },
+  { to: '/relatorios/estoque', label: 'Estoque' },
   { to: '/fechamento', label: 'Fechamento do dia' },
 ]
 </script>

@@ -108,6 +108,41 @@ export class ReportsRepository {
       group by p.id, ${key}`)
   }
 
+  /**
+   * Posição do estoque (RN-REL-07): cada variação ativa com saldo, custo e preço (o da variação ou o do produto)
+   * e a data da última entrada e da última venda (para ver o que está parado).
+   */
+  stockPosition() {
+    return this.db.execute<{
+      variant_id: string
+      product_id: string
+      product_name: string
+      reference: string | null
+      category: string | null
+      color: string
+      size: string
+      sku: string | null
+      stock_qty: number
+      min_stock: number | null
+      cost_cents: number | null
+      price_cents: number
+      last_entry: string | null
+      last_sale: string | null
+    }>(sql`
+      select v.id as variant_id, p.id as product_id, p.name as product_name, p.reference, p.category,
+        v.color, v.size, v.sku, v.stock_qty, v.min_stock,
+        coalesce(v.cost_cents, p.cost_cents) as cost_cents,
+        coalesce(v.price_cents, p.base_price_cents) as price_cents,
+        (select max(m.business_date)::text from stock_movements m
+          where m.variant_id = v.id and m.type in ('initial', 'purchase_entry')) as last_entry,
+        (select max(m.business_date)::text from stock_movements m
+          where m.variant_id = v.id and m.type = 'sale') as last_sale
+      from variants v
+      join products p on p.id = v.product_id
+      where v.active and p.active
+      order by lower(p.name), lower(v.color), v.size_sort, v.size`)
+  }
+
   /** Fiado em aberto (RN-REL-03): clientes com saldo > 0. */
   openReceivables(today: string) {
     return this.db.execute<{

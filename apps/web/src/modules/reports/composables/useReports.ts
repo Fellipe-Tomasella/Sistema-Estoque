@@ -83,3 +83,14 @@ export const csvUrl = (path: string, params: Record<string, string | undefined>)
   const search = new URLSearchParams(Object.entries(params).filter((e): e is [string, string] => Boolean(e[1])))
   return `/api/reports/${path}.csv?${search}`
 }
+
+type StockQuery = NonNullable<Parameters<typeof client.reports.stock.get>[0]>['query']
+
+/** Posição do estoque (RN-REL-07): saldo, valor a custo e a preço de venda, por categoria e por peça. */
+export function useStockReport(query: MaybeRefOrGetter<StockQuery>) {
+  return useQuery({
+    queryKey: computed(() => [...keys.reports, 'stock', toValue(query)]),
+    queryFn: () => unwrap(client.reports.stock.get({ query: toValue(query) })),
+    placeholderData: (previous) => previous,
+  })
+}

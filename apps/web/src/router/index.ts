@@ -150,6 +150,12 @@ const appRoutes: RouteRecordRaw[] = [
     meta: { title: 'Mais e menos vendidos' },
   },
   {
+    path: 'relatorios/estoque',
+    name: 'report-stock',
+    component: () => import('@/modules/reports/pages/StockReportPage.vue'),
+    meta: { title: 'Estoque' },
+  },
+  {
     path: 'fechamento/:data?',
     name: 'closing',
     component: () => import('@/modules/reports/pages/ClosingPage.vue'),
