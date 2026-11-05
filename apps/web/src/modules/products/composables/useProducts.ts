@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/vue-query'
 import { computed, type MaybeRefOrGetter, toValue } from 'vue'
 import { client, unwrap } from '@/lib/api'
+import { shrinkImage } from '@/lib/image'
 import { invalidateStock, keys, queryClient } from '@/lib/query'
 
 type ListQuery = NonNullable<Parameters<typeof client.products.get>[0]>['query']
@@ -78,8 +79,19 @@ export function useProductImages(productId: MaybeRefOrGetter<string>) {
   return {
     /** Envia uma por vez, na ordem escolhida; para no primeiro erro (ex.: limite de 5). */
     upload: useMutation({
-      mutationFn: async (files: File[]) => {
-        for (const file of files) await unwrap(images().post({ file }))
+      /** Reduz cada foto no aparelho e envia uma por vez; desiste depois de 60 s sem resposta. */
+      mutationFn: async ({ files, onEach }: { files: File[]; onEach?: (done: number) => void }) => {
+        for (const [i, original] of files.entries()) {
+          const file = await shrinkImage(original)
+          const timeout = new Promise<never>((_, reject) =>
+            setTimeout(
+              () => reject(new Error('A foto demorou demais para subir. Confira a internet e tente de novo.')),
+              60_000,
+            ),
+          )
+          await Promise.race([unwrap(images().post({ file })), timeout])
+          onEach?.(i + 1)
+        }
       },
       onSettled: refresh,
     }),

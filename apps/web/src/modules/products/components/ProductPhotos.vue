@@ -26,8 +26,8 @@ import type { Product, ProductImage } from '../types'
 const props = defineProps<{ product: Product }>()
 
 const MAX = 5
-const MAX_BYTES = 15 * 1024 * 1024
-const ACCEPT = ['image/jpeg', 'image/png', 'image/webp']
+/** Antes de reduzir no aparelho; depois de reduzida, a foto fica em poucas centenas de KB. */
+const MAX_BYTES = 40 * 1024 * 1024
 
 const { upload, update, reorder, remove } = useProductImages(() => props.product.id)
 const images = computed(() => props.product.images)
@@ -39,19 +39,26 @@ const input = useTemplateRef('input')
 const dropZone = useTemplateRef('dropZone')
 const viewing = ref<ProductImage | null>(null)
 const removing = ref<ProductImage | null>(null)
+/** “Enviando 1 de 3…” enquanto sobe. */
+const progress = ref<{ done: number; total: number } | null>(null)
 
 async function send(files: File[] | FileList | null) {
   const list = [...(files ?? [])]
   if (!list.length) return
-  const wrong = list.find((f) => !ACCEPT.includes(f.type))
-  if (wrong) return toast.error(`“${wrong.name}” não é JPG, PNG ou WebP.`)
+  const wrong = list.find((f) => f.type && !f.type.startsWith('image/'))
+  if (wrong) return toast.error(`“${wrong.name}” não é uma foto.`)
   const big = list.find((f) => f.size > MAX_BYTES)
-  if (big) return toast.error(`“${big.name}” passa de 15 MB.`)
+  if (big) return toast.error(`“${big.name}” passa de 40 MB.`)
   if (list.length > left.value) {
     return toast.error(left.value ? `Cabem só mais ${left.value} foto(s) neste produto.` : 'O produto já tem 5 fotos.')
   }
-  await upload.mutateAsync(list)
-  toast.success(list.length === 1 ? 'Foto enviada.' : `${list.length} fotos enviadas.`)
+  progress.value = { done: 0, total: list.length }
+  try {
+    await upload.mutateAsync({ files: list, onEach: (done) => (progress.value = { done, total: list.length }) })
+    toast.success(list.length === 1 ? 'Foto enviada.' : `${list.length} fotos enviadas.`)
+  } finally {
+    progress.value = null
+  }
 }
 
 function pick(event: Event) {
@@ -85,9 +92,10 @@ async function confirmRemove() {
         Fotos <span class="text-sm font-normal text-muted-foreground">{{ images.length }} de {{ MAX }}</span>
       </p>
       <Button v-if="left > 0" variant="secondary" size="sm" :disabled="busy" @click="input?.click()">
-        <LoaderCircle v-if="upload.isPending.value" class="animate-spin" /><ImagePlus v-else /> Adicionar
+        <LoaderCircle v-if="upload.isPending.value" class="animate-spin" /><ImagePlus v-else />
+        {{ progress ? `Enviando ${Math.min(progress.done + 1, progress.total)} de ${progress.total}…` : 'Adicionar' }}
       </Button>
-      <input ref="input" type="file" :accept="ACCEPT.join(',')" multiple class="hidden" @change="pick" />
+      <input ref="input" type="file" accept="image/*" multiple class="hidden" @change="pick" />
     </div>
 
     <div
