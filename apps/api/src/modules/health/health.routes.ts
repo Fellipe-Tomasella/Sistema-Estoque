@@ -8,5 +8,10 @@ export const healthRoutes = new Elysia({ prefix: '/health' }).use(servicesPlugin
     if (!result.ok) set.status = 503
     return result
   },
-  { response: { 200: t.Object({ ok: t.Boolean(), db: t.Boolean(), version: t.String() }), 503: t.Any() } },
+  {
+    response: {
+      200: t.Object({ ok: t.Boolean(), db: t.Boolean(), media: t.Boolean(), version: t.String() }),
+      503: t.Any(),
+    },
+  },
 )

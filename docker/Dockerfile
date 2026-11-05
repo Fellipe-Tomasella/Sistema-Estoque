@@ -27,6 +27,9 @@ RUN bun install --frozen-lockfile --production --filter @estoque/api
 
 FROM oven/bun:1.3.13-slim AS runtime
 WORKDIR /app
+# versão da tag (release.yml), mostrada em /api/health para saber o que está no ar
+ARG APP_VERSION=dev
+ENV APP_VERSION=$APP_VERSION
 ENV NODE_ENV=production \
     PORT=3000 \
     PUBLIC_DIR=/app/public     MEDIA_DIR=/app/media

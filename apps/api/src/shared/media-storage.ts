@@ -1,8 +1,8 @@
-import { mkdir, rm } from 'node:fs/promises'
+import { access, constants, mkdir, rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import sharp from 'sharp'
 import { env } from '../config/env'
-import { ValidationError } from './errors'
+import { AppError, ValidationError } from './errors'
 
 export type ImageSize = 'thumb' | 'large'
 
@@ -47,8 +47,28 @@ export class MediaStorage {
   }
 
   async save(id: string, image: ProcessedImage) {
-    await mkdir(this.dir, { recursive: true })
-    for (const [size, data] of Object.entries(image.files)) await Bun.write(this.path(id, size as ImageSize), data)
+    try {
+      await mkdir(this.dir, { recursive: true })
+      for (const [size, data] of Object.entries(image.files)) await Bun.write(this.path(id, size as ImageSize), data)
+    } catch (error) {
+      console.error(`Fotos: não foi possível gravar em ${this.dir}`, error)
+      throw new AppError(
+        500,
+        'MEDIA_UNAVAILABLE',
+        'O servidor não conseguiu guardar a foto (pasta das fotos sem permissão de gravação). Avise o suporte.',
+      )
+    }
+  }
+
+  /** A pasta das fotos existe e aceita gravação? (aparece em /api/health) */
+  async writable() {
+    try {
+      await mkdir(this.dir, { recursive: true })
+      await access(this.dir, constants.W_OK)
+      return true
+    } catch {
+      return false
+    }
   }
 
   async remove(id: string) {

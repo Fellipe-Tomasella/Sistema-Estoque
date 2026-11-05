@@ -143,7 +143,7 @@ export function createContainer() {
     receivableReceipts,
     fiscal,
     auth: new AuthService(repositories.auth, audit, mailer, env.appOrigin),
-    health: new HealthService(repositories.health, pkg.version),
+    health: new HealthService(repositories.health, process.env.APP_VERSION ?? pkg.version, media),
     imports: new ImportsService(repositories.imports, products, audit),
     integrity: new IntegrityService(repositories.integrity),
     exports: new ExportsService(repositories.exports, settings, audit),
