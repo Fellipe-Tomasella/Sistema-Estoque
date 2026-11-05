@@ -19,7 +19,11 @@ export interface NfeApplied {
   supplierName: string
   reference: string
   entryDate: string | null
-  nfe: { accessKey: string | null; supplierDocument: string; links: { supplierCode: string; variantId: string }[] }
+  nfe: {
+    accessKey: string | null
+    supplierDocument: string
+    links: { supplierCode: string; variantId: string; barcode: string | null }[]
+  }
 }
 
 /**
@@ -62,7 +66,7 @@ async function apply() {
       if (manual === null) continue // ignorado
       const variant = manual ?? (await unwrap(client.variants({ id: item.match!.variantId }).get()))
       lines.push({ variant, quantity: item.quantity, unitCostCents: item.unitCostCents })
-      links.push({ supplierCode: item.code, variantId: variant.id })
+      links.push({ supplierCode: item.code, variantId: variant.id, barcode: item.barcode })
     }
     if (!lines.length) return toast.error('Todos os itens foram ignorados.')
     const n = note.value

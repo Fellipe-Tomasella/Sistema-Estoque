@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { newIdempotencyKey } from '@/lib/api'
-import { formatBRL } from '@/lib/format'
+import { formatBRL, localToday } from '@/lib/format'
 import { useCustomer } from '@/modules/customers/composables/useCustomers'
 import { useDashboard } from '@/modules/dashboard/composables/useDashboard'
 import { useReceivableMutations } from '../composables/useReceivables'
@@ -34,7 +34,7 @@ const method = ref<MoneyMethod>('pix')
 const date = ref('')
 const manual = ref<Record<string, number | null> | null>(null)
 const lastReceiptId = ref<string | null>(null)
-const today = computed(() => dashboard.value?.today ?? new Date().toISOString().slice(0, 10))
+const today = computed(() => dashboard.value?.today ?? localToday())
 watch(today, (value) => (date.value ||= value), { immediate: true })
 
 // Troca de cliente: começa do zero.

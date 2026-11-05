@@ -27,7 +27,12 @@ export const CreateEntryBody = t.Object({
       accessKey: t.Nullable(t.String({ pattern: '^[0-9]{44}$' })),
       supplierDocument: t.String({ maxLength: 14 }),
       links: t.Array(
-        t.Object({ supplierCode: t.String({ minLength: 1, maxLength: 60 }), variantId: t.String({ format: 'uuid' }) }),
+        t.Object({
+          supplierCode: t.String({ minLength: 1, maxLength: 60 }),
+          variantId: t.String({ format: 'uuid' }),
+          /** EAN que veio na nota: grava na peça se ela ainda não tiver código de barras. */
+          barcode: t.Optional(t.Nullable(t.String({ maxLength: 14 }))),
+        }),
         { maxItems: 500 },
       ),
     }),

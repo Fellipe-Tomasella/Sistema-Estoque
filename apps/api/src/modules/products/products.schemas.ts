@@ -81,6 +81,18 @@ export const SearchVariantsQuery = t.Object({
 
 export const IdParams = t.Object({ id: t.String({ format: 'uuid' }) })
 
+export const CodesQuery = t.Object({
+  q: t.Optional(t.String({ maxLength: 100 })),
+  missing: t.Optional(t.Boolean()),
+  /** Ids separados por vírgula (página de impressão das etiquetas). */
+  ids: t.Optional(t.String({ maxLength: 40_000 })),
+})
+
+export const GenerateCodesBody = t.Object({
+  /** Vazio = todas as peças sem código de barras. */
+  variantIds: t.Optional(t.Array(t.String({ format: 'uuid' }), { maxItems: 1000 })),
+})
+
 export const ImageParams = t.Object({ id: t.String({ format: 'uuid' }), imageId: t.String({ format: 'uuid' }) })
 
 export const UploadImageBody = t.Object({

@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { newIdempotencyKey } from '@/lib/api'
-import { pieces } from '@/lib/format'
+import { pieces, localToday } from '@/lib/format'
 import { useDashboard } from '@/modules/dashboard/composables/useDashboard'
 import VariantPicker from '@/modules/products/components/VariantPicker.vue'
 import type { VariantSearchResult } from '@/modules/products/types'
@@ -32,7 +32,7 @@ const key = newIdempotencyKey()
 const { data: dashboard } = useDashboard()
 const { createEntry } = useStockMutations()
 
-const today = computed(() => dashboard.value?.today ?? new Date().toISOString().slice(0, 10))
+const today = computed(() => dashboard.value?.today ?? localToday())
 const form = reactive({ entryDate: '', supplierName: '', reference: '', notes: '' })
 watch(today, (value) => (form.entryDate ||= value), { immediate: true })
 const lines = ref<Line[]>([])

@@ -120,6 +120,13 @@
       "when": 1793839795518,
       "tag": "0016_storefront_announcement",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1793840180279,
+      "tag": "0017_barcode_seq",
+      "breakpoints": true
     }
   ]
 }

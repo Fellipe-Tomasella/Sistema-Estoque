@@ -1,4 +1,4 @@
-import { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 import { authPlugin } from '../../shared/auth.plugin'
 import { IdParams, SearchVariantsQuery, UpdateVariantBody } from './products.schemas'
 
@@ -7,6 +7,10 @@ export const variantsRoutes = new Elysia({ prefix: '/variants' })
   .guard({ auth: true })
   .get('/search', ({ query, services }) => services.products.searchVariants(query.q, query.limit), {
     query: SearchVariantsQuery,
+  })
+  // leitor de código de barras e câmera (PDV, Nova venda)
+  .get('/by-code/:code', ({ params, services }) => services.products.findByCode(params.code), {
+    params: t.Object({ code: t.String({ minLength: 1, maxLength: 60 }) }),
   })
   .get('/:id', ({ params, services }) => services.products.getVariant(params.id), { params: IdParams })
   .patch('/:id', ({ params, body, services, user }) => services.products.updateVariant(params.id, body, user.id), {

@@ -13,6 +13,7 @@ import { formatBRL, pieces } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { useCustomer } from '@/modules/customers/composables/useCustomers'
 import { addItem, addSearchResult, totalOf } from '../cart'
+import { addByCode, useBarcodeScanner } from '../composables/useBarcode'
 import { useSaleDraft } from '../composables/useSaleDraft'
 import CartItems from './CartItems.vue'
 import CustomerPicker from './CustomerPicker.vue'
@@ -52,6 +53,10 @@ async function doConfirm() {
 }
 
 // Atalhos de teclado (notebook).
+/** Leitor de código (USB) e câmera: a peça bipada entra direto no carrinho. */
+const scan = (code: string) => addByCode(code, (v) => change((s) => addSearchResult(s, v)))
+useBarcodeScanner(scan)
+
 const typing = (e: KeyboardEvent) => (e.target as Element | null)?.closest?.('input, textarea, [contenteditable]')
 onKeyStroke('/', (e) => {
   if (typing(e)) return
@@ -117,6 +122,7 @@ onKeyStroke('Enter', (e) => {
         v-if="wide || step === 0"
         ref="catalog"
         @pick="(v) => change((s) => addSearchResult(s, v))"
+        @code="scan"
         @add="(name, v, qty) => change((s) => addItem(s, name, v, qty))"
       />
 

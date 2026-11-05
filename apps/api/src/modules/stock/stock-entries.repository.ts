@@ -69,11 +69,18 @@ export class StockEntriesRepository {
     if (!links.length) return
     await tx
       .insert(supplierItemLinks)
-      .values(links.map((l) => ({ supplierDocument, ...l })))
+      .values(links.map((l) => ({ supplierDocument, supplierCode: l.supplierCode, variantId: l.variantId })))
       .onConflictDoUpdate({
         target: [supplierItemLinks.supplierDocument, supplierItemLinks.supplierCode],
         set: { variantId: sql`excluded.variant_id` },
       })
+  }
+
+  /** EAN da nota na peça sem código de barras, se nenhuma outra peça já usa esse código (RN-EST-11). */
+  async fillBarcode(variantId: string, barcode: string, tx: DbOrTx) {
+    await tx.execute(sql`update variants set barcode = ${barcode}
+      where id = ${variantId} and barcode is null
+        and not exists (select 1 from variants other where other.barcode = ${barcode})`)
   }
 
   async find(id: string, tx: DbOrTx = this.db) {

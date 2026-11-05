@@ -39,6 +39,8 @@ O tipo `App` exportado em `apps/api/src/app.ts` alimenta o Eden Treaty no front 
 | POST | `/products/:id/deactivate` · `/activate` | |
 | DELETE | `/products/:id` · `/variants/:id` | só sem histórico (RN-PRO-08) |
 | GET | `/products/suggestions` | cores, tamanhos e categorias já usados |
+| GET · POST | `/products/codes` · `/products/codes/generate` | `?q&missing&ids` lista de códigos; gerar EAN interno/SKU que faltam (`{ variantIds? }`) (RN-PRO-16) |
+| GET | `/variants/by-code/:code` | peça pelo código bipado (barras, SKU ou código do fornecedor) |
 | GET | `/products/:id/images` | fotos na ordem (a primeira é a capa); o produto também traz `images` e `coverUrl` |
 | POST | `/products/:id/images` | multipart `file` (JPG/PNG/WebP, até 15 MB) + `color?` — até 5 (RN-PRO-12) |
 | POST | `/products/:id/images/order` | `{ ids }` com todas as fotos na nova ordem (RN-PRO-13) |

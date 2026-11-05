@@ -27,3 +27,6 @@ export function formatDateTime(value: string | Date | null | undefined) {
 export const formatLongDate = (value: string | Date) => longDate.format(toDate(value))
 
 export const pieces = (n: number) => `${n} ${n === 1 ? 'peça' : 'peças'}`
+
+/** Hoje no relógio do aparelho (AAAA-MM-DD). Não usar toISOString: em UTC, depois das 21h no Brasil já é amanhã. */
+export const localToday = () => new Date().toLocaleDateString('sv-SE')

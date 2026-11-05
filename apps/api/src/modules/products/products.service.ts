@@ -1,4 +1,4 @@
-import { normalizeBarcode, normalizeSize, productCode, sizeSort, variantSku } from '@estoque/shared'
+import { internalEan13, normalizeBarcode, normalizeSize, productCode, sizeSort, variantSku } from '@estoque/shared'
 import { db, type DbOrTx } from '../../db/client'
 import type { Product, Variant } from '../../db/schema'
 import { BusinessRuleError, ConflictError, NotFoundError, ValidationError } from '../../shared/errors'
@@ -328,6 +328,49 @@ export class ProductsService {
       (await this.repo.hasSaleItems(variantIds, tx)) ||
       (await this.webOrders.hasItemsFor(variantIds, tx))
     if (hasHistory) throw new BusinessRuleError(message)
+  }
+
+  /** Tela Códigos e etiquetas: referência, SKU, código de barras e códigos dos fornecedores de cada peça. */
+  listCodes(filters: { q?: string; missing?: boolean; ids?: string[] }) {
+    return this.repo.codes(filters)
+  }
+
+  /**
+   * RN-PRO-16: gera o código de barras interno (EAN-13 “20…”) das peças que ainda não têm, e o SKU padrão
+   * das que estão sem SKU. Peça que já tem código (da etiqueta do fornecedor ou da NF-e) fica como está.
+   */
+  async generateCodes(variantIds: string[] | undefined, userId: string) {
+    return db.transaction(async (tx) => {
+      const rows = await this.repo.codes({ incomplete: !variantIds?.length, ids: variantIds })
+      let generated = 0
+      for (const row of rows) {
+        const changes: VariantChanges = {}
+        if (!row.barcode) changes.barcode = internalEan13(await this.repo.nextBarcodeNumber(tx))
+        if (!row.sku && row.reference) changes.sku = variantSku(row.reference, row.color, row.size)
+        if (Object.keys(changes).length === 0) continue
+        await this.repo.updateVariant(row.variantId, changes, tx)
+        generated++
+      }
+      if (generated) {
+        await this.audit.record(
+          { entity: 'variant', entityId: 'lote', action: 'generate_codes', after: { generated }, userId },
+          tx,
+        )
+      }
+      return { generated }
+    })
+  }
+
+  /** Leitor/câmera: a peça do código, já no formato da busca do PDV. */
+  async findByCode(code: string) {
+    const row = await this.repo.findByCode(code.trim())
+    if (!row) throw new NotFoundError(`Nenhuma peça com o código ${code.trim()}.`)
+    const images = await this.repo.findImages([row.product.id])
+    return {
+      ...toVariantDto(row.variant, row.product),
+      productName: row.product.name,
+      coverUrl: coverUrl(images, row.variant.color),
+    }
   }
 
   /** Código de barras digitado: só dígitos (8 a 14); texto preenchido e inválido é erro. */

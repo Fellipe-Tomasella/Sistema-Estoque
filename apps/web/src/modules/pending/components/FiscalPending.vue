@@ -6,7 +6,7 @@ import MoneyText from '@/components/common/MoneyText.vue'
 import StatusBadge from '@/components/common/StatusBadge.vue'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { formatDate } from '@/lib/format'
+import { formatDate, localToday } from '@/lib/format'
 import { useDashboard } from '@/modules/dashboard/composables/useDashboard'
 import { FISCAL, FISCAL_DOC } from '@/modules/sales/labels'
 import { useFiscalPending, usePendingActions } from '../composables/usePending'
@@ -17,7 +17,7 @@ const { data: dashboard } = useDashboard()
 const { documentCancelled } = usePendingActions()
 
 async function markCancelled(id: string) {
-  await documentCancelled.mutateAsync({ id, date: dashboard.value?.today ?? new Date().toISOString().slice(0, 10) })
+  await documentCancelled.mutateAsync({ id, date: dashboard.value?.today ?? localToday() })
   toast.success('Cancelamento da nota registrado.')
 }
 </script>

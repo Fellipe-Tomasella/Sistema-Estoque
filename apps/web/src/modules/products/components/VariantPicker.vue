@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { client, unwrap } from '@/lib/api'
 import { formatBRL } from '@/lib/format'
 import { cn } from '@/lib/utils'
+import { findByCode, looksLikeCode } from '@/modules/pos/composables/useBarcode'
 import type { VariantSearchResult } from '../types'
 
 /**
@@ -15,7 +16,7 @@ import type { VariantSearchResult } from '../types'
  * Usada em entradas, acertos e no PDV.
  */
 const props = withDefaults(defineProps<{ placeholder?: string; autofocus?: boolean }>(), {
-  placeholder: 'Buscar peça: nome, cor e tamanho (ex.: blusa preta m)',
+  placeholder: 'Buscar peça ou bipar o código (ex.: blusa preta m)',
 })
 const emit = defineEmits<{ select: [variant: VariantSearchResult] }>()
 
@@ -43,10 +44,23 @@ function choose(variant: VariantSearchResult | undefined) {
   open.value = false
 }
 
+/** Enter com um código (leitor ou digitado): procura a peça exata antes de usar a lista. */
+async function enter() {
+  const text = term.value.trim()
+  if (looksLikeCode(text)) {
+    try {
+      return choose(await findByCode(text))
+    } catch {
+      // não é código de nenhuma peça: segue com o resultado da busca
+    }
+  }
+  choose(results.value[highlighted.value])
+}
+
 function onKey(event: KeyboardEvent) {
   if (event.key === 'ArrowDown') highlighted.value = Math.min(highlighted.value + 1, results.value.length - 1)
   else if (event.key === 'ArrowUp') highlighted.value = Math.max(highlighted.value - 1, 0)
-  else if (event.key === 'Enter') choose(results.value[highlighted.value])
+  else if (event.key === 'Enter') enter()
   else if (event.key === 'Escape') open.value = false
   else return
   event.preventDefault()

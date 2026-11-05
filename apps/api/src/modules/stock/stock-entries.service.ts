@@ -1,3 +1,4 @@
+import { normalizeBarcode } from '@estoque/shared'
 import { db } from '../../db/client'
 import { ConflictError, NotFoundError, ValidationError } from '../../shared/errors'
 import { isUniqueViolation } from '../../shared/sql'
@@ -53,7 +54,13 @@ export class StockEntriesService {
           })),
           { businessDate: input.entryDate, userId },
         )
-        if (input.nfe) await this.repo.saveLinks(input.nfe.supplierDocument, input.nfe.links, tx)
+        if (input.nfe) {
+          await this.repo.saveLinks(input.nfe.supplierDocument, input.nfe.links, tx)
+          for (const link of input.nfe.links) {
+            const barcode = normalizeBarcode(link.barcode)
+            if (barcode) await this.repo.fillBarcode(link.variantId, barcode, tx)
+          }
+        }
       })
     } catch (error) {
       if (isUniqueViolation(error, 'stock_entries_nfeAccessKey_unique')) {

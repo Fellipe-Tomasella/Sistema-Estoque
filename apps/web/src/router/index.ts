@@ -66,6 +66,12 @@ const appRoutes: RouteRecordRaw[] = [
     meta: { title: 'Importar planilha' },
   },
   {
+    path: 'estoque/codigos',
+    name: 'stock-codes',
+    component: () => import('@/modules/stock/pages/CodesPage.vue'),
+    meta: { title: 'Códigos e etiquetas' },
+  },
+  {
     path: 'estoque/movimentos',
     name: 'stock-movements',
     component: () => import('@/modules/stock/pages/MovementsPage.vue'),
@@ -167,6 +173,13 @@ const routes: RouteRecordRaw[] = [
   // Layout persistente: o menu é montado uma vez; só a área de conteúdo troca.
   // Vem antes do layout de acesso: os dois têm path '/', e '/' precisa cair aqui.
   { path: '/', component: () => import('@/layouts/AppLayout.vue'), children: appRoutes },
+  // impressão de etiquetas: página limpa, fora do layout (RN-PRO-16)
+  {
+    path: '/estoque/etiquetas',
+    name: 'labels-print',
+    component: () => import('@/modules/stock/pages/LabelsPrintPage.vue'),
+    meta: { title: 'Etiquetas' },
+  },
   // PDV clássico em tela cheia, fora do layout com menu (decisão 041)
   {
     path: '/pdv/:draftId?',

@@ -129,3 +129,53 @@ describe('entrada pela NF-e (RN-EST-11)', () => {
     expect(res.body.error.message).toContain('não é de uma NF-e')
   })
 })
+
+describe('códigos e etiquetas (RN-PRO-16)', () => {
+  test('gera EAN interno só para quem não tem; leitor acha por código de barras, SKU ou código do fornecedor', async () => {
+    const a = await createProduct(userId, { name: 'Body', variants: [['Preta', 'M', 2]] })
+    const b = await createProduct(userId, { name: 'Saia', variants: [['Azul', 'P', 1]] })
+    await services.products.updateVariant(b.variants[0]!.id, { barcode: '7891234567895' }, userId)
+
+    const missing = await request('GET', '/products/codes?missing=true', { cookie })
+    expect(missing.body.map((r: { productName: string }) => r.productName)).toEqual(['Body'])
+
+    const gen = await request('POST', '/products/codes/generate', { cookie, body: {} })
+    expect(gen.body).toEqual({ generated: 1 })
+    const [row] = (await request('GET', '/products/codes?q=body', { cookie })).body
+    expect(row.barcode).toBe('2000000000015')
+    expect(row.sku).toBe('P00001-PRE-M')
+    // a que já tinha código continua igual
+    expect((await services.products.getVariant(b.variants[0]!.id)).barcode).toBe('7891234567895')
+
+    const byEan = await request('GET', '/variants/by-code/2000000000015', { cookie })
+    expect(byEan.body).toMatchObject({ id: a.variants[0]!.id, productName: 'Body' })
+    const bySku = await request('GET', '/variants/by-code/p00001-pre-m', { cookie })
+    expect(bySku.body.id).toBe(a.variants[0]!.id)
+    const none = await request('GET', '/variants/by-code/999', { cookie })
+    expect(none.status).toBe(404)
+    expect(none.body.error.message).toContain('Nenhuma peça com o código 999')
+  })
+
+  test('NF-e: o EAN da nota vai para a peça sem código e o código do fornecedor passa a achar a peça', async () => {
+    const product = await createProduct(userId, { name: 'Blusa renda', variants: [['Preta', 'P', 0]] })
+    const variantId = product.variants[0]!.id
+    const doc = (await preview()).body
+    await request('POST', '/stock/entries', {
+      cookie,
+      headers: { 'idempotency-key': crypto.randomUUID() },
+      body: {
+        entryDate: '2026-11-01',
+        items: [{ variantId, quantity: 3, unitCostCents: 2550 }],
+        nfe: {
+          accessKey: doc.accessKey,
+          supplierDocument: doc.supplier.document,
+          links: [{ supplierCode: 'BL-01-P', variantId, barcode: '7891234567895' }],
+        },
+      },
+    })
+    expect((await services.products.getVariant(variantId)).barcode).toBe('7891234567895')
+    expect((await request('GET', '/variants/by-code/BL-01-P', { cookie })).body.id).toBe(variantId)
+    const [row] = (await request('GET', '/products/codes?q=blusa', { cookie })).body
+    expect(row.supplierCodes).toEqual(['BL-01-P'])
+  })
+})

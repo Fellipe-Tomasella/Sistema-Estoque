@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Shirt } from '@lucide/vue'
+import { Camera, Shirt } from '@lucide/vue'
 import { computed, ref, useTemplateRef } from 'vue'
 import EmptyState from '@/components/common/EmptyState.vue'
 import { Card } from '@/components/ui/card'
@@ -8,13 +8,17 @@ import { cn } from '@/lib/utils'
 import VariantPicker from '@/modules/products/components/VariantPicker.vue'
 import { useProductList, useProductSuggestions } from '@/modules/products/composables/useProducts'
 import type { Variant, VariantSearchResult } from '@/modules/products/types'
+import { Button } from '@/components/ui/button'
+import CameraScanner from './CameraScanner.vue'
 import CatalogCard from './CatalogCard.vue'
 
 /** Catálogo do PDV: busca direta (Enter adiciona) e produtos por categoria com chips de cor/tamanho. */
 const emit = defineEmits<{
   pick: [variant: VariantSearchResult]
   add: [productName: string, variant: Variant, quantity: number]
+  code: [code: string]
 }>()
+const camera = ref(false)
 
 const category = ref<string | undefined>(undefined)
 const { data: suggestions } = useProductSuggestions()
@@ -32,7 +36,13 @@ defineExpose({ focus: () => picker.value?.focus() })
 <template>
   <div class="space-y-4">
     <Card class="gap-3 p-4 shadow-sm">
-      <VariantPicker ref="picker" @select="emit('pick', $event)" />
+      <div class="flex gap-2">
+        <div class="min-w-0 flex-1"><VariantPicker ref="picker" @select="emit('pick', $event)" /></div>
+        <Button variant="outline" class="h-10 shrink-0" aria-label="Ler código pela câmera" @click="camera = true">
+          <Camera /> <span class="hidden sm:inline">Câmera</span>
+        </Button>
+      </div>
+      <CameraScanner v-model:open="camera" @code="emit('code', $event)" />
       <div v-if="suggestions?.categories.length" class="flex flex-wrap items-center gap-1.5">
         <span class="text-xs text-muted-foreground">Filtro:</span>
         <button
@@ -51,8 +61,8 @@ defineExpose({ focus: () => picker.value?.focus() })
         </button>
       </div>
       <p class="hidden text-xs text-muted-foreground lg:block">
-        Atalhos: <kbd class="rounded border px-1">/</kbd> buscar · <kbd class="rounded border px-1">F2</kbd> desconto ·
-        <kbd class="rounded border px-1">F4</kbd> pagamento ·
+        Leitor de código: é só bipar · <kbd class="rounded border px-1">/</kbd> buscar ·
+        <kbd class="rounded border px-1">F2</kbd> desconto · <kbd class="rounded border px-1">F4</kbd> pagamento ·
         <kbd class="rounded border px-1">Ctrl+Enter</kbd> confirmar
       </p>
     </Card>

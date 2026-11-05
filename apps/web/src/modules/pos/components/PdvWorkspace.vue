@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { formatBRL, pieces } from '@/lib/format'
 import { addItem, addSearchResult, totalOf } from '../cart'
+import { addByCode, useBarcodeScanner } from '../composables/useBarcode'
 import CartItems from './CartItems.vue'
 import CustomerPicker from './CustomerPicker.vue'
 import DiscountField from './DiscountField.vue'
@@ -49,6 +50,10 @@ async function doConfirm() {
   await confirm.mutateAsync()
   confirming.value = false
 }
+
+/** Leitor de código (USB) e câmera: a peça bipada entra direto no carrinho. */
+const scan = (code: string) => addByCode(code, (v) => change((s) => addSearchResult(s, v)))
+useBarcodeScanner(scan)
 
 const typing = (e: KeyboardEvent) => (e.target as Element | null)?.closest?.('input, textarea, [contenteditable]')
 onKeyStroke('/', (e) => {
@@ -106,6 +111,7 @@ onKeyStroke('Enter', (e) => {
       <PosCatalog
         ref="catalog"
         @pick="(v) => change((s) => addSearchResult(s, v))"
+        @code="scan"
         @add="(name, v, qty) => change((s) => addItem(s, name, v, qty))"
       />
       <Card v-if="wide" class="gap-4 p-4 shadow-sm lg:sticky lg:top-20 lg:max-h-[calc(100svh-6.5rem)] lg:self-start">

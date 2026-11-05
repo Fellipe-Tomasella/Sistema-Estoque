@@ -24,6 +24,7 @@ Origem: **[C]** confirmado · **[P]** proposto · **[D]** decidido em 30/10/2026
 | RN-PRO-13 | A primeira foto é a **capa** (lista de produtos, PDV, site). A dona reordena as fotos; excluir uma refaz a ordem. Foto não é registro financeiro: excluir apaga o arquivo. | P |
 | RN-PRO-14 | Uma foto pode ser de uma **cor** do produto: a busca e o catálogo do PDV mostram a foto da cor da variação e, sem ela, a capa. Cada foto pode ficar fora do site (“só interna”). | P |
 | RN-PRO-15 | **Código padrão**: produto sem referência recebe a próxima da sequência `P00001`, `P00002`…; variação sem SKU recebe `REFERÊNCIA-COR-TAMANHO` (ex.: `P00012-PRE-M`, `P00012-AZUC-GG`). Referência/SKU digitados são mantidos. Código de barras (EAN, 8 a 14 dígitos) é opcional e único; a busca do PDV acha a peça por ele ou pelo SKU exato. | Dev |
+| RN-PRO-16 | **Códigos e etiquetas**: peça sem código de barras recebe um EAN-13 interno (prefixo `20`, uso só da loja, sequencial com dígito verificador); a que já tem (etiqueta do fornecedor, EAN da NF-e) mantém o dela. A tela lista referência, SKU, código de barras e códigos dos fornecedores e imprime etiquetas (A4 3×10 ou térmica 50×30/40×25) com loja, peça, cor/tamanho, preço opcional e código. No PDV e na Nova venda, o **leitor** (bipar) e a **câmera** acham a peça por código de barras, SKU ou código do fornecedor e a põem no carrinho. | Dev |
 
 ## RN-EST — Estoque
 

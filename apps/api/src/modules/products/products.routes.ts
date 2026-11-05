@@ -2,7 +2,9 @@ import { Elysia } from 'elysia'
 import { authPlugin } from '../../shared/auth.plugin'
 import {
   AddVariantsBody,
+  CodesQuery,
   CreateProductBody,
+  GenerateCodesBody,
   IdParams,
   ImageParams,
   ListProductsQuery,
@@ -18,6 +20,15 @@ export const productsRoutes = new Elysia({ prefix: '/products' })
   .guard({ auth: true })
   .get('/', ({ query, services }) => services.products.list(query), { query: ListProductsQuery })
   .get('/suggestions', ({ services }) => services.products.suggestions())
+  // RN-PRO-16: tela Códigos e etiquetas
+  .get(
+    '/codes',
+    ({ query, services }) => services.products.listCodes({ ...query, ids: query.ids?.split(',').filter(Boolean) }),
+    { query: CodesQuery },
+  )
+  .post('/codes/generate', ({ body, services, user }) => services.products.generateCodes(body.variantIds, user.id), {
+    body: GenerateCodesBody,
+  })
   .get('/:id', ({ params, services }) => services.products.get(params.id), { params: IdParams })
   .post(
     '/',

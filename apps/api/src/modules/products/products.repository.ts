@@ -64,6 +64,78 @@ export class ProductsRepository {
     await tx.update(variants).set({ minStock }).where(eq(variants.productId, productId))
   }
 
+  /** Variações com seus códigos (tela Códigos e etiquetas), com os códigos dos fornecedores já vinculados. */
+  codes(filters: { q?: string; missing?: boolean; incomplete?: boolean; ids?: string[] }) {
+    const words = (filters.q ?? '').trim().split(/\s+/).filter(Boolean)
+    const haystack = searchable(
+      sql`${products.name} || ' ' || ${variants.color} || ' ' || ${variants.size} || ' ' || coalesce(${products.reference}, '') || ' ' || coalesce(${variants.sku}, '') || ' ' || coalesce(${variants.barcode}, '')`,
+    )
+    return this.db
+      .select({
+        variantId: variants.id,
+        productId: products.id,
+        productName: products.name,
+        reference: products.reference,
+        color: variants.color,
+        size: variants.size,
+        sku: variants.sku,
+        barcode: variants.barcode,
+        priceCents: sql<number>`coalesce(${variants.priceCents}, ${products.basePriceCents})`.mapWith(Number),
+        stockQty: variants.stockQty,
+        supplierCodes: sql<
+          string[]
+        >`coalesce((select array_agg(${supplierItemLinks.supplierCode} order by ${supplierItemLinks.supplierCode})
+          from ${supplierItemLinks} where ${supplierItemLinks.variantId} = ${variants.id}), '{}')`,
+      })
+      .from(variants)
+      .innerJoin(products, eq(products.id, variants.productId))
+      .where(
+        and(
+          eq(products.active, true),
+          eq(variants.active, true),
+          filters.missing ? sql`${variants.barcode} is null` : undefined,
+          filters.incomplete ? sql`(${variants.barcode} is null or ${variants.sku} is null)` : undefined,
+          filters.ids?.length ? inArray(variants.id, filters.ids) : undefined,
+          ...words.map((word) => sql`${haystack} like ${searchable(containsPattern(word))}`),
+        ),
+      )
+      .orderBy(asc(sql`lower(${products.name})`), ...variantOrder)
+      .limit(filters.ids?.length ? 1000 : 500)
+  }
+
+  /** Peça pelo código lido no leitor ou na câmera: código de barras exato, SKU ou código do fornecedor. */
+  async findByCode(code: string) {
+    const [row] = await this.db
+      .select({ variant: variants, product: products })
+      .from(variants)
+      .innerJoin(products, eq(products.id, variants.productId))
+      .where(
+        and(
+          eq(variants.active, true),
+          eq(products.active, true),
+          or(
+            eq(variants.barcode, code),
+            sql`lower(${variants.sku}) = lower(${code})`,
+            exists(
+              this.db
+                .select({ one: sql`1` })
+                .from(supplierItemLinks)
+                .where(and(eq(supplierItemLinks.variantId, variants.id), eq(supplierItemLinks.supplierCode, code))),
+            ),
+          ),
+        ),
+      )
+      // código de barras ganha de SKU e de código de fornecedor
+      .orderBy(sql`(${variants.barcode} = ${code}) desc nulls last`)
+      .limit(1)
+    return row
+  }
+
+  async nextBarcodeNumber(tx: DbOrTx = this.db) {
+    const [row] = await tx.execute<{ n: number }>(sql`select nextval('barcode_seq')::int as n`)
+    return row!.n
+  }
+
   /** Próximo número do código padrão do produto (RN-PRO-15). */
   async nextProductCode(tx: DbOrTx = this.db) {
     const [row] = await tx.execute<{ n: number }>(sql`select nextval('product_code_seq')::int as n`)
