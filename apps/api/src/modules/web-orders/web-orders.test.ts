@@ -73,6 +73,10 @@ describe('pedido pelo site (sem login)', () => {
     expect(mailer.outbox[0]!.text).toContain('https://wa.me/5511988887777')
     expect(mailer.outbox[0]!.text).toContain('R$ 160,00')
     expect(mailer.outbox[1]!.text).toContain('não é documento fiscal')
+    // versão HTML com o nome da loja como remetente; a cliente responde para a vendedora
+    expect(mailer.outbox[0]!.html).toContain('Chamar no WhatsApp')
+    expect(mailer.outbox[1]).toMatchObject({ fromName: 'Jooliv Lingeries', replyTo: 'vendedora@loja.test' })
+    expect(mailer.outbox[1]!.html).toContain('pedido nº 1')
   })
 
   test('RN-LOJ-05: mesmo envio duas vezes não duplica; campo isca não grava', async () => {

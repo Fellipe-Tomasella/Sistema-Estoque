@@ -1,6 +1,6 @@
 import { normalizeWhatsapp } from '@estoque/shared'
 import { db, type DbOrTx } from '../../db/client'
-import type { WebOrder, WebOrderItem } from '../../db/schema'
+import type { StorefrontSettings, WebOrder, WebOrderItem } from '../../db/schema'
 import {
   BusinessRuleError,
   ConflictError,
@@ -16,7 +16,7 @@ import type { CustomersService } from '../customers/customers.service'
 import type { SaleDraftsService } from '../sales/sale-drafts.service'
 import type { SettingsService } from '../settings/settings.service'
 import type { StorefrontRepository } from '../storefront/storefront.repository'
-import { customerEmail, sellerEmail } from './web-order-emails'
+import { customerEmail, type EmailContext, sellerEmail } from './web-order-emails'
 import type { WebOrdersRepository } from './web-orders.repository'
 import type { CreateWebOrderInput, WebOrderStatusInput } from './web-orders.schemas'
 
@@ -93,7 +93,7 @@ export class WebOrdersService {
       if (isUniqueViolation(error)) return this.publicView((await this.repo.find(key))!)
       throw error
     }
-    void this.notify(order, site.notifyEmail, site.title, site.whatsapp)
+    void this.notify(order, site)
     return this.publicView(order)
   }
 
@@ -232,12 +232,16 @@ export class WebOrdersService {
   }
 
   /** E-mails depois de gravar: falha de envio não perde o pedido (ele já aparece no sistema). */
-  private async notify(order: WebOrder, to: string | null, title: string | null, whatsapp: string | null) {
+  private async notify(order: WebOrder, site: StorefrontSettings) {
     const items = await this.repo.items([order.id])
-    const ctx = {
-      storeTitle: title ?? (await this.settings.get()).storeName,
+    const to = site.notifyEmail
+    const ctx: EmailContext = {
+      storeTitle: site.title ?? (await this.settings.get()).storeName,
       origin: this.origin,
-      storeWhatsapp: whatsapp,
+      storeWhatsapp: site.whatsapp,
+      accentColor: site.accentColor,
+      storePath: site.slug ? `/${site.slug}` : null,
+      sellerEmail: site.notifyEmail,
     }
     const messages = [
       to ? sellerEmail(order, items, ctx, to) : null,

@@ -5,6 +5,18 @@ export interface MailMessage {
   to: string
   subject: string
   text: string
+  /** Versão bonita; o texto continua como alternativa para leitores sem HTML. */
+  html?: string
+  /** Nome que aparece como remetente (o endereço continua o do SMTP_FROM). */
+  fromName?: string
+  replyTo?: string
+}
+
+/** “Nome <email>” com outro nome, mantendo o endereço autorizado no SMTP. */
+export function withFromName(from: string | undefined, name: string | undefined) {
+  if (!from || !name) return from
+  const address = from.match(/<([^>]+)>/)?.[1] ?? from.trim()
+  return `"${name.replace(/"/g, '')}" <${address}>`
 }
 
 export interface Mailer {
@@ -23,7 +35,8 @@ export class SmtpMailer implements Mailer {
   })
 
   async send(message: MailMessage): Promise<void> {
-    await this.transport.sendMail({ from: env.smtp.from, ...message })
+    const { fromName, ...rest } = message
+    await this.transport.sendMail({ ...rest, from: withFromName(env.smtp.from, fromName) })
   }
 }
 
