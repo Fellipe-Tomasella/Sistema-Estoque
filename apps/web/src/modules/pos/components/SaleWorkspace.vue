@@ -54,7 +54,7 @@ async function doConfirm() {
 
 // Atalhos de teclado (notebook).
 /** Leitor de código (USB) e câmera: a peça bipada entra direto no carrinho. */
-const scan = (code: string) => addByCode(code, (v) => change((s) => addSearchResult(s, v)))
+const scan = (code: string, quiet = false) => addByCode(code, (v) => change((s) => addSearchResult(s, v)), quiet)
 useBarcodeScanner(scan)
 
 const typing = (e: KeyboardEvent) => (e.target as Element | null)?.closest?.('input, textarea, [contenteditable]')
@@ -121,8 +121,8 @@ onKeyStroke('Enter', (e) => {
       <PosCatalog
         v-if="wide || step === 0"
         ref="catalog"
+        :scan="(code: string) => scan(code, true)"
         @pick="(v) => change((s) => addSearchResult(s, v))"
-        @code="scan"
         @add="(name, v, qty) => change((s) => addItem(s, name, v, qty))"
       />
 

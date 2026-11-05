@@ -104,7 +104,7 @@ const create = useMutation({
 
 <template>
   <Dialog v-model:open="open">
-    <DialogContent class="max-h-[90svh] max-w-2xl gap-4 overflow-y-auto">
+    <DialogContent class="max-h-[90svh] gap-4 overflow-y-auto sm:max-w-2xl">
       <DialogTitle class="flex items-center gap-2"
         ><PackagePlus class="size-5" /> Cadastrar produtos novos da nota</DialogTitle
       >

@@ -93,6 +93,13 @@
     @apply bg-background text-foreground antialiased;
     font-feature-settings: 'cv11';
   }
+  /*
+   * Celular: item de grade não pode crescer até o texto mais comprido (o padrão do CSS é min-width: auto),
+   * senão uma tabela larga empurra a página para o lado e os popups ficam cortados.
+   */
+  .grid > * {
+    min-width: 0;
+  }
 }
 
 /* Números alinhados em tabelas e valores (DESIGN.md: tabular figures). */

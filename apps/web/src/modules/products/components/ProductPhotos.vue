@@ -168,7 +168,7 @@ async function confirmRemove() {
     </div>
 
     <Dialog :open="viewing !== null" @update:open="!$event && (viewing = null)">
-      <DialogContent class="max-w-3xl p-2 sm:p-3">
+      <DialogContent class="p-2 sm:max-w-3xl sm:p-3">
         <DialogTitle class="sr-only">Foto de {{ product.name }}</DialogTitle>
         <img
           v-if="viewing"

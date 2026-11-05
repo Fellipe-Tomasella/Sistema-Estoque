@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Barcode, LoaderCircle, Printer, Sparkles } from '@lucide/vue'
 import { useMutation, useQuery } from '@tanstack/vue-query'
-import { refDebounced } from '@vueuse/core'
+import { refDebounced, useMediaQuery } from '@vueuse/core'
 import { useRouteQuery } from '@vueuse/router'
 import { computed, reactive, ref } from 'vue'
 import { toast } from 'vue-sonner'
@@ -25,6 +25,7 @@ import { LABELS_KEY } from '../labels'
  * Códigos e etiquetas (RN-PRO-15/16): referência, SKU, código de barras e códigos dos fornecedores de cada
  * peça. Gera o código de barras de quem não tem e imprime etiquetas para bipar no PDV.
  */
+const mobile = useMediaQuery('(max-width: 767px)')
 const q = useRouteQuery<string>('q', '')
 const search = ref(q.value)
 const debounced = refDebounced(search, 250)
@@ -79,14 +80,14 @@ function print() {
     <div class="flex flex-wrap items-center gap-3">
       <Input
         v-model="search"
-        placeholder="Buscar por nome, cor, referência, SKU ou código"
-        class="h-10 max-w-md min-w-0 flex-1"
+        placeholder="Buscar peça ou código"
+        class="h-10 w-full min-w-0 sm:w-auto sm:max-w-md sm:flex-1"
       />
       <div class="flex items-center gap-2">
         <Switch id="only-missing" v-model="missing" />
         <Label for="only-missing" class="font-normal">Só sem código de barras</Label>
       </div>
-      <div class="ml-auto flex flex-wrap gap-2">
+      <div class="flex w-full flex-wrap gap-2 sm:ml-auto sm:w-auto [&>*]:flex-1 sm:[&>*]:flex-none">
         <Button variant="outline" :disabled="generate.isPending.value" @click="generate.mutate(undefined)">
           <LoaderCircle v-if="generate.isPending.value" class="animate-spin" /><Sparkles v-else /> Gerar códigos que
           faltam
@@ -111,6 +112,45 @@ function print() {
       title="Nenhuma peça encontrada"
       description="Mude a busca ou o filtro."
     />
+    <!-- celular: cartões (a tabela não cabe) -->
+    <ul v-else-if="mobile" class="divide-y">
+      <li v-for="r in rows" :key="r.variantId" class="flex gap-3 px-4 py-3">
+        <Checkbox
+          class="mt-1"
+          :model-value="selected.has(r.variantId)"
+          :aria-label="`Marcar ${r.productName} ${r.color} ${r.size}`"
+          @update:model-value="toggle(r.variantId, r.stockQty, Boolean($event))"
+        />
+        <div class="min-w-0 flex-1 space-y-1">
+          <p class="font-medium">{{ r.productName }}</p>
+          <p class="text-xs text-muted-foreground">
+            {{ r.color }} / {{ r.size }} · {{ formatBRL(r.priceCents) }} · saldo {{ r.stockQty }}
+          </p>
+          <p class="truncate font-mono text-xs text-muted-foreground">{{ r.sku ?? r.reference ?? '—' }}</p>
+          <div v-if="r.barcode" class="flex items-center gap-2">
+            <span class="font-mono text-xs">{{ r.barcode }}</span>
+            <StatusBadge :tone="isInternal(r.barcode) ? 'info' : 'neutral'">
+              {{ isInternal(r.barcode) ? 'Interno' : 'Fornecedor' }}
+            </StatusBadge>
+          </div>
+          <Button v-else variant="ghost" size="sm" class="-ml-2 text-brand" @click="generate.mutate([r.variantId])">
+            <Sparkles /> Gerar código
+          </Button>
+        </div>
+        <div v-if="selected.has(r.variantId)" class="shrink-0 text-right">
+          <p class="text-[11px] text-muted-foreground">Etiquetas</p>
+          <Input
+            type="number"
+            inputmode="numeric"
+            min="1"
+            max="500"
+            class="h-9 w-16 text-right"
+            :model-value="selected.get(r.variantId)"
+            @update:model-value="selected.set(r.variantId, Math.max(1, Math.min(500, Math.floor(Number($event) || 1))))"
+          />
+        </div>
+      </li>
+    </ul>
     <div v-else class="overflow-x-auto">
       <table class="w-full min-w-[720px] text-sm">
         <thead class="bg-muted/50 text-xs tracking-wider text-muted-foreground uppercase">

@@ -27,18 +27,23 @@ export function beep(ok = true) {
   navigator.vibrate?.(ok ? 40 : [60, 40, 60])
 }
 
-/** Procura o código e entrega a peça; avisa (tela + bipe) se não achar. */
-export async function addByCode(code: string, add: (variant: VariantSearchResult) => void) {
+/**
+ * Procura o código e entrega a peça; bipe de confirmação e o texto do aviso. `quiet` = quem chamou mostra o aviso
+ * (a câmera mostra o dela, grande); senão aparece no canto da tela.
+ */
+export async function addByCode(code: string, add: (variant: VariantSearchResult) => void, quiet = false) {
   try {
     const variant = await findByCode(code)
     add(variant)
     beep(true)
-    toast.success(`${variant.productName} · ${variant.label} adicionada`)
-    return true
+    const text = `${variant.productName} · ${variant.label} adicionada`
+    if (!quiet) toast.success(text)
+    return { ok: true, text }
   } catch (error) {
     beep(false)
-    toast.error(error instanceof ApiError ? error.message : 'Não foi possível ler o código.')
-    return false
+    const text = error instanceof ApiError ? error.message : 'Não foi possível ler o código.'
+    if (!quiet) toast.error(text)
+    return { ok: false, text }
   }
 }
 

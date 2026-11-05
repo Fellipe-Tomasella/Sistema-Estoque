@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LoaderCircle, PackageCheck, Trash2 } from '@lucide/vue'
+import { useMediaQuery } from '@vueuse/core'
 import { computed, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
@@ -26,6 +27,7 @@ interface Line {
 }
 
 /** Entrada de mercadoria (RN-EST-03): data, fornecedor e peças recebidas. Lançada não se edita (RN-EST-04). */
+const mobile = useMediaQuery('(max-width: 767px)')
 const route = useRoute()
 const router = useRouter()
 const key = newIdempotencyKey()
@@ -110,6 +112,43 @@ async function save() {
           title="Nenhuma peça ainda"
           description="Busque pelo nome, cor e tamanho e escolha a variação."
         />
+        <!-- celular: uma linha por peça, quantidade e custo lado a lado -->
+        <ul v-else-if="mobile" class="divide-y rounded-lg border">
+          <li v-for="(line, i) in lines" :key="line.variant.id" class="space-y-2 p-3">
+            <div class="flex items-start gap-2">
+              <div class="min-w-0 flex-1">
+                <p class="font-medium">{{ line.variant.productName }}</p>
+                <p class="text-xs text-muted-foreground">
+                  {{ line.variant.label }} · saldo {{ line.variant.stockQty }} →
+                  {{ line.variant.stockQty + line.quantity }}
+                </p>
+              </div>
+              <button
+                type="button"
+                class="p-1 text-muted-foreground hover:text-red-700"
+                :aria-label="`Remover ${line.variant.productName} ${line.variant.label}`"
+                @click="lines.splice(i, 1)"
+              >
+                <Trash2 class="size-4" />
+              </button>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <label class="space-y-1 text-xs text-muted-foreground"
+                >Quantidade
+                <Input
+                  type="number"
+                  inputmode="numeric"
+                  min="1"
+                  class="h-9 text-right"
+                  :model-value="line.quantity"
+                  @update:model-value="line.quantity = Math.max(1, Math.floor(Number($event) || 1))"
+              /></label>
+              <label class="space-y-1 text-xs text-muted-foreground"
+                >Custo un. (opcional)<MoneyInput v-model="line.unitCostCents" class="h-9"
+              /></label>
+            </div>
+          </li>
+        </ul>
         <div v-else class="overflow-x-auto rounded-lg border">
           <table class="w-full min-w-[520px] text-sm">
             <thead class="bg-muted/50 text-xs tracking-wider text-muted-foreground uppercase">

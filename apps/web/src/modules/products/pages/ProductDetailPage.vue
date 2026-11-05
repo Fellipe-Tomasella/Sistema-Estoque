@@ -19,6 +19,7 @@ import StockStatusBadge from '../components/StockStatusBadge.vue'
 import ProductPhotos from '../components/ProductPhotos.vue'
 import ProductSiteCard from '../components/ProductSiteCard.vue'
 import VariantActions from '../components/VariantActions.vue'
+import VariantMobileList from '../components/VariantMobileList.vue'
 import VariantEditDialog from '../components/VariantEditDialog.vue'
 import VariantGrid from '../components/VariantGrid.vue'
 import { useProduct, useProductMutations } from '../composables/useProducts'
@@ -128,57 +129,66 @@ async function applyMinForAll() {
             <RouterLink :to="`/produtos/${product.id}/editar`">+ Cor ou tamanho</RouterLink>
           </Button>
         </div>
-        <Table>
-          <TableHeader>
-            <TableRow class="bg-muted/50">
-              <TableHead>Variação</TableHead>
-              <TableHead class="text-center">Situação</TableHead>
-              <TableHead class="hidden text-right md:table-cell">Mínimo</TableHead>
-              <TableHead class="text-right">Saldo</TableHead>
-              <TableHead class="text-right">Ações</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow v-for="variant in product.variants" :key="variant.id">
-              <TableCell>
-                <p class="font-medium">{{ variant.label }}</p>
-                <p class="text-xs text-muted-foreground">
-                  <MoneyText :cents="variant.effectivePriceCents" />
-                  <template v-if="variant.priceCents !== null"> (preço próprio)</template>
-                  <template v-if="variant.sku"> · SKU {{ variant.sku }}</template>
-                </p>
-              </TableCell>
-              <TableCell class="text-center">
-                <StockStatusBadge :status="variant.stockStatus" :active="variant.active" />
-              </TableCell>
-              <TableCell class="hidden text-right text-muted-foreground tabular md:table-cell">
-                {{ variant.minStock ?? '—' }}
-              </TableCell>
-              <TableCell
-                :class="cn('text-right font-semibold tabular', variant.stockStatus === 'out' && 'text-red-700')"
-              >
-                {{ variant.stockQty }} un
-              </TableCell>
-              <TableCell>
-                <div class="flex items-center justify-end gap-1">
-                  <VariantActions :variant-id="variant.id" class="hidden sm:flex" />
-                  <Button variant="ghost" size="icon-sm" aria-label="Editar variação" @click="edit(variant)">
-                    <Pencil />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    class="hover:text-red-700"
-                    aria-label="Excluir variação"
-                    @click="removingVariant = variant"
-                  >
-                    <Trash2 />
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+        <VariantMobileList
+          :variants="product.variants"
+          editable
+          class="md:hidden"
+          @edit="edit"
+          @remove="removingVariant = $event"
+        />
+        <div class="hidden md:block">
+          <Table>
+            <TableHeader>
+              <TableRow class="bg-muted/50">
+                <TableHead>Variação</TableHead>
+                <TableHead class="text-center">Situação</TableHead>
+                <TableHead class="hidden text-right md:table-cell">Mínimo</TableHead>
+                <TableHead class="text-right">Saldo</TableHead>
+                <TableHead class="text-right">Ações</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow v-for="variant in product.variants" :key="variant.id">
+                <TableCell>
+                  <p class="font-medium">{{ variant.label }}</p>
+                  <p class="text-xs text-muted-foreground">
+                    <MoneyText :cents="variant.effectivePriceCents" />
+                    <template v-if="variant.priceCents !== null"> (preço próprio)</template>
+                    <template v-if="variant.sku"> · SKU {{ variant.sku }}</template>
+                  </p>
+                </TableCell>
+                <TableCell class="text-center">
+                  <StockStatusBadge :status="variant.stockStatus" :active="variant.active" />
+                </TableCell>
+                <TableCell class="hidden text-right text-muted-foreground tabular md:table-cell">
+                  {{ variant.minStock ?? '—' }}
+                </TableCell>
+                <TableCell
+                  :class="cn('text-right font-semibold tabular', variant.stockStatus === 'out' && 'text-red-700')"
+                >
+                  {{ variant.stockQty }} un
+                </TableCell>
+                <TableCell>
+                  <div class="flex items-center justify-end gap-1">
+                    <VariantActions :variant-id="variant.id" class="hidden sm:flex" />
+                    <Button variant="ghost" size="icon-sm" aria-label="Editar variação" @click="edit(variant)">
+                      <Pencil />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      class="hover:text-red-700"
+                      aria-label="Excluir variação"
+                      @click="removingVariant = variant"
+                    >
+                      <Trash2 />
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
       </Card>
 
       <div class="space-y-4">

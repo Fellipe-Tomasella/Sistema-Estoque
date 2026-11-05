@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ChevronDown } from '@lucide/vue'
+import { useMediaQuery } from '@vueuse/core'
 import { ref } from 'vue'
 import MoneyText from '@/components/common/MoneyText.vue'
 import ProductThumb from '@/components/common/ProductThumb.vue'
@@ -12,10 +13,12 @@ import type { Product } from '../types'
 import StockStatusBadge from './StockStatusBadge.vue'
 import VariantActions from './VariantActions.vue'
 import VariantGrid from './VariantGrid.vue'
+import VariantMobileList from './VariantMobileList.vue'
 
 /** Card do produto na lista: cabeçalho com preço e saldo; variações em tabela ou grade cor × tamanho. */
 defineProps<{ product: Product; view: 'table' | 'grid' }>()
 const open = ref(true)
+const mobile = useMediaQuery('(max-width: 767px)')
 </script>
 
 <template>
@@ -59,6 +62,7 @@ const open = ref(true)
         <div v-if="view === 'grid'" class="border-t p-4">
           <VariantGrid :variants="product.variants" @select="$router.push(`/produtos/${product.id}`)" />
         </div>
+        <VariantMobileList v-else-if="mobile" :variants="product.variants" class="border-t" />
         <Table v-else class="border-t">
           <TableHeader>
             <TableRow class="bg-muted/50">

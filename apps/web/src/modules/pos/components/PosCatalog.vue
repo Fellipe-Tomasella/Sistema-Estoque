@@ -16,8 +16,9 @@ import CatalogCard from './CatalogCard.vue'
 const emit = defineEmits<{
   pick: [variant: VariantSearchResult]
   add: [productName: string, variant: Variant, quantity: number]
-  code: [code: string]
 }>()
+/** A câmera entrega cada código lido; quem usa o catálogo põe a peça no carrinho e devolve o aviso. */
+defineProps<{ scan: (code: string) => Promise<{ ok: boolean; text: string }> }>()
 const camera = ref(false)
 
 const category = ref<string | undefined>(undefined)
@@ -42,7 +43,7 @@ defineExpose({ focus: () => picker.value?.focus() })
           <Camera /> <span class="hidden sm:inline">Câmera</span>
         </Button>
       </div>
-      <CameraScanner v-model:open="camera" @code="emit('code', $event)" />
+      <CameraScanner v-model:open="camera" :handle="scan" />
       <div v-if="suggestions?.categories.length" class="flex flex-wrap items-center gap-1.5">
         <span class="text-xs text-muted-foreground">Filtro:</span>
         <button

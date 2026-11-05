@@ -42,7 +42,7 @@ watch(
       </SheetContent>
     </Sheet>
 
-    <div class="lg:pl-60">
+    <div class="min-w-0 overflow-x-clip lg:pl-60">
       <OfflineBanner />
       <AppHeader @menu="drawerOpen = true" @search="searchOpen = true" />
       <!-- conteúdo ocupa a largura toda ao lado do menu (sem vão em monitor grande) -->

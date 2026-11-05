@@ -21,7 +21,8 @@ const props = withDefaults(defineProps<{ placeholder?: string; autofocus?: boole
 const emit = defineEmits<{ select: [variant: VariantSearchResult] }>()
 
 const term = ref('')
-const debounced = refDebounced(term, 200)
+// espera curta entre teclas: o resultado aparece enquanto ainda digita
+const debounced = refDebounced(term, 120)
 const open = ref(false)
 const highlighted = ref(0)
 const root = useTemplateRef<HTMLElement>('root')
@@ -33,6 +34,9 @@ const { data, isFetching } = useQuery({
   queryKey: computed(() => ['search', 'variants', debounced.value]),
   queryFn: () => unwrap(client.variants.search.get({ query: { q: debounced.value, limit: 10 } })),
   enabled: computed(() => debounced.value.trim().length >= 2),
+  // mantém a lista anterior enquanto busca a nova (não pisca “nenhuma peça”)
+  placeholderData: (previous) => previous,
+  staleTime: 30_000,
 })
 const results = computed(() => (debounced.value.trim().length >= 2 ? (data.value ?? []) : []))
 watch(results, () => (highlighted.value = 0))
@@ -91,8 +95,14 @@ function onKey(event: KeyboardEvent) {
       class="absolute inset-x-0 top-full z-50 mt-1 max-h-80 overflow-y-auto rounded-lg border bg-popover p-1 shadow-md"
       role="listbox"
     >
-      <li v-if="!results.length && !isFetching" class="px-3 py-4 text-center text-sm text-muted-foreground">
-        Nenhuma peça encontrada.
+      <li
+        v-if="!results.length && (isFetching || term !== debounced)"
+        class="px-3 py-4 text-center text-sm text-muted-foreground"
+      >
+        Buscando…
+      </li>
+      <li v-else-if="!results.length" class="px-3 py-4 text-center text-sm text-muted-foreground">
+        Nenhuma peça encontrada. Confira o nome ou tente só uma palavra.
       </li>
       <li
         v-for="(variant, i) in results"
